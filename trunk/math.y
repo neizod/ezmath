@@ -54,15 +54,19 @@ factor: term
 | factor MUL term { pop(ts[0]); pop(ts[1]); strcat(ts[1], " \\times "); strcat(ts[1], ts[0]); push(ts[1]); printf("::: %s\n", ts[1]); }
 | factor DOT term { pop(ts[0]); pop(ts[1]); strcat(ts[1], " \\cdot "); strcat(ts[1], ts[0]); push(ts[1]); printf("::: %s\n", ts[1]); }
 | factor term { pop(ts[0]); pop(ts[1]); strcat(ts[1], ts[0]); push(ts[1]); printf(":: %s\n", ts[1]); }
+/*
 | factor DIV OP exp CP { pop(ts[0]); pop(ts[1]); strcpy(ts[2], " \\frac{"); strcat(ts[2], ts[1]); strcat(ts[2], "}{"); strcat(ts[2], ts[0]); strcat(ts[2], "} ");  push(ts[2]); printf("::: %s\n", ts[2]); }
+*/
 | factor DIV term { pop(ts[0]); pop(ts[1]); strcpy(ts[2], " \\frac{"); strcat(ts[2], ts[1]); strcat(ts[2], "}{"); strcat(ts[2], ts[0]); strcat(ts[2], "} ");  push(ts[2]); printf("::: %s\n", ts[2]); }
 ;
 
 term: NUM { push("n"); }
 | VAR { push("v"); }
 | GREEK { push(dGreek[$$]); }
+/*
 | exp POW OP exp CP { pop(ts[0]); pop(ts[1]); strcat(ts[1], "^{"); strcat(ts[1], ts[0]); strcat(ts[1], "}"); push(ts[1]); printf("::: %s\n", ts[1]); }
 | exp POW exp { pop(ts[0]); pop(ts[1]); strcat(ts[1], "^{"); strcat(ts[1], ts[0]); strcat(ts[1], "}"); push(ts[1]); printf("::: %s\n", ts[1]); }
+*/
 | OP exp CP { pop(ts[0]); strcpy(ts[1], "("); strcat(ts[1], ts[0]); strcat(ts[1], ")"); push(ts[1]); printf("::: %s\n", ts[1]); }
 ;
 

@@ -1,93 +1,139 @@
 %{
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 
 
-char latex[1024] = "\\[\n";
+char latex[1024];
 
-int stak_i = 0;
-char stak_str[64][1024];
+int stack_i = 0;
+char stack_str[64][1024];
 char ts[16][1024];
 
-void push(str)
-  char str[1024];
-  {
-    strcpy(stak_str[stak_i++], str);
-  }
-void pop(str)
-  char str[1024];
-  {
-    strcpy(str, stak_str[--stak_i]);
-  }
+void dbs(void) {
+  if(stack_i > 0)
+    printf("(%3d)>>> %s\n", stack_i, ts[0]);
+  else
+    printf("(fin)::: %s\n", ts[0]);
+}
+void push(char* str) {
+  strcpy(stack_str[stack_i++], str);
+}
+void pop(char* str) {
+  strcpy(str, stack_str[--stack_i]);
+}
+void popi(int n) {
+  register int i;
+  strcpy(ts[0], "");
+  for(i = 1; i <= n; i++)
+    pop(ts[i]);
+}
+void join(int n, char* strs, ...) {
+  register int i;
+  va_list ap;
 
-char* dGreek[2] = {"\\alpha", "\\beta"};
+  va_start(ap, strs);
+  strcpy(ts[0], strs);
+  for(i = 1; i < n; i++)
+    strcat(ts[0], va_arg(ap, char*));
+  va_end(ap);
+}
 
+ char* dOprt[8] = {"+", "-", "\\times", "\\cdot", "\\neg", "\\neg", "\\pm", "\\mp"};
+ char* dEqvl[16] = {"=", "\\neq", "<", ">", "\\ll", "\\gg", "\\leg", "\\geg", "\\approx", "\\cong", "\\equiv", "\\rightarrow", "\\leftrightarrow", "\\land", "lor"};
+ char* dSet[11] = {"\\emptyset", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{Q}", "\\mathbb{R}", "\\mathbb{C}", "\\infty", "\\lodts", "\\forall", "\\exists", "\\exists!"};
 %}
 
-/*
-%token N0 N1 N2 N3 N4 N5 N6 N7 N8 N9
-*/
+%token NUMBER ENGL GREEK SET
+%token OPRT EQVL
 
-%token NUM VAR GREEK
-%token ADD SUB MUL DOT DIV POW
-%token EQI NEQ
-%token OP CP
+%token DIV POW
+%token SUM INT PROD FROM TO
+
+%token OP CP OB OB_M CB
 %token EOL
 
 %%
 
 list: /* nothing */
-| list equation EOL { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, "\n"); printf(">>> %s\n", ts[0]); }
+| list sentence EOL { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, " \n"); dbs(); }
 ;
 
-equation: exp
-| equation EQI exp { pop(ts[0]); pop(ts[1]); strcat(ts[1], " = "); strcat(ts[1], ts[0]); push(ts[1]); printf("::: %s\n", ts[1]); }
-| equation NEQ exp { pop(ts[0]); pop(ts[1]); strcat(ts[1], " \\neg "); strcat(ts[1], ts[0]); push(ts[1]); printf("::: %s\n", ts[1]); }
-;
-
-exp: factor
-| exp ADD factor { pop(ts[0]); pop(ts[1]); strcat(ts[1], " + "); strcat(ts[1], ts[0]); push(ts[1]); printf("::: %s\n", ts[1]); }
-| exp SUB factor { pop(ts[0]); pop(ts[1]); strcat(ts[1], " - "); strcat(ts[1], ts[0]); push(ts[1]); printf("::: %s\n", ts[1]); }
-;
-
-factor: term
-| factor MUL term { pop(ts[0]); pop(ts[1]); strcat(ts[1], " \\times "); strcat(ts[1], ts[0]); push(ts[1]); printf("::: %s\n", ts[1]); }
-| factor DOT term { pop(ts[0]); pop(ts[1]); strcat(ts[1], " \\cdot "); strcat(ts[1], ts[0]); push(ts[1]); printf("::: %s\n", ts[1]); }
-| factor term { pop(ts[0]); pop(ts[1]); strcat(ts[1], ts[0]); push(ts[1]); printf(":: %s\n", ts[1]); }
-/*
-| factor DIV OP exp CP { pop(ts[0]); pop(ts[1]); strcpy(ts[2], " \\frac{"); strcat(ts[2], ts[1]); strcat(ts[2], "}{"); strcat(ts[2], ts[0]); strcat(ts[2], "} ");  push(ts[2]); printf("::: %s\n", ts[2]); }
-*/
-| factor DIV term { pop(ts[0]); pop(ts[1]); strcpy(ts[2], " \\frac{"); strcat(ts[2], ts[1]); strcat(ts[2], "}{"); strcat(ts[2], ts[0]); strcat(ts[2], "} ");  push(ts[2]); printf("::: %s\n", ts[2]); }
-;
-
-term: NUM { push("n"); }
-| VAR { push("v"); }
-| GREEK { push(dGreek[$$]); }
-/*
-| exp POW OP exp CP { pop(ts[0]); pop(ts[1]); strcat(ts[1], "^{"); strcat(ts[1], ts[0]); strcat(ts[1], "}"); push(ts[1]); printf("::: %s\n", ts[1]); }
-| exp POW exp { pop(ts[0]); pop(ts[1]); strcat(ts[1], "^{"); strcat(ts[1], ts[0]); strcat(ts[1], "}"); push(ts[1]); printf("::: %s\n", ts[1]); }
-*/
-| OP exp CP { pop(ts[0]); strcpy(ts[1], "("); strcat(ts[1], ts[0]); strcat(ts[1], ")"); push(ts[1]); printf("::: %s\n", ts[1]); }
-;
 
 /*
-number: digit { strcpy(left, node); printf("at digit"); }
-| number digit { strcpy(right, node); strcpy(node, left); strcat(node, right); printf("at number"); }
-;
-
-digit: N0 { strcpy(node, "0"); printf("at N0"); } 
-| N1 { strcpy(node, "1"); }
-| N2 | N3 | N4 | N5 | N6 | N7 | N8 | N9
+matrix: OB_M brac_element CB { popi(1); join(3, "\\matrix{", ts[1], "}"), push(ts[0]); dbs(); }
 ;
 */
+
+
+
+
+sentence: element
+| sentence element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+;
+
+element: piece
+| sumational
+| frac
+| bracket
+;
+
+reduce: piece
+| OP sentence CP
+;
+
+sumational: sumsymbol 
+| sumsymbol sumelement { popi(2), join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+;
+
+sumsymbol: INT { push("\\int"); }
+| SUM { push("\\sum"); }
+| PROD { push("\\prod"); }
+;
+
+sumelement: boundary
+| sentence
+| sentence boundary { popi(2); join(2, ts[1], ts[2]); push(ts[0]), dbs(); }
+;
+
+boundary: FROM reduce TO reduce { popi(2), join(5, "_{", ts[2], "}^{", ts[1], "}"); push(ts[0]); dbs(); }
+;
+
+frac: reduce DIV reduce { popi(2); join(5, "\\frac{", ts[2], "}{", ts[1], "}"); push(ts[0]); dbs(); }
+;
+
+bracket: OP sentence CP { popi(1); join(3, "(", ts[1], ")"); push(ts[0]); dbs(); }
+;
+
+piece: subsingle
+| subsingle POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
+/* !!! conflict shift/reduce
+| variable number { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
+*/
+;
+
+subsingle: single
+| single OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); push(ts[0]); dbs(); }
+;
+
+single: number
+| variable
+| OPRT { push(dOprt[$1]); }
+| EQVL { push(dEqvl[$1]); }
+;
+number: NUMBER { push((char*)$1); }
+;
+variable: ENGL { join(2, " ", (char*)$1); push(ts[0]); }
+| GREEK { join(2, "\\", (char*)$1); push(ts[0]); }
+| SET { push(dSet[$1]); }
+;
+
 
 %%
 
 main(int argc, char **argv)
 {
-  
   yyparse();
-  strcat(latex, "\\]");
   printf("%s\n", latex);
 }
 

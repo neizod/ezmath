@@ -12,10 +12,42 @@
 "!"     { yylval = 5; return OPRT; }
 "+-"    { yylval = 6; return OPRT; }
 "-+"    { yylval = 7; return OPRT; }
+
+"(+)"   { yylval = 8; return OPRT; }
+"(-)"   { yylval = 9; return OPRT; }
+"(*)"   { yylval = 10; return OPRT; }
+"(.)"   { yylval = 11; return OPRT; }
+"(/)"   { yylval = 12; return OPRT; }
+
 "/"	{ return DIV; }
 "^"     { return POW; }
 
+"sqrt"  { return SQRT; }
+"root"  { return ROOT; }
 
+"sin"    { yylval = 0; return NAME; }
+"cos"    { yylval = 1; return NAME; }
+"tan"    { yylval = 2; return NAME; }
+"cot"    { yylval = 3; return NAME; }
+"sec"    { yylval = 4; return NAME; }
+"csc"    { yylval = 5; return NAME; }
+"asin"   |
+"arcsin" { yylval = 6; return NAME; }
+"acos"   |
+"arccos" { yylval = 7; return NAME; }
+"atan"   |
+"arctan" { yylval = 8; return NAME; }
+"acot"   |
+"arccot" { yylval = 9; return NAME; }
+"asec"   |
+"arcsec" { yylval = 10; return NAME; }
+"acsc"   |
+"arccsc" { yylval = 11; return NAME; }
+"exp"    { yylval = 0; return NAME; /*
+
+
+"mod"   "\\bmod"
+*/ }
 
 "="     { yylval = 0; return EQVL; }
 "!="    { yylval = 1; return EQVL; }
@@ -31,8 +63,9 @@
 "=="    { yylval = 10; return EQVL; }
 "->"    { yylval = 11; return EQVL; }
 "<->"   { yylval = 12; return EQVL; }
-"&&"    { yylval = 13; return EQVL; }
-"||"    { yylval = 14; return EQVL; }
+"and"   { yylval = 13; return EQVL; }
+"or"    { yylval = 14; return EQVL; }
+"not"   { yylval = 15; return EQVL; }
 
 
 
@@ -44,6 +77,9 @@
 "["     { return OB; }
 "]"     { return CB; }
 
+
+","     { return SEP; }
+";"     { return SNL; }
 
 
 [0-9]+(\.[0-9]+)?  { yylval = (int)yytext; return NUMBER; }
@@ -108,29 +144,51 @@
 "Qset"     { yylval = 3; return SET; }
 "Rset"     { yylval = 4; return SET; }
 "Cset"     { yylval = 5; return SET; }
+"aleph"    |
+"Aleph"    { yylval = 6; return SET; }
 
 "inf"      |
 "Inf"      |
 "infty"    |
 "infinity" |
-"Infinity" { yylval = 6; return SET; }
+"Infinity" { yylval = 7; return SET; }
 
-"..."      { yylval = 7; return SET; }
+"..."      { yylval = 8; return SET; }
 
 "all"      |
 "forall"   |
-"for all"  { yylval = 8; return SET; }
-"exists"   { yylval = 9; return SET; }
-"exist"    { yylval = 10; return SET; }
+"for all"  { yylval = 9; return SET; }
+"exists"   { yylval = 10; return SET; }
 
-"aleph"    |
-"Aleph"    { }
+"in"       { yylval = 11; return SET; }
+"notin"    |
+"not in"   { yylval = 12; return SET; }
+"subset"   { yylval = 13; return SET; }
+"supset"   |
+"superset" { yylval = 14; return SET; }
+
+"union"    |
+"cup"      { yylval = 15; return SET; }
+"intersect"    |
+"intersection" |
+"cap"      { yylval = 16; return SET; }
 
 
 
-"int"      { return INT; }
-"sum"      { return SUM; }
-"prod"     { return PROD; }
+"sum"      |
+"Sum"      |
+"sumation" |
+"Sumation" { yylval = 0; return SUM; }
+
+"prod"     |
+"Prod"     |
+"product"  |
+"Product"  { yylval = 1; return SUM; }
+
+"int"      |
+"Int"      |
+"integral" |
+"Integral" { yylval = 2; return SUM; }
 
 "from"     { return FROM; }
 "to"       { return TO; }
@@ -138,6 +196,7 @@
 
 
 \n	{ return EOL; }
+"_"     { return SPACE; }
 [ \t]	{ }
 .	{ printf("Unknown: %c\n", *yytext); }
 

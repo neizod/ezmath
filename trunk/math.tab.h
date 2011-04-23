@@ -39,20 +39,29 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     NUM = 258,
-     VAR = 259,
+     NUMBER = 258,
+     ENGL = 259,
      GREEK = 260,
-     ADD = 261,
-     SUB = 262,
-     MUL = 263,
-     DOT = 264,
+     SET = 261,
+     OPRT = 262,
+     EQVL = 263,
+     NAME = 264,
      DIV = 265,
      POW = 266,
-     EQI = 267,
-     NEQ = 268,
-     OP = 269,
-     CP = 270,
-     EOL = 271
+     SQRT = 267,
+     ROOT = 268,
+     SUM = 269,
+     FROM = 270,
+     TO = 271,
+     OP = 272,
+     CP = 273,
+     OB = 274,
+     OB_M = 275,
+     CB = 276,
+     SEP = 277,
+     SNL = 278,
+     SPACE = 279,
+     EOL = 280
    };
 #endif
 
@@ -66,5 +75,3 @@ typedef int YYSTYPE;
 #endif
 
 extern YYSTYPE yylval;
-
-

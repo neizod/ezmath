@@ -39,19 +39,21 @@ void join(int n, char* strs, ...) {
   va_end(ap);
 }
 
- char* dOprt[8] = {"+", "-", "\\times", "\\cdot", "\\neg", "\\neg", "\\pm", "\\mp"};
- char* dEqvl[16] = {"=", "\\neq", "<", ">", "\\ll", "\\gg", "\\leg", "\\geg", "\\approx", "\\cong", "\\equiv", "\\rightarrow", "\\leftrightarrow", "\\land", "lor"};
- char* dSet[11] = {"\\emptyset", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{Q}", "\\mathbb{R}", "\\mathbb{C}", "\\infty", "\\lodts", "\\forall", "\\exists", "\\exists!"};
+ char* dOprt[13] = {"+", "-", "\\times", "\\cdot", "\\sim", "!", "\\pm", "\\mp", "\\oplus", "\\ominus", "\\otimes", "\\odot", "\\oslash"};
+ char* dEqvl[16] = {"=", "\\neq", "<", ">", "\\ll", "\\gg", "\\leg", "\\geg", "\\approx", "\\cong", "\\equiv", "\\rightarrow", "\\leftrightarrow", "\\land", "\\lor", "\\neg"};
+ char* dSet[17] = {"\\emptyset", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{Q}", "\\mathbb{R}", "\\mathbb{C}", "\\aleph", "\\infty", "\\lodts", "\\forall", "\\exists", "\\in", "\\notin", "\\subseteq", "\\supseteq", "\\cup", "\\cap"};
+ char* dName[12] = {"\\sin", "\\cos", "\\tan", "\\cot", "\\sec", "\\csc", "\\arcsin", "\\arccos", "\\arctan", "\\arccot", "\\arcsec", "\\arccsc"};
+ char* dSum[3] = {"\\sum", "\\prod", "\\int"};
 %}
 
 %token NUMBER ENGL GREEK SET
-%token OPRT EQVL
+%token OPRT EQVL NAME
 
-%token DIV POW
-%token SUM INT PROD FROM TO
+%token DIV POW SQRT ROOT
+%token SUM FROM TO
 
-%token OP CP OB OB_M CB
-%token EOL
+%token OP CP OB OB_M CB SEP SNL
+%token SPACE EOL
 
 %%
 
@@ -59,39 +61,56 @@ list: /* nothing */
 | list sentence EOL { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, " \n"); dbs(); }
 ;
 
+sentence: superelement
+| sentence superelement { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+;
 
 /*
-matrix: OB_M brac_element CB { popi(1); join(3, "\\matrix{", ts[1], "}"), push(ts[0]); dbs(); }
+sentence: element
+| sentence element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
 ;
 */
 
-
-
-
-sentence: element
-| sentence element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+superelement: element
+| SEP { push(","); }
+| SNL { push(";"); }
 ;
 
 element: piece
 | sumational
 | frac
+| root
 | bracket
+| matrix
+| SPACE { push("\\quad"); }
 ;
 
 reduce: piece
 | OP sentence CP
 ;
 
-sumational: sumsymbol 
-| sumsymbol sumelement { popi(2), join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+
+matrix: OB_M mtx_sentence CB { popi(1); join(3, "\\begin{bmatrix}\n", ts[1], "\n\\end{bmatrix}"), push(ts[0]); dbs(); }
 ;
 
-sumsymbol: INT { push("\\int"); }
-| SUM { push("\\sum"); }
-| PROD { push("\\prod"); }
+mtx_sentence: mtx_element
+| mtx_sentence mtx_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
 ;
 
-sumelement: boundary
+mtx_element: element /* cause shift/reduce conflict*/
+| SEP { popi(1); join(2, ts[1], "&"); push(ts[0]); dbs(); }
+| SNL { popi(1); join(2, ts[1], "\\\\\n"); push(ts[0]); dbs(); }
+;
+
+
+sumational: sum_symbol /* cause shift/reduce conflict*/
+| sum_symbol sum_element { popi(2), join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+;
+
+sum_symbol: SUM { push(dSum[$1]); }
+;
+
+sum_element: boundary
 | sentence
 | sentence boundary { popi(2); join(2, ts[1], ts[2]); push(ts[0]), dbs(); }
 ;
@@ -99,15 +118,21 @@ sumelement: boundary
 boundary: FROM reduce TO reduce { popi(2), join(5, "_{", ts[2], "}^{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 
+
 frac: reduce DIV reduce { popi(2); join(5, "\\frac{", ts[2], "}{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 
-bracket: OP sentence CP { popi(1); join(3, "(", ts[1], ")"); push(ts[0]); dbs(); }
+root: SQRT reduce { popi(1); join(3, "\\sqrt{", ts[1], "}"); push(ts[0]); dbs(); }
+| reduce ROOT reduce { popi(2); join(5, "\\sqrt[", ts[2], "]{", ts[1], "}"); push(ts[0]); dbs(); }
+;
+
+bracket: OP sentence CP { popi(1); join(3, "\\left(", ts[1], "\\right)"); push(ts[0]); dbs(); }
 ;
 
 piece: subsingle
 | subsingle POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
-/* !!! conflict shift/reduce
+/* cause shift/reduce conflict
+   remove this feature due to its make parser too much complex
 | variable number { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
 */
 ;
@@ -120,6 +145,7 @@ single: number
 | variable
 | OPRT { push(dOprt[$1]); }
 | EQVL { push(dEqvl[$1]); }
+| NAME { push(dName[$1]); }
 ;
 number: NUMBER { push((char*)$1); }
 ;
@@ -131,13 +157,11 @@ variable: ENGL { join(2, " ", (char*)$1); push(ts[0]); }
 
 %%
 
-main(int argc, char **argv)
-{
+main(int argc, char **argv) {
   yyparse();
   printf("%s\n", latex);
 }
 
-yyerror(char *s)
-{
+yyerror(char *s) {
   fprintf(stderr, "error: %s\n", s);
 }

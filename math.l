@@ -8,6 +8,9 @@
 "-"	{ yylval = 1; return OPRT; }
 "*"	{ yylval = 2; return OPRT; }
 "."     { yylval = 3; return OPRT; }
+"asterisk" { /* return * */ }
+"star"  { /* return \\star */}
+"degree"  { /* return {^\\circ} */}
 "~"     { yylval = 4; return OPRT; }
 "!"     { yylval = 5; return OPRT; }
 "+-"    { yylval = 6; return OPRT; }
@@ -19,30 +22,52 @@
 "(.)"   { yylval = 11; return OPRT; }
 "(/)"   { yylval = 12; return OPRT; }
 
-"/"	{ return DIV; }
-"^"     { return POW; }
 
-"sqrt"  { return SQRT; }
-"root"  { return ROOT; }
+"/"	 { return DIV; }
+"^"      { return POW; }
+"choose" { return CHS; }
+"sqrt"   { return SRT; }
+"root"   { return NRT; }
+"case"   { return SWC; }
 
-"sin"    { yylval = 0; return NAME; }
-"cos"    { yylval = 1; return NAME; }
-"tan"    { yylval = 2; return NAME; }
-"cot"    { yylval = 3; return NAME; }
-"sec"    { yylval = 4; return NAME; }
-"csc"    { yylval = 5; return NAME; }
-"asin"   |
-"arcsin" { yylval = 6; return NAME; }
-"acos"   |
-"arccos" { yylval = 7; return NAME; }
-"atan"   |
-"arctan" { yylval = 8; return NAME; }
-"acot"   |
-"arccot" { yylval = 9; return NAME; }
-"asec"   |
-"arcsec" { yylval = 10; return NAME; }
-"acsc"   |
-"arccsc" { yylval = 11; return NAME; }
+"sin"     { yylval = 0; return NAME; }
+"cos"     { yylval = 1; return NAME; }
+"tan"     { yylval = 2; return NAME; }
+"cot"     { yylval = 3; return NAME; }
+"sec"     { yylval = 4; return NAME; }
+"csc"     { yylval = 5; return NAME; }
+"asin"    |
+"arcsin"  { yylval = 6; return NAME; }
+"acos"    |
+"arccos"  { yylval = 7; return NAME; }
+"atan"    |
+"arctan"  { yylval = 8; return NAME; }
+"acot"    |
+"arccot"  { yylval = 9; return NAME; }
+"asec"    |
+"arcsec"  { yylval = 10; return NAME; }
+"acsc"    |
+"arccsc"  { yylval = 11; return NAME; }
+
+"sinh"    { yylval = 12; return NAME; }
+"cosh"    { yylval = 13; return NAME; }
+"tanh"    { yylval = 14; return NAME; }
+"coth"    { yylval = 15; return NAME; }
+"sech"    { yylval = 16; return NAME; }
+"csch"    { yylval = 17; return NAME; }
+"asinh"   |
+"arcsinh" { yylval = 18; return NAME; }
+"acosh"   |
+"arccosh" { yylval = 19; return NAME; }
+"atanh"   |
+"arctanh" { yylval = 20; return NAME; }
+"acoth"   |
+"arccoth" { yylval = 21; return NAME; }
+"asech"   |
+"arcsech" { yylval = 22; return NAME; }
+"acsch"   |
+"arccsch" { yylval = 23; return NAME; }
+
 "exp"    { yylval = 0; return NAME; /*
 
 
@@ -69,21 +94,24 @@
 
 
 
-"("     { return OP; }
-")"     { return CP; }
+"("      { return OP; }
+")"      { return CP; }
 
-^"["    |
-" ["    { return OB_M; }
-"["     { return OB; }
-"]"     { return CB; }
+"{"      { return OS; }
+"}"      { return CS; }
+
+^"["     |
+[ \t]"[" { return OB_M; }
+"["      { return OB; }
+"]"      { return CB; }
+"\|["    { return OL_M; }
+"]\|"    { return CL_M; }
+
+","      { return SEP; }
+";"      { return SNL; }
 
 
-","     { return SEP; }
-";"     { return SNL; }
-
-
-[0-9]+(\.[0-9]+)?  { yylval = (int)yytext; return NUMBER; }
-
+[0-9]+(\.[0-9]+(\.\.\.)?)?  { yylval = (int)yytext; return NUMBER; }
 
 
 "alpha"    |
@@ -137,6 +165,9 @@
 "Omega"    { yylval = (int)yytext; return GREEK; }
 
 [a-zA-Z]   { yylval = (int)yytext; return ENGL; }
+"'"*       { yylval = (int)yytext; return ENGL; }
+
+\"[^\"]*\" { yylval = (int)yytext; return TEXT; }
 
 "Eset"     { yylval = 0; return SET; }
 "Nset"     { yylval = 1; return SET; }
@@ -190,13 +221,18 @@
 "integral" |
 "Integral" { yylval = 2; return SUM; }
 
+"oint"     { yylval = 3; return SUM; }
+
+"iint"     { yylval = 4; return SUM; }
+
 "from"     { return FROM; }
 "to"       { return TO; }
-
+"when"     { return WHEN; }
 
 
 \n	{ return EOL; }
-"_"     { return SPACE; }
+"_"     { return NIL; }
+"__"    { return SPC; }
 [ \t]	{ }
 .	{ printf("Unknown: %c\n", *yytext); }
 

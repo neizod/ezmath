@@ -4,235 +4,320 @@
 
 %%
 
-"+"	{ yylval = 0; return OPRT; }
-"-"	{ yylval = 1; return OPRT; }
-"*"	{ yylval = 2; return OPRT; }
-"."     { yylval = 3; return OPRT; }
-"asterisk" { /* return * */ }
-"star"  { /* return \\star */}
-"degree"  { /* return {^\\circ} */}
-"~"     { yylval = 4; return OPRT; }
-"!"     { yylval = 5; return OPRT; }
-"+-"    { yylval = 6; return OPRT; }
-"-+"    { yylval = 7; return OPRT; }
+"+"	{ yylval = 0; return SOPT; }
+"-"	{ yylval = 1; return SOPT; }
+"*"	{ yylval = 2; return SOPT; }
+"."	{ yylval = 3; return SOPT; }
+"ast"	{ yylval = 4; return SOPT; }
+"//"	{ yylval = 5; return SOPT; }
 
-"(+)"   { yylval = 8; return OPRT; }
-"(-)"   { yylval = 9; return OPRT; }
-"(*)"   { yylval = 10; return OPRT; }
-"(.)"   { yylval = 11; return OPRT; }
-"(/)"   { yylval = 12; return OPRT; }
+"(+)"	{ yylval = 6; return SOPT; }
+"(-)"	{ yylval = 7; return SOPT; }
+"(*)"	{ yylval = 8; return SOPT; }
+"(.)"	{ yylval = 9; return SOPT; }
+"(ast)"	{ yylval = 10; return SOPT; }
+"(/)"	{ yylval = 11; return SOPT; }
 
+"+-"	{ yylval = 12; return SOPT; }
+"-+"	{ yylval = 13; return SOPT; }
 
-"/"	 { return DIV; }
-"^"      { return POW; }
-"choose" { return CHS; }
-"sqrt"   { return SRT; }
-"root"   { return NRT; }
-"case"   { return SWC; }
-
-"sin"     { yylval = 0; return NAME; }
-"cos"     { yylval = 1; return NAME; }
-"tan"     { yylval = 2; return NAME; }
-"cot"     { yylval = 3; return NAME; }
-"sec"     { yylval = 4; return NAME; }
-"csc"     { yylval = 5; return NAME; }
-"asin"    |
-"arcsin"  { yylval = 6; return NAME; }
-"acos"    |
-"arccos"  { yylval = 7; return NAME; }
-"atan"    |
-"arctan"  { yylval = 8; return NAME; }
-"acot"    |
-"arccot"  { yylval = 9; return NAME; }
-"asec"    |
-"arcsec"  { yylval = 10; return NAME; }
-"acsc"    |
-"arccsc"  { yylval = 11; return NAME; }
-
-"sinh"    { yylval = 12; return NAME; }
-"cosh"    { yylval = 13; return NAME; }
-"tanh"    { yylval = 14; return NAME; }
-"coth"    { yylval = 15; return NAME; }
-"sech"    { yylval = 16; return NAME; }
-"csch"    { yylval = 17; return NAME; }
-"asinh"   |
-"arcsinh" { yylval = 18; return NAME; }
-"acosh"   |
-"arccosh" { yylval = 19; return NAME; }
-"atanh"   |
-"arctanh" { yylval = 20; return NAME; }
-"acoth"   |
-"arccoth" { yylval = 21; return NAME; }
-"asech"   |
-"arcsech" { yylval = 22; return NAME; }
-"acsch"   |
-"arccsch" { yylval = 23; return NAME; }
-
-"exp"    { yylval = 0; return NAME; /*
+"~"	{ yylval = 14; return SOPT; }
+"degree"	{ yylval = 15; return SOPT; }
+"star"	{ yylval = 16; return SOPT; }
 
 
-"mod"   "\\bmod"
-*/ }
+"="	{ yylval = 0; return SEQV; }
+"=="	{ yylval = 1; return SEQV; }
+"~="	{ yylval = 2; return SEQV; }
+"~~"	{ yylval = 3; return SEQV; }
+"propto"	{ yylval = 4; return SEQV; }
+"!="	{ yylval = 5; return SEQV; }
+"<"	{ yylval = 6; return SEQV; }
+">"	{ yylval = 7; return SEQV; }
+"<<"	{ yylval = 8; return SEQV; }
+">>"	{ yylval = 9; return SEQV; }
+"<="	{ yylval = 10; return SEQV; }
+">="	{ yylval = 11; return SEQV; }
+"-<"	{ yylval = 12; return SEQV; }
+">-"	{ yylval = 13; return SEQV; }
 
-"="     { yylval = 0; return EQVL; }
-"!="    { yylval = 1; return EQVL; }
-"<"     { yylval = 2; return EQVL; }
-">"     { yylval = 3; return EQVL; }
-"<<"    { yylval = 4; return EQVL; }
-">>"    { yylval = 5; return EQVL; }
-"<="    { yylval = 6; return EQVL; }
-">="    { yylval = 7; return EQVL; }
-"~~"    { yylval = 8; return EQVL; }
 
-"~="    { yylval = 9; return EQVL; }
-"=="    { yylval = 10; return EQVL; }
-"->"    { yylval = 11; return EQVL; }
-"<->"   { yylval = 12; return EQVL; }
-"and"   { yylval = 13; return EQVL; }
-"or"    { yylval = 14; return EQVL; }
-"not"   { yylval = 15; return EQVL; }
+"<-"	{ yylval = 0; return SLGC; }
+"->"	{ yylval = 1; return SLGC; }
+"<->"	{ yylval = 2; return SLGC; }
+"=>"	{ yylval = 3; return SLGC; }
+"<=>"	{ yylval = 4; return SLGC; }
+"and"	{ yylval = 5; return SLGC; }
+"or"	{ yylval = 6; return SLGC; }
+"not"	{ yylval = 7; return SLGC; }
+
+
+"..."	{ yylval = 0; return SOTH; }
+"inf"	|
+"Inf"	|
+"infty"	|
+"infinity"	|
+"Infinity"	{ yylval = 1; return SOTH; }
+
+"part"	|
+"partial"	{ yylval = 2; return SOTH; }
+"grad"	|
+"nabla"	{ yylval = 3; return SOTH; }
+
+
+"all"	|
+"forall"	|
+"for all"	{ yylval = 0; return SSET; }
+"exists"	{ yylval = 1; return SSET; }
+
+"in"	{ yylval = 2; return SSET; }
+"notin"	|
+"not in"	{ yylval = 3; return SSET; }
+"subset"	{ yylval = 4; return SSET; }
+"supset"	|
+"superset" { yylval = 5; return SSET; }
+
+"union"	|
+"cup"	{ yylval = 6; return SSET; }
+"intersect"	|
+"intersection" |
+"cap"	{ yylval = 7; return SSET; }
+"\\"	{ yylval = 8; return SSET; }
 
 
 
-"("      { return OP; }
-")"      { return CP; }
-
-"{"      { return OS; }
-"}"      { return CS; }
-
-^"["     |
-[ \t]"[" { return OB_M; }
-"["      { return OB; }
-"]"      { return CB; }
-"\|["    { return OL_M; }
-"]\|"    { return CL_M; }
-
-","      { return SEP; }
-";"      { return SNL; }
+"Eset"	{ yylval = 0; return NSET; }
+"Nset"	{ yylval = 1; return NSET; }
+"Zset"	{ yylval = 2; return NSET; }
+"Pset"	{ yylval = 3; return NSET; }
+"Qset"	{ yylval = 4; return NSET; }
+"Rset"	{ yylval = 5; return NSET; }
+"Cset"	{ yylval = 6; return NSET; }
+"Hset"	{ yylval = 7; return NSET; }
+"aleph"	|
+"Aleph"	{ yylval = 8; return NSET; }
+"Re"	{ yylval = 9; return NSET; }
+"Im"	{ yylval = 10; return NSET; }
 
 
-[0-9]+(\.[0-9]+(\.\.\.)?)?  { yylval = (int)yytext; return NUMBER; }
+"sin"	{ yylval = 0; return NTRI; }
+"cos"	{ yylval = 1; return NTRI; }
+"tan"	{ yylval = 2; return NTRI; }
+"cot"	{ yylval = 3; return NTRI; }
+"sec"	{ yylval = 4; return NTRI; }
+"csc"	{ yylval = 5; return NTRI; }
+"asin"	|
+"arcsin"	{ yylval = 6; return NTRI; }
+"acos"	|
+"arccos"	{ yylval = 7; return NTRI; }
+"atan"	|
+"arctan"	{ yylval = 8; return NTRI; }
+"acot"	|
+"arccot"	{ yylval = 9; return NTRI; }
+"asec"	|
+"arcsec"	{ yylval = 10; return NTRI; }
+"acsc"	|
+"arccsc"	{ yylval = 11; return NTRI; }
+
+"sinh"	{ yylval = 0; return NHYB; }
+"cosh"	{ yylval = 1; return NHYB; }
+"tanh"	{ yylval = 2; return NHYB; }
+"coth"	{ yylval = 3; return NHYB; }
+"sech"	{ yylval = 4; return NHYB; }
+"csch"	{ yylval = 5; return NHYB; }
+"asinh"	|
+"arcsinh" { yylval = 6; return NHYB; }
+"acosh"	|
+"arccosh" { yylval = 7; return NHYB; }
+"atanh"	|
+"arctanh" { yylval = 8; return NHYB; }
+"acoth"	|
+"arccoth" { yylval = 9; return NHYB; }
+"asech"	|
+"arcsech" { yylval = 10; return NHYB; }
+"acsch"	|
+"arccsch" { yylval = 11; return NHYB; }
 
 
-"alpha"    |
-"beta"     |
-"gamma"    |
-"delta"    |
-"epsilon"  |
-"zeta"     |
-"eta"      |
-"theta"    |
-"iota"     |
-"kappa"    |
-"lambda"   |
-"mu"       |
-"nu"       |
-"xi"       |
-"pi"       |
-"rho"      |
-"sigma"    |
-"varsigma" |
-"tau"      |
-"upsilon"  |
-"phi"      |
-"varphi"   |
-"chi"      |
-"psi"      |
-"omega"    { yylval = (int)yytext; return GREEK; }
+"exp"	{ yylval = 0; return NEXP; }
+"log"	{ yylval = 1; return NEXP; }
+"ln"	{ yylval = 2; return NEXP; }
 
-"Alpha"    |
-"Beta"     |
-"Gamma"    |
-"Delta"    |
-"Epsilon"  |
-"Zeta"     |
-"Eta"      |
-"Theta"    |
-"Iota"     |
-"Kappa"    |
-"Lambda"   |
-"Mu"       |
-"Nu"       |
-"Xi"       |
-"Pi"       |
-"Rho"      |
-"Sigma"    |
-"Tau"      |
-"Upsilon"  |
-"Phi"      |
-"Chi"      |
-"Psi"      |
-"Omega"    { yylval = (int)yytext; return GREEK; }
 
-[a-zA-Z]   { yylval = (int)yytext; return ENGL; }
-"'"*       { yylval = (int)yytext; return ENGL; }
+"sgn"	{ yylval = 0; return NOTH; }
+"max"	{ yylval = 1; return NOTH; }
+"min"	{ yylval = 2; return NOTH; }
+"gcd"	{ yylval = 3; return NOTH; }
+"lcm"	{ yylval = 4; return NOTH; }
+"det"	{ yylval = 5; return NOTH; }
+
+
+
+"alpha"	|
+"beta"	|
+"gamma"	|
+"delta"	|
+"epsilon"	|
+"zeta"	|
+"eta"	|
+"theta"	|
+"iota"	|
+"kappa"	|
+"lambda"	|
+"mu"	|
+"nu"	|
+"xi"	|
+"pi"	|
+"rho"	|
+"sigma"	|
+"tau"	|
+"upsilon"	|
+"phi"	|
+"chi"	|
+"psi"	|
+"omega"	{ yylval = (int)yytext; return GREEK; }
+
+"varepsilon"	|
+"vartheta"	|
+"varpi"	|
+"varrho"	|
+"varsigma"	|
+"varphi"	{ yylval = (int)yytext; return GREEK; }
+
+"Alpha"	|
+"Beta"	|
+"Gamma"	|
+"Delta"	|
+"Epsilon"	|
+"Zeta"	|
+"Eta"	|
+"Theta"	|
+"Iota"	|
+"Kappa"	|
+"Lambda"	|
+"Mu"	|
+"Nu"	|
+"Xi"	|
+"Pi"	|
+"Rho"	|
+"Sigma"	|
+"Tau"	|
+"Upsilon"	|
+"Phi"	|
+"Chi"	|
+"Psi"	|
+"Omega"	{ yylval = (int)yytext; return GREEK; }
+
+[a-zA-Z]	{ yylval = (int)yytext; return ENGL; }
+[':!\?]	{ yylval = (int)yytext; return PUNCT; }
+[#%&]	{ yylval = (int)yytext; return ESCCH; }
+
+[0-9]+(\.[0-9]+(\.\.\.)?)?	{ yylval = (int)yytext; return NUMBER; }
 
 \"[^\"]*\" { yylval = (int)yytext; return TEXT; }
 
-"Eset"     { yylval = 0; return SET; }
-"Nset"     { yylval = 1; return SET; }
-"Zset"     { yylval = 2; return SET; }
-"Qset"     { yylval = 3; return SET; }
-"Rset"     { yylval = 4; return SET; }
-"Cset"     { yylval = 5; return SET; }
-"aleph"    |
-"Aleph"    { yylval = 6; return SET; }
 
-"inf"      |
-"Inf"      |
-"infty"    |
-"infinity" |
-"Infinity" { yylval = 7; return SET; }
 
-"..."      { yylval = 8; return SET; }
+"("	{ return OP; }
+")"	{ return CP; }
 
-"all"      |
-"forall"   |
-"for all"  { yylval = 9; return SET; }
-"exists"   { yylval = 10; return SET; }
+"{"	{ return OS; }
+"}"	{ return CS; }
 
-"in"       { yylval = 11; return SET; }
-"notin"    |
-"not in"   { yylval = 12; return SET; }
-"subset"   { yylval = 13; return SET; }
-"supset"   |
-"superset" { yylval = 14; return SET; }
-
-"union"    |
-"cup"      { yylval = 15; return SET; }
-"intersect"    |
-"intersection" |
-"cap"      { yylval = 16; return SET; }
+^"["	|
+[ \t]"["	{ return OB_M; }
+"["	{ return OB; }
+"]"	{ return CB; }
+"\|["	{ return OL_M; }
+"]\|"	{ return CL_M; }
 
 
 
-"sum"      |
-"Sum"      |
+"/"	{ return DIV; }
+"^"	{ return POW; }
+"choose"	{ return CHS; }
+"root"	{ return NRT; }
+"sqrt"	{ return SRT; }
+
+"mod"	{ return MOD; }
+"floor"	{ return FLR; }
+"ceil"	{ return CIL; }
+"round"	{ return RND; }
+
+"case"	|
+"cases"	{ return SWC; }
+
+
+"hati"	|
+"hat i"	|
+"hat(i)"	{ yylval = 0; return NOVR; }
+"hatj"	|
+"hat j"	|
+"hat(j)"	{ yylval = 1; return NOVR; }
+"veci"	|
+"vec i"	|
+"vec(i)"	{ yylval = 2; return NOVR; }
+"vecj"	|
+"vec j"	|
+"vec(j)"	{ yylval = 3; return NOVR; }
+"bari"	|
+"bar i"	|
+"bar(i)"	{ yylval = 4; return NOVR; }
+"barj"	|
+"bar j"	|
+"bar(j)"	{ yylval = 5; return NOVR; }
+
+
+"dot"	{ yylval = 0; return OOVR; }
+"ddot"	{ yylval = 1; return OOVR; }
+"hat"	{ yylval = 2; return OOVR; }
+"vec"	{ yylval = 3; return OOVR; }
+"bar"	{ yylval = 4; return OOVR; }
+
+
+"sum"	|
+"Sum"	|
 "sumation" |
-"Sumation" { yylval = 0; return SUM; }
+"Sumation" { yylval = 0; return OSUM; }
 
-"prod"     |
-"Prod"     |
-"product"  |
-"Product"  { yylval = 1; return SUM; }
+"prod"	|
+"Prod"	|
+"product"	|
+"Product"	{ yylval = 1; return OSUM; }
 
-"int"      |
-"Int"      |
+"coprod"	|
+"Coprod"	|
+"coproduct"	|
+"Coproduct"	{ yylval = 2; return OSUM; }
+
+"Union"	|
+"Cup"	{ yylval = 3; return OSUM; }
+"Intersect"	|
+"Intersection"	|
+"Cap"	{ yylval = 4; return OSUM; }
+
+"lim"	{ yylval = 5; return OSUM; }
+
+"int"	|
+"Int"	|
 "integral" |
-"Integral" { yylval = 2; return SUM; }
+"Integral" { yylval = 6; return OSUM; }
 
-"oint"     { yylval = 3; return SUM; }
-
-"iint"     { yylval = 4; return SUM; }
-
-"from"     { return FROM; }
-"to"       { return TO; }
-"when"     { return WHEN; }
+"oint"	{ yylval = 7; return OSUM; }
+"iint"	{ yylval = 8; return OSUM; }
+"iiint"	{ yylval = 9; return OSUM; }
 
 
+"from"	{ return FR; }
+"to"	{ return TO; }
+"when"	|
+"where"	{ return WH; }
+
+
+"_"	{ return SPC; }
+","	{ return SEP; }
+";"	{ return SNL; }
 \n	{ return EOL; }
-"_"     { return NIL; }
-"__"    { return SPC; }
 [ \t]	{ }
 .	{ printf("Unknown: %c\n", *yytext); }
 

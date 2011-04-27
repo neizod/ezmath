@@ -3,18 +3,21 @@
 #include <string.h>
 #include <stdarg.h>
 
+#include <stdlib.h>
 
-char latex[1024] = "\\begin{align}\n";
+char latex[2048] = "\\begin{align}\n";
 
 int stack_i = 0;
-char stack_str[64][1024];
-char ts[16][1024];
+char stack_str[32][2048];
+char ts[8][2048];
 
 void dbs(void) {
+  /*
   if(stack_i > 0)
     printf("(%3d)>>> %s\n", stack_i, ts[0]);
   else
     printf("(fin)::: %s\n", ts[0]);
+  */
 }
 void push(char* str) {
   strcpy(stack_str[stack_i++], str);
@@ -72,8 +75,12 @@ void join(int n, char* strs, ...) {
 %%
 
 list: /* nothing */
+| sentence { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, " \n"); dbs(); YYACCEPT; }
+/* uncomment this to enable muti-line input
 | list sentence EOL { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, " \n"); dbs(); }
+*/
 ;
+
 
 sentence: superelement
 | sentence superelement { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
@@ -109,7 +116,7 @@ supersingle: matrix
 | bracket
 | choose
 | round
-| over /* should ut this to piece for the recursive recall? */
+| over
 ;
 
 reduce: piece
@@ -205,6 +212,10 @@ alignment: SPC { push("\\quad"); }
 %%
 
 main(int argc, char **argv) {
+  if(argc > 1)
+    yy_scan_string(argv[1]);
+  else
+    yy_scan_string("\"error: no input\"");
   yyparse();
   strcat(latex, "\\end{align}");
   printf("%s\n", latex);

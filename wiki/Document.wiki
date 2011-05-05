@@ -7,4 +7,4 @@ Ezmath is an open-source [http://flex.sourceforge.net/ Flex]-[http://www.gnu.org
   * [quickStart Quick start]
 
 == Developer Zone ==
-  * [installation Installation]
+  * [installDrupal Installation guide as Drupal Module]

@@ -1,0 +1,10 @@
+#labels Featured
+== Ezmath Documentation ==
+
+Ezmath is an open-source [http://flex.sourceforge.net/ Flex]-[http://www.gnu.org/software/bison/ Bison]-[http://www.php.net/ PHP] application that translate Ezmath syntax into LaTeX and let [http://www.mathjax.org/ MathJax] draw them on web.
+
+= Basic Usage =
+  * Quick start
+
+= Developer Zone =
+  * Installation

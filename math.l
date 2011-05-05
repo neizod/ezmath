@@ -25,6 +25,8 @@
 "degree"	{ yylval = 15; return SOPT; }
 "star"	{ yylval = 16; return SOPT; }
 
+"||"	{ yylval = 17; return SOPT; }
+"|"	{ yylval = 18; return SOPT; }
 
 "="	{ yylval = 0; return SEQV; }
 "=="	{ yylval = 1; return SEQV; }
@@ -85,19 +87,19 @@
 "\\"	{ yylval = 8; return SSET; }
 
 
-
-"Eset"	{ yylval = 0; return NSET; }
-"Nset"	{ yylval = 1; return NSET; }
-"Zset"	{ yylval = 2; return NSET; }
-"Pset"	{ yylval = 3; return NSET; }
-"Qset"	{ yylval = 4; return NSET; }
-"Rset"	{ yylval = 5; return NSET; }
-"Cset"	{ yylval = 6; return NSET; }
-"Hset"	{ yylval = 7; return NSET; }
+"empty"	{ yylval = 0; return NSET; }
+"Eset"	{ yylval = 1; return NSET; }
+"Nset"	{ yylval = 2; return NSET; }
+"Zset"	{ yylval = 3; return NSET; }
+"Pset"	{ yylval = 4; return NSET; }
+"Qset"	{ yylval = 5; return NSET; }
+"Rset"	{ yylval = 6; return NSET; }
+"Cset"	{ yylval = 7; return NSET; }
+"Hset"	{ yylval = 8; return NSET; }
 "aleph"	|
-"Aleph"	{ yylval = 8; return NSET; }
-"Re"	{ yylval = 9; return NSET; }
-"Im"	{ yylval = 10; return NSET; }
+"Aleph"	{ yylval = 9; return NSET; }
+"Re"	{ yylval = 10; return NSET; }
+"Im"	{ yylval = 11; return NSET; }
 
 
 "sin"	{ yylval = 0; return NTRI; }
@@ -209,8 +211,8 @@
 "Omega"	{ yylval = (int)yytext; return GREEK; }
 
 [a-zA-Z]	{ yylval = (int)yytext; return ENGL; }
-[':!\?]	{ yylval = (int)yytext; return PUNCT; }
-[#%&]	{ yylval = (int)yytext; return ESCCH; }
+[':!@\?\$]	{ yylval = (int)yytext; return PUNCT; }
+[%&]	{ yylval = (int)yytext; return ESCCH; }
 
 [0-9]+(\.[0-9]+(\.\.\.)?)?	{ yylval = (int)yytext; return NUMBER; }
 
@@ -226,10 +228,13 @@
 
 ^"["	|
 [ \t]"["	{ return OB_M; }
+"det["	{ return OB_D; }
 "["	{ return OB; }
 "]"	{ return CB; }
 "\|["	{ return OL_M; }
 "]\|"	{ return CL_M; }
+"\|\|["	{ return OL_D; }
+"]\|\|"	{ return CL_D; }
 
 
 
@@ -303,7 +308,11 @@
 "integral" |
 "Integral" { yylval = 6; return OSUM; }
 
-"oint"	{ yylval = 7; return OSUM; }
+"oint"	|
+"Oint"	|
+"ointegral"	|
+"Ointegral"	{ yylval = 7; return OSUM; }
+
 "iint"	{ yylval = 8; return OSUM; }
 "iiint"	{ yylval = 9; return OSUM; }
 
@@ -317,7 +326,8 @@
 "_"	{ return SPC; }
 ","	{ return SEP; }
 ";"	{ return SNL; }
-\n	{ return EOL; }
+"#"	{ return ALG; }
+\r?\n	{ /* return EOL; */ }
 [ \t]	{ }
 .	{ printf("Unknown: %c\n", *yytext); }
 

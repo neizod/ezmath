@@ -1,4 +1,4 @@
-#labels Phase-Implementation
+#labels Phase-Implementation,Featured
 = Installation Guide for Drupal Module =
 
 Before installing Ezmath module, make sure you already install MathJax module.

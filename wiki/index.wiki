@@ -1,0 +1,8 @@
+#labels Featured
+Ezmath Documentation
+
+= Basic Usage =
+  * Quick start
+
+= Developer Zone =
+  * Installation

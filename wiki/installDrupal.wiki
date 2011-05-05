@@ -9,6 +9,6 @@ Before installing Ezmath module, make sure you already install MathJax module.
   # Replace that line with `'inlineMath: [["\\\\(","\\\\)"]],' +`. This will allow you to save single Dollar sign ($) for text.
   # Download and uncompress `ezmath.tar.gz` in side your modules folder, which default place is `/sites/all/modules`.
   # Enable `Ezmath filter` module under `Administer >> Site building >> Modules`.
-  # Add Ezmath filter to your input at `Administer >> Site configuration >> Input formats`.
+  # Add `Ezmath` filter to your input at `Administer >> Site configuration >> Input formats`.
   # Go to `Rearrange` tab and weight Ezmath to -1 (to make sure that Ezmath will be run first).
-  # Test by post new content between `$$...$$` e.g. `$$ a[i][j] * Xi^T = [i,j;4,2;x,0] $$`.
+  # Test by post new content between `$$...$$`, e.g. `$$ a[i][j] * Xi^T = [i,j;4,2;x,0] $$`.

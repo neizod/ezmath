@@ -5,7 +5,7 @@ Before installing Ezmath module, make sure you already install MathJax module.
 
 == Installation and Setup ==
   # Go to your [http://www.mathjax.org/ MathJax] module folder. Open `mathjax.js` with text editor.
-  # Search for the line that start with `'inlineMath:` and remove it.
+  # Search for the line that start with `'inlineMath: ...` and remove it.
   # Replace that line with `'inlineMath: [["\\\\(","\\\\)"]],' +`. This will allow you to save single Dollar sign ($) for text.
   # Download and uncompress `ezmath.tar.gz` in side your modules folder, which default place is `/sites/all/modules`.
   # Enable `Ezmath filter` module under `Administer >> Site building >> Modules`.

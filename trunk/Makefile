@@ -1,4 +1,4 @@
 math: math.l math.y
       bison -d math.y
       flex math.l
-      cc -o $@ math.tab.c lex.yy.c -lfl
+      cc -o ezmath math.tab.c lex.yy.c -lfl

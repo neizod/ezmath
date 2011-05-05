@@ -1,3 +1,4 @@
+#labels Phase-Implementation
 = Installation Guide for Drupal Module =
 
 Before installing Ezmath module, make sure you already install MathJax module.
@@ -7,12 +8,6 @@ Before installing Ezmath module, make sure you already install MathJax module.
   # Search for the line that start with `'inlineMath:` and remove it.
   # Replace that line with `'inlineMath: [["\\\\(","\\\\)"]],' +`. This will allow you to save single Dollar sign ($) for text, not for MathJax.
   # Download and uncompress `ezmath.tar.gz` in side your modules folder, which default place is `/sites/all/modules`.
-  # Enable `Ezmath filter` module under Administer >> Site building >> Modules.
-  # Administer >> Site configuration >>
-
-== Details ==
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  # Enable `Ezmath filter` module under `Administer >> Site building >> Modules`.
+  # Add Ezmath filter at `Administer >> Site configuration >> Input formats`.
+  # Go to `Rearrange` tab and weight Ezmath to -1.

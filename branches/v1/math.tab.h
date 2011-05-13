@@ -79,15 +79,12 @@
      CB = 295,
      OB_M = 296,
      OB_D = 297,
-     OL_M = 298,
-     CL_M = 299,
-     OL_D = 300,
-     CL_D = 301,
-     SPC = 302,
-     SEP = 303,
-     SNL = 304,
-     ALG = 305,
-     EOL = 306
+     OB_P = 298,
+     SPC = 299,
+     SEP = 300,
+     SNL = 301,
+     ALG = 302,
+     EOL = 303
    };
 #endif
 
@@ -101,3 +98,5 @@ typedef int YYSTYPE;
 #endif
 
 extern YYSTYPE yylval;
+
+

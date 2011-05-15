@@ -44,14 +44,20 @@
 ">-"	{ yylval = 13; return SEQV; }
 
 
-"<-"	{ yylval = 0; return SLGC; }
-"->"	{ yylval = 1; return SLGC; }
-"<->"	{ yylval = 2; return SLGC; }
-"=>"	{ yylval = 3; return SLGC; }
-"<=>"	{ yylval = 4; return SLGC; }
-"and"	{ yylval = 5; return SLGC; }
-"or"	{ yylval = 6; return SLGC; }
-"not"	{ yylval = 7; return SLGC; }
+"and"	{ yylval = 0; return SLGC; }
+"or"	{ yylval = 1; return SLGC; }
+"not"	{ yylval = 2; return SLGC; }
+"<->"	{ yylval = 3; return SLGC; }
+"<-->"	{ yylval = 4; return SLGC; }
+"->"	{ yylval = 5; return SLGC; }
+"-->"	{ yylval = 6; return SLGC; }
+"<-"	{ yylval = 7; return SLGC; }
+"<--"	{ yylval = 8; return SLGC; }
+"<=>"	{ yylval = 9; return SLGC; }
+"<==>"	{ yylval = 10; return SLGC; }
+"=>"	{ yylval = 11; return SLGC; }
+"==>"	{ yylval = 12; return SLGC; }
+"<=="	{ yylval = 13; return SLGC; }
 
 
 "..."	{ yylval = 0; return SOTH; }
@@ -214,7 +220,7 @@
 [':!@\?\$]	{ yylval = (int)yytext; return PUNCT; }
 [%&]	{ yylval = (int)yytext; return ESCCH; }
 
-[0-9]+(\.[0-9]+(\.\.\.)?)?	{ yylval = (int)yytext; return NUMBER; }
+[0-9]+(\.[0-9]+"..."?)?	{ yylval = (int)yytext; return NUMBER; }
 
 \"[^\"]*\" { yylval = (int)yytext; return TEXT; }
 
@@ -228,13 +234,10 @@
 
 ^"["	|
 [ \t]"["	{ return OB_M; }
-"det["	{ return OB_D; }
+"det ["	{ return OB_D; }
+"parentheses ["	{ return OB_P; }
 "["	{ return OB; }
 "]"	{ return CB; }
-"\|["	{ return OL_M; }
-"]\|"	{ return CL_M; }
-"\|\|["	{ return OL_D; }
-"]\|\|"	{ return CL_D; }
 
 
 
@@ -256,21 +259,27 @@
 "hati"	|
 "hat i"	|
 "hat(i)"	{ yylval = 0; return NOVR; }
+"hatiota"	|
+"hat iota"	{ yylval = 1; return NOVR; }
 "hatj"	|
 "hat j"	|
-"hat(j)"	{ yylval = 1; return NOVR; }
+"hat(j)"	{ yylval = 2; return NOVR; }
 "veci"	|
 "vec i"	|
-"vec(i)"	{ yylval = 2; return NOVR; }
+"vec(i)"	{ yylval = 3; return NOVR; }
+"veciota"	|
+"vec iota"	{ yylval = 4; return NOVR; }
 "vecj"	|
 "vec j"	|
-"vec(j)"	{ yylval = 3; return NOVR; }
+"vec(j)"	{ yylval = 5; return NOVR; }
 "bari"	|
 "bar i"	|
-"bar(i)"	{ yylval = 4; return NOVR; }
+"bar(i)"	{ yylval = 6; return NOVR; }
+"bariota"	|
+"bar iota"	{ yylval = 7; return NOVR; }
 "barj"	|
 "bar j"	|
-"bar(j)"	{ yylval = 5; return NOVR; }
+"bar(j)"	{ yylval = 8; return NOVR; }
 
 
 "dot"	{ yylval = 0; return OOVR; }
@@ -327,8 +336,8 @@
 ","	{ return SEP; }
 ";"	{ return SNL; }
 "#"	{ return ALG; }
-\r?\n	{ /* return EOL; */ }
-[ \t]	{ }
+\n	{ return EOL; }
+[ \t]	{ /* do nothing */ }
 .	{ printf("Unknown: %c\n", *yytext); }
 
 %%

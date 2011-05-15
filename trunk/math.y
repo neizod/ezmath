@@ -50,7 +50,7 @@ void join(int n, char* strs, ...) {
 
  char* dSopt[19] = {"+", "-", "\\times", "\\cdot", "*", "\\div", "\\oplus", "\\ominus", "\\otimes", "\\odot", "\\circleast", "\\oslash", "\\pm", "\\mp", "\\sim", "{^\\circ}", "\\star", "\\|", "|"};
  char* dSeqv[14] = {"=", "\\equiv", "\\cong", "\\approx", "\\propto", "\\neq", "\\lt", "\\gt", "\\ll", "\\gg", "\\leq", "\\geq", "\\prec", "\\succ"};
- char* dSlgc[8] = {"\\leftarrow", "\\rightarrow", "\\leftrightarrow", "\\Rightarrow", "\\Leftrightarrow", "\\land", "\\lor", "\\neg"};
+ char* dSlgc[14] = {"\\land", "\\lor", "\\neg", "\\leftrightarrow", "\\longleftrightarrow", "\\rightarrow", "\\longrightarrow", "\\leftarrow", "\\longleftarrow", "\\Leftrightarrow", "\\Longleftrightarrow", "\\Rightarrow", "\\Longrightarrow", "\\Longleftarrow",};
  char* dSoth[4] = {"\\ldots", "\\infty", "\\partial", "\\nabla"};
  char* dSset[9] = {"\\forall", "\\exists", "\\in", "\\notin", "\\subseteq", "\\supseteq", "\\cup", "\\cap", "\\setminus"};
  char* dNset[12] = {"\\emptyset", "\\varnothing", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{P}", "\\mathbb{Q}", "\\mathbb{R}", "\\mathbb{C}", "\\mathbb{H}", "\\aleph", "\\Re", "\\Im"};
@@ -58,7 +58,7 @@ void join(int n, char* strs, ...) {
  char* dNhyb[12] = {"\\sinh", "\\cosh", "\\tanh", "\\coth", "\\sech", "\\csch", "\\sinh^{-1}", "\\cosh^{-1}", "\\tanh^{-1}", "\\coth^{-1}", "\\sech^{-1}", "\\csch^{-1}"};
  char* dNexp[3] = {"\\exp", "\\log", "\\ln"};
  char* dNoth[6] = {"\\operatorname{sgn}", "\\max", "\\min", "\\gcd", "\\operatorname{lcm}", "\\det"};
- char* dNovr[6] = {"\\hat{\\imath}", "\\hat{\\jmath}", "\\vec{\\imath}", "\\vec{\\jmath}", "\\overline{\\imath}", "\\overline{\\jmath}"};
+ char* dNovr[9] = {"\\hat{\\imath}","\\hat{\\iota}", "\\hat{\\jmath}", "\\vec{\\imath}", "\\vec{\\iota}", "\\vec{\\jmath}", "\\overline{\\imath}", "\\overline{\\iota}", "\\overline{\\jmath}"};
  char* dOovr[5] = {"\\dot", "\\ddot", "\\hat", "\\vec", "\\overline"};
  char* dOsum[10] = {"\\sum", "\\prod", "\\coprod", "\\bigcup", "\\bigcap", "\\lim", "\\int", "\\oint", "\\iint", "\\iiint"};
 %}
@@ -75,18 +75,14 @@ void join(int n, char* strs, ...) {
 %token NOVR OOVR
 
 %token OP CP OS CS OB CB
-%token OB_M OB_D OL_M CL_M OL_D CL_D
+%token OB_M OB_D OB_P
 %token SPC SEP SNL ALG EOL
 
 %%
 
 list: /* nothing */
 | sentence { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, " \n"); dbs(); YYACCEPT; }
-/* uncomment next line to enable muti-line input
-| list sentence EOL { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, "\\\\\n"); dbf(); }
-*/
 ;
-
 
 sentence: superelement
 | sentence superelement { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
@@ -105,6 +101,8 @@ subcontsingle: contsingle OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], 
 | subcontsingle OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 contsingle: SEP { push(","); }
+| SNL { push(";"); }
+| EOL { push("\\\\\n"); }
 ;
 
 element: piece
@@ -135,9 +133,8 @@ reduce: piece
 ;
 
 matrix: OB_M mtx_sentence CB { popi(1); join(3, "\\begin{bmatrix}\n", ts[1], "\n\\end{bmatrix}"), push(ts[0]); dbs(); }
-|  OB_D mtx_sentence CB { popi(1); join(3, "\\begin{vmatrix}\n", ts[1], "\n\\end{vmatrix}"), push(ts[0]); dbs(); }
-| OL_M mtx_sentence CL_M { popi(1); join(3, "\\begin{vmatrix}\n", ts[1], "\n\\end{vmatrix}"), push(ts[0]); dbs(); }
-| OL_D mtx_sentence CL_D { popi(1); join(3, "\\begin{Vmatrix}\n", ts[1], "\n\\end{Vmatrix}"), push(ts[0]); dbs(); }
+| OB_D mtx_sentence CB { popi(1); join(3, "\\begin{vmatrix}\n", ts[1], "\n\\end{vmatrix}"), push(ts[0]); dbs(); }
+| OB_P mtx_sentence CB { popi(1); join(3, "\\begin{pmatrix}\n", ts[1], "\n\\end{pmatrix}"), push(ts[0]); dbs(); }
 | SWC OP mtx_sentence CP { popi(1); join(3, "\\begin{cases}\n", ts[1], "\n\\end{cases}"), push(ts[0]); dbs(); }
 ;
 mtx_sentence: mtx_element
@@ -145,6 +142,8 @@ mtx_sentence: mtx_element
 ;
 mtx_element: element
 | SEP { push("&"); }
+| SNL { push("\\\\\n"); }
+| EOL { push(""); /* do nothing -- but require to push since it is a token too */ }
 ;
 
 sumational: sum_symbol /* cause shift/reduce conflict*/
@@ -160,7 +159,7 @@ boundary: FR reduce TO reduce { popi(2), join(5, "_{", ts[2], "}^{", ts[1], "}")
 | WH reduce { popi(1), join(3, "_{\\substack{", ts[1], "}}"); push(ts[0]); dbs(); }
 ;
 
-choose: reduce CHS reduce { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); }
+choose: OP sentence CHS sentence CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 frac: reduce DIV reduce { popi(2); join(5, "\\frac{", ts[2], "}{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
@@ -223,7 +222,6 @@ text: TEXT { strcpy(ts[1], (char*)$1+1); ts[1][strlen(ts[1])-1] = '\0'; join(3, 
 | ESCCH { join(2, "\\", (char*)$1); push(ts[0]); }
 ;
 alignment: SPC { push("\\;"); }
-| SNL { push("\\\\\n"); } /* !!!note!!! delete \n out here in the finale release */
 | ALG { push("&"); }
 ;
 %%
@@ -242,4 +240,5 @@ main(int argc, char **argv) {
 
 yyerror(char *s) {
   fprintf(stderr, "error: %s\n", s);
+  exit(0);
 }

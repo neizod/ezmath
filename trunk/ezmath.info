@@ -1,0 +1,8 @@
+; $Id$
+name = Ezmath filter
+description = Allows content to be submitted using Ezmath, a simple math-plain-text syntax that will turn into mathematical notation.
+package = "Input filters"
+dependencies[] = filter
+dependencies[] = mathjax
+core = 6.x
+

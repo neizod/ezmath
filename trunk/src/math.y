@@ -109,7 +109,6 @@ element: piece
 | superpiece
 | sumational
 | frac
-| root
 | modular
 ;
 superpiece: subsuperpiece
@@ -125,7 +124,6 @@ supersingle: matrix
 | bracket
 | choose
 | round
-| over
 ;
 
 reduce: piece
@@ -147,7 +145,7 @@ mtx_element: element
 ;
 
 sumational: sum_symbol /* cause shift/reduce conflict*/
-| sum_symbol sum_element { popi(2); if($1<7) join(2, ts[2], ts[1]); else join(3, ts[2], "\\limits", ts[1]); push(ts[0]); dbs(); }
+| sum_symbol sum_element { popi(2); if($1<7 && $1>5) join(2, ts[2], ts[1]); else join(3, ts[2], "\\limits", ts[1]); push(ts[0]); dbs(); }
 ;
 sum_symbol: OSUM { push(dOsum[$1]); }
 ;
@@ -181,6 +179,9 @@ bracket: OP sentence CP { popi(1); join(3, "\\left(", ts[1], "\\right)"); push(t
 
 piece: subpiece
 | subpiece POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
+| root
+| over
+
 /* cause shift/reduce conflict, remove this feature due to its make parser too much complex
 | variable number { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
 */

@@ -57,7 +57,7 @@ void join(int n, char* strs, ...) {
  char* dNtri[12] = {"\\sin", "\\cos", "\\tan", "\\cot", "\\sec", "\\csc", "\\sin^{-1}", "\\cos^{-1}", "\\tan^{-1}", "\\cot^{-1}", "\\sec^{-1}", "\\csc^{-1}"};
  char* dNhyb[12] = {"\\sinh", "\\cosh", "\\tanh", "\\coth", "\\sech", "\\csch", "\\sinh^{-1}", "\\cosh^{-1}", "\\tanh^{-1}", "\\coth^{-1}", "\\sech^{-1}", "\\csch^{-1}"};
  char* dNexp[3] = {"\\exp", "\\log", "\\ln"};
- char* dNoth[6] = {"\\operatorname{sgn}", "\\max", "\\min", "\\gcd", "\\operatorname{lcm}", "\\det"};
+ char* dNmic[5] = {"\\max", "\\min", "\\gcd", "\\operatorname{lcm}", "\\det"};
  char* dNovr[9] = {"\\hat{\\imath}","\\hat{\\iota}", "\\hat{\\jmath}", "\\vec{\\imath}", "\\vec{\\iota}", "\\vec{\\jmath}", "\\overline{\\imath}", "\\overline{\\iota}", "\\overline{\\jmath}"};
  char* dOovr[5] = {"\\dot", "\\ddot", "\\hat", "\\vec", "\\overline"};
  char* dOsum[10] = {"\\sum", "\\prod", "\\coprod", "\\bigcup", "\\bigcap", "\\lim", "\\int", "\\oint", "\\iint", "\\iiint"};
@@ -65,17 +65,16 @@ void join(int n, char* strs, ...) {
 
 %token NUMBER ENGL GREEK TEXT PUNCT ESCCH
 %token SOPT SEQV SLGC SOTH SSET
-%token NSET NTRI NHYB NEXP NOTH
+%token NSET NTRI NHYB NEXP NMIC NOTH
 
 %token DIV POW CHS NRT
 %token SRT MOD FLR CIL RND
-%token SWC
 
 %token OSUM FR TO WH
 %token NOVR OOVR
 
 %token OP CP OS CS OB CB
-%token OB_M OB_D OB_P
+%token OB_M OB_D OB_P OB_C
 %token SPC SEP SNL ALG EOL
 
 %%
@@ -122,7 +121,6 @@ subsupersingle: supersingle OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1]
 ;
 supersingle: matrix
 | bracket
-| choose
 | round
 ;
 
@@ -133,7 +131,7 @@ reduce: piece
 matrix: OB_M mtx_sentence CB { popi(1); join(3, "\\begin{bmatrix}\n", ts[1], "\n\\end{bmatrix}"), push(ts[0]); dbs(); }
 | OB_D mtx_sentence CB { popi(1); join(3, "\\begin{vmatrix}\n", ts[1], "\n\\end{vmatrix}"), push(ts[0]); dbs(); }
 | OB_P mtx_sentence CB { popi(1); join(3, "\\begin{pmatrix}\n", ts[1], "\n\\end{pmatrix}"), push(ts[0]); dbs(); }
-| SWC OP mtx_sentence CP { popi(1); join(3, "\\begin{cases}\n", ts[1], "\n\\end{cases}"), push(ts[0]); dbs(); }
+| OB_C mtx_sentence CB { popi(1); join(3, "\\begin{cases}\n", ts[1], "\n\\end{cases}"), push(ts[0]); dbs(); }
 ;
 mtx_sentence: mtx_element
 | mtx_sentence mtx_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
@@ -141,10 +139,10 @@ mtx_sentence: mtx_element
 mtx_element: element
 | SEP { push("&"); }
 | SNL { push("\\\\\n"); }
-| EOL { push(""); /* do nothing -- but require to push since it is a token too */ }
+| EOL { push(""); /* do nothing -- but require to push empty string since it is a token too */ }
 ;
 
-sumational: sum_symbol /* cause shift/reduce conflict*/
+sumational: sum_symbol /* cause shift/reduce conflict */
 | sum_symbol sum_element { popi(2); if($1<7 && $1>5) join(2, ts[2], ts[1]); else join(3, ts[2], "\\limits", ts[1]); push(ts[0]); dbs(); }
 ;
 sum_symbol: OSUM { push(dOsum[$1]); }
@@ -157,8 +155,6 @@ boundary: FR reduce TO reduce { popi(2), join(5, "_{", ts[2], "}^{", ts[1], "}")
 | WH reduce { popi(1), join(3, "_{\\substack{", ts[1], "}}"); push(ts[0]); dbs(); }
 ;
 
-choose: OP sentence CHS sentence CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); }
-;
 frac: reduce DIV reduce { popi(2); join(5, "\\frac{", ts[2], "}{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 root: SRT reduce { popi(1); join(3, "\\sqrt{", ts[1], "}"); push(ts[0]); dbs(); }
@@ -174,17 +170,12 @@ over: OOVR reduce { popi(1); join(4, dOovr[$1], "{", ts[1], "}"); push(ts[0]); d
 ;
 
 bracket: OP sentence CP { popi(1); join(3, "\\left(", ts[1], "\\right)"); push(ts[0]); dbs(); }
+| OP sentence CHS sentence CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); }
 | OS sentence CS { popi(1); join(3, "\\left\\{", ts[1], "\\right\\}"); push(ts[0]); dbs(); }
 ;
 
 piece: subpiece
 | subpiece POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
-| root
-| over
-
-/* cause shift/reduce conflict, remove this feature due to its make parser too much complex
-| variable number { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
-*/
 ;
 subpiece: single
 | subsingle
@@ -199,6 +190,8 @@ single: number
 | symbol
 | text
 | alignment
+| root
+| over
 ;
 number: NUMBER { push((char*)$1); }
 ;
@@ -207,10 +200,11 @@ variable: ENGL { join(2, " ", (char*)$1); push(ts[0]); }
 | NSET { push(dNset[$1]); }
 | NOVR { push(dNovr[$1]); }
 ;
-name: NTRI { push(dNtri[$1]); }
+name: NOTH { strcpy(ts[1], (char*)$1); join(3, "\\operatorname{", ts[1], "}"); push(ts[0]); }
+| NTRI { push(dNtri[$1]); }
 | NHYB { push(dNhyb[$1]); }
 | NEXP { push(dNexp[$1]); }
-| NOTH { push(dNoth[$1]); }
+| NMIC { push(dNmic[$1]); }
 ;
 symbol: SOPT { push(dSopt[$1]); }
 | SOTH { push(dSoth[$1]); }

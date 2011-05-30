@@ -128,8 +128,10 @@ reduce: piece
 | OP sentence CP
 | subreduce
 | subreduce POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
+| OP sentence CP POW reduce { popi(2); join(5, "\\left(", ts[2], "\\right)^{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 subreduce: OP sentence CP OB sentence CB { popi(2); join(5, "\\left(", ts[2], "\\right)_{", ts[1], "}"); push(ts[0]); dbs(); }
+| subreduce OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 
 matrix: OB_M mtx_sentence CB { popi(1); join(3, "\\begin{bmatrix}\n", ts[1], "\n\\end{bmatrix}"), push(ts[0]); dbs(); }

@@ -108,7 +108,6 @@ contsingle: SEP { push(","); }
 
 element: piece
 | superpiece
-| sumational
 | frac
 | modular
 ;
@@ -121,9 +120,8 @@ subsuperpiece: supersingle
 subsupersingle: supersingle OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); push(ts[0]); dbs(); }
 | subsupersingle OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); dbs(); }
 ;
-supersingle: matrix
+supersingle: sumational
 | bracket
-| round
 ;
 
 reduce: piece
@@ -141,7 +139,7 @@ matrix: OB_M mtx_sentence CB { popi(1); join(3, "\\begin{bmatrix}\n", ts[1], "\n
 | OB_P mtx_sentence CB { popi(1); join(3, "\\begin{pmatrix}\n", ts[1], "\n\\end{pmatrix}"), push(ts[0]); dbs(); }
 | OB_C mtx_sentence CB { popi(1); join(3, "\\begin{cases}\n", ts[1], "\n\\end{cases}"), push(ts[0]); dbs(); }
 ;
-mtx_sentence: /* nothing */
+mtx_sentence: { push(""); /* nothing */ }
 | mtx_subsentence
 ;
 mtx_subsentence: mtx_element
@@ -153,17 +151,15 @@ mtx_element: element
 | EOL { push(""); /* do nothing -- but require to push empty string since it is a token too */ }
 ;
 
-sumational: sum_symbol /* cause shift/reduce conflict */;
-/*
-| sum_symbol sum_element { popi(2); if($1<7 && $1>5) join(2, ts[2], ts[1]); else join(3, ts[2], "\\limits", ts[1]); push(ts[0]); dbs(); }
-*/
+sumational: sum_symbol sum_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
 ;
 sum_symbol: OSUM { push(dOsum[$1]); }
 ;
-sum_element: sentence boundary { popi(2); join(2, ts[1], ts[2]); push(ts[0]), dbs(); }
+sum_element: sentence
+| sentence boundary { popi(2); join(3, "\\limits", ts[1], ts[2]); push(ts[0]), dbs(); }
 ;
 boundary: FR reduce TO reduce { popi(2), join(5, "_{", ts[2], "}^{", ts[1], "}"); push(ts[0]); dbs(); }
-| WH reduce { popi(1), join(3, "_{\\substack{", ts[1], "}}"); push(ts[0]); dbs(); }
+| WH reduce { popi(1), join(3, "_{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 
 frac: reduce DIV reduce { popi(2); join(5, "\\frac{", ts[2], "}{", ts[1], "}"); push(ts[0]); dbs(); }
@@ -203,6 +199,9 @@ single: number
 | symbol
 | text
 | alignment
+
+| matrix
+| round
 | subbracket
 | root
 | over

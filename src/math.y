@@ -79,12 +79,14 @@ void join(int n, char* strs, ...) {
 
 %%
 
-list: /* nothing */
-| sentence { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, " \n"); dbs(); YYACCEPT; }
+list: sentence { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, " \n"); dbs(); YYACCEPT; }
 ;
 
-sentence: superelement
-| sentence superelement { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+sentence: { push(""); }
+| subsentence
+;
+subsentence: superelement
+| subsentence superelement { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
 ;
 
 superelement: element
@@ -139,8 +141,11 @@ matrix: OB_M mtx_sentence CB { popi(1); join(3, "\\begin{bmatrix}\n", ts[1], "\n
 | OB_P mtx_sentence CB { popi(1); join(3, "\\begin{pmatrix}\n", ts[1], "\n\\end{pmatrix}"), push(ts[0]); dbs(); }
 | OB_C mtx_sentence CB { popi(1); join(3, "\\begin{cases}\n", ts[1], "\n\\end{cases}"), push(ts[0]); dbs(); }
 ;
-mtx_sentence: mtx_element
-| mtx_sentence mtx_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+mtx_sentence: /* nothing */
+| mtx_subsentence
+;
+mtx_subsentence: mtx_element
+| mtx_subsentence mtx_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
 ;
 mtx_element: element
 | SEP { push("&"); }
@@ -148,14 +153,14 @@ mtx_element: element
 | EOL { push(""); /* do nothing -- but require to push empty string since it is a token too */ }
 ;
 
-sumational: sum_symbol /* cause shift/reduce conflict */
+sumational: sum_symbol /* cause shift/reduce conflict */;
+/*
 | sum_symbol sum_element { popi(2); if($1<7 && $1>5) join(2, ts[2], ts[1]); else join(3, ts[2], "\\limits", ts[1]); push(ts[0]); dbs(); }
+*/
 ;
 sum_symbol: OSUM { push(dOsum[$1]); }
 ;
-sum_element: boundary
-| sentence
-| sentence boundary { popi(2); join(2, ts[1], ts[2]); push(ts[0]), dbs(); }
+sum_element: sentence boundary { popi(2); join(2, ts[1], ts[2]); push(ts[0]), dbs(); }
 ;
 boundary: FR reduce TO reduce { popi(2), join(5, "_{", ts[2], "}^{", ts[1], "}"); push(ts[0]); dbs(); }
 | WH reduce { popi(1), join(3, "_{\\substack{", ts[1], "}}"); push(ts[0]); dbs(); }
@@ -178,6 +183,7 @@ over: OOVR reduce { popi(1); join(4, dOovr[$1], "{", ts[1], "}"); push(ts[0]); d
 bracket: OP sentence CP { popi(1); join(3, "\\left(", ts[1], "\\right)"); push(ts[0]); dbs(); }
 ;
 subbracket: OP sentence CHS sentence CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); }
+/* | OP MOD CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); } */
 | OS sentence CS { popi(1); join(3, "\\left\\{", ts[1], "\\right\\}"); push(ts[0]); dbs(); }
 ;
 

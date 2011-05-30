@@ -152,12 +152,16 @@
 "ln"	{ yylval = 2; return NEXP; }
 
 
-"sgn"	{ yylval = 0; return NOTH; }
-"max"	{ yylval = 1; return NOTH; }
-"min"	{ yylval = 2; return NOTH; }
-"gcd"	{ yylval = 3; return NOTH; }
-"lcm"	{ yylval = 4; return NOTH; }
-"det"	{ yylval = 5; return NOTH; }
+"max"	{ yylval = 0; return NMIC; }
+"min"	{ yylval = 1; return NMIC; }
+"gcd"	{ yylval = 2; return NMIC; }
+"lcm"	{ yylval = 3; return NMIC; }
+"det"	{ yylval = 4; return NMIC; }
+
+
+"sgn"	|
+"case"	|
+"cases"	{ yylval = (int)yytext; return NOTH; }
 
 
 
@@ -236,6 +240,8 @@
 [ \t]"["	{ return OB_M; }
 "det ["	{ return OB_D; }
 "parentheses ["	{ return OB_P; }
+"case ["	|
+"cases ["	{ return OB_C; }
 "["	{ return OB; }
 "]"	{ return CB; }
 
@@ -251,9 +257,6 @@
 "floor"	{ return FLR; }
 "ceil"	{ return CIL; }
 "round"	{ return RND; }
-
-"case"	|
-"cases"	{ return SWC; }
 
 
 "hati"	|

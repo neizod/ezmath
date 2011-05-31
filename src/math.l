@@ -108,43 +108,19 @@
 "Im"	{ yylval = 11; return NSET; }
 
 
-"sin"	{ yylval = 0; return NTRI; }
-"cos"	{ yylval = 1; return NTRI; }
-"tan"	{ yylval = 2; return NTRI; }
-"cot"	{ yylval = 3; return NTRI; }
-"sec"	{ yylval = 4; return NTRI; }
-"csc"	{ yylval = 5; return NTRI; }
-"asin"	|
-"arcsin"	{ yylval = 6; return NTRI; }
-"acos"	|
-"arccos"	{ yylval = 7; return NTRI; }
-"atan"	|
-"arctan"	{ yylval = 8; return NTRI; }
-"acot"	|
-"arccot"	{ yylval = 9; return NTRI; }
-"asec"	|
-"arcsec"	{ yylval = 10; return NTRI; }
-"acsc"	|
-"arccsc"	{ yylval = 11; return NTRI; }
+sinh?	|
+cosh?	|
+tanh?	|
+coth?	|
+sech?	|
+csch?	{ yylval = (int)yytext; return FUNC; }
 
-"sinh"	{ yylval = 0; return NHYB; }
-"cosh"	{ yylval = 1; return NHYB; }
-"tanh"	{ yylval = 2; return NHYB; }
-"coth"	{ yylval = 3; return NHYB; }
-"sech"	{ yylval = 4; return NHYB; }
-"csch"	{ yylval = 5; return NHYB; }
-"asinh"	|
-"arcsinh" { yylval = 6; return NHYB; }
-"acosh"	|
-"arccosh" { yylval = 7; return NHYB; }
-"atanh"	|
-"arctanh" { yylval = 8; return NHYB; }
-"acoth"	|
-"arccoth" { yylval = 9; return NHYB; }
-"asech"	|
-"arcsech" { yylval = 10; return NHYB; }
-"acsch"	|
-"arccsch" { yylval = 11; return NHYB; }
+a(rc)?sinh?	|
+a(rc)?cosh?	|
+a(rc)?tanh?	|
+a(rc)?coth?	|
+a(rc)?sech?	|
+a(rc)?csch?	{ yylval = (int)yytext; return INVFUNC; }
 
 
 "exp"	{ yylval = 0; return NEXP; }
@@ -255,7 +231,8 @@
 
 "mod"	{ return MOD; }
 "floor"	{ return FLR; }
-"ceil"	{ return CIL; }
+"ceil"	|
+"ceiling"	{ return CIL; }
 "round"	{ return RND; }
 
 

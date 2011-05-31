@@ -63,7 +63,7 @@ void join(int n, char* strs, ...) {
  char* dOsum[10] = {"\\sum", "\\prod", "\\coprod", "\\bigcup", "\\bigcap", "\\lim", "\\int", "\\oint", "\\iint", "\\iiint"};
 %}
 
-%token NUMBER ENGL GREEK TEXT PUNCT ESCCH
+%token NUMBER ENGL GREEK TEXT FUNC INVFUNC PUNCT ESCCH
 %token SOPT SEQV SLGC SOTH SSET
 %token NSET NTRI NHYB NEXP NMIC NOTH
 
@@ -218,6 +218,8 @@ name: NOTH { strcpy(ts[1], (char*)$1); join(3, "\\operatorname{", ts[1], "}"); p
 | NHYB { push(dNhyb[$1]); }
 | NEXP { push(dNexp[$1]); }
 | NMIC { push(dNmic[$1]); }
+| FUNC { strcpy(ts[1], (char*)$1); join(2, "\\", ts[1]); push(ts[0]); }
+| INVFUNC { if(strlen((char*)$1)<6) strcpy(ts[1], (char*)$1+1); else strcpy(ts[1], (char*)$1+3); join(3, "\\", ts[1], "^{-1}"); push(ts[0]); }
 ;
 symbol: SOPT { push(dSopt[$1]); }
 | SOTH { push(dSoth[$1]); }

@@ -79,7 +79,7 @@ void join(int n, char* strs, ...) {
 list: sentence { pop(ts[0]); strcat(latex, ts[0]); strcat(latex, " \n"); dbs(); YYACCEPT; }
 ;
 
-sentence: { push(""); }
+sentence: /* nothing */ { push(""); }
 | subsentence
 ;
 subsentence: superelement
@@ -89,7 +89,7 @@ subsentence: superelement
 superelement: element
 | control
 ;
-control:subcontrol
+control: subcontrol
 | subcontrol POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 subcontrol: contsingle
@@ -105,6 +105,7 @@ contsingle: SEP { push(","); }
 
 element: piece
 | superpiece
+| superreduce
 | frac
 ;
 superpiece: subsuperpiece
@@ -122,7 +123,9 @@ supersingle: sumational
 
 reduce: piece
 | OP sentence CP
-| subreduce
+| superreduce
+;
+superreduce: subreduce
 | subreduce POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
 | OP sentence CP POW reduce { popi(2); join(5, "\\left(", ts[2], "\\right)^{", ts[1], "}"); push(ts[0]); dbs(); }
 ;

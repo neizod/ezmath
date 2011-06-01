@@ -54,18 +54,14 @@ void join(int n, char* strs, ...) {
  char* dSoth[4] = {"\\ldots", "\\infty", "\\partial", "\\nabla"};
  char* dSset[9] = {"\\forall", "\\exists", "\\in", "\\notin", "\\subseteq", "\\supseteq", "\\cup", "\\cap", "\\setminus"};
  char* dNset[12] = {"\\emptyset", "\\varnothing", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{P}", "\\mathbb{Q}", "\\mathbb{R}", "\\mathbb{C}", "\\mathbb{H}", "\\aleph", "\\Re", "\\Im"};
- char* dNtri[12] = {"\\sin", "\\cos", "\\tan", "\\cot", "\\sec", "\\csc", "\\sin^{-1}", "\\cos^{-1}", "\\tan^{-1}", "\\cot^{-1}", "\\sec^{-1}", "\\csc^{-1}"};
- char* dNhyb[12] = {"\\sinh", "\\cosh", "\\tanh", "\\coth", "\\sech", "\\csch", "\\sinh^{-1}", "\\cosh^{-1}", "\\tanh^{-1}", "\\coth^{-1}", "\\sech^{-1}", "\\csch^{-1}"};
- char* dNexp[3] = {"\\exp", "\\log", "\\ln"};
- char* dNmic[5] = {"\\max", "\\min", "\\gcd", "\\operatorname{lcm}", "\\det"};
  char* dNovr[9] = {"\\hat{\\imath}","\\hat{\\iota}", "\\hat{\\jmath}", "\\vec{\\imath}", "\\vec{\\iota}", "\\vec{\\jmath}", "\\overline{\\imath}", "\\overline{\\iota}", "\\overline{\\jmath}"};
  char* dOovr[5] = {"\\dot", "\\ddot", "\\hat", "\\vec", "\\overline"};
  char* dOsum[10] = {"\\sum", "\\prod", "\\coprod", "\\bigcup", "\\bigcap", "\\lim", "\\int", "\\oint", "\\iint", "\\iiint"};
 %}
 
-%token NUMBER ENGL GREEK TEXT FUNC INVFUNC PUNCT ESCCH
+%token NUMBER ENGL GREEK TEXT PUNCT ESCCH
 %token SOPT SEQV SLGC SOTH SSET
-%token NSET NTRI NHYB NEXP NMIC NOTH
+%token NSET NAME FUNC INVFUNC
 
 %token DIV POW CHS NRT
 %token SRT MOD FLR CIL RND
@@ -213,11 +209,7 @@ variable: ENGL { join(2, " ", (char*)$1); push(ts[0]); }
 | NSET { push(dNset[$1]); }
 | NOVR { push(dNovr[$1]); }
 ;
-name: NOTH { strcpy(ts[1], (char*)$1); join(3, "\\operatorname{", ts[1], "}"); push(ts[0]); }
-| NTRI { push(dNtri[$1]); }
-| NHYB { push(dNhyb[$1]); }
-| NEXP { push(dNexp[$1]); }
-| NMIC { push(dNmic[$1]); }
+name: NAME { strcpy(ts[1], (char*)$1); join(3, "\\operatorname{", ts[1], "}"); push(ts[0]); }
 | FUNC { strcpy(ts[1], (char*)$1); join(2, "\\", ts[1]); push(ts[0]); }
 | INVFUNC { if(strlen((char*)$1)<6) strcpy(ts[1], (char*)$1+1); else strcpy(ts[1], (char*)$1+3); join(3, "\\", ts[1], "^{-1}"); push(ts[0]); }
 ;

@@ -45,14 +45,12 @@ class Ezmath_Parser {
       if(preg_match("/^\s*$/", $text_array[$j])) {
         continue;
       }
-      // remove first & last empty line to prevent LaTeX conflict.
-      $text_array[$j] = preg_replace("/^\s+|\s+$/", '', $text_array[$j]);
 
       // parse and check for error
       $math = $this->latex($text_array[$j]);
       if($math != '') {
         // check if math element is in-line or new-line.
-        if(preg_match("/\n$/", $text_array[$j-1]) && preg_match("/^\n/", $text_array[$j+1])) {
+        if(preg_match("/^\n/", $text_array[$j]) && preg_match("/\n$/", $text_array[$j])) {
           $text_array[$j] = '\\[' . $math . '\\]';
         } else {
           $text_array[$j] = '\\(' . $math . '\\)';
@@ -80,6 +78,9 @@ class Ezmath_Parser {
     return '"' . strtr($text, array('"' => '\\"')) . '"';
   }
   function latex($text) {
+    // remove first & last empty lines to prevent LaTeX conflict.
+    $text = preg_replace("/^\s+|\s+$/", '', $text);
+
     return shell_exec(drupal_get_path('module', 'ezmath') . '/ezmath ' . $this->wrap_argv($text));
   }
   // parsing error handler, return original text hilight in darkred.

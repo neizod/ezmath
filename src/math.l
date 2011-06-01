@@ -61,34 +61,24 @@
 
 
 "..."	{ yylval = 0; return SOTH; }
-"inf"	|
-"Inf"	|
-"infty"	|
-"infinity"	|
-"Infinity"	{ yylval = 1; return SOTH; }
+(I|i)nf((ini)?ty)?	{ yylval = 1; return SOTH; }
 
-"part"	|
-"partial"	{ yylval = 2; return SOTH; }
+part(ial)?	{ yylval = 2; return SOTH; }
 "grad"	|
 "nabla"	{ yylval = 3; return SOTH; }
 
 
-"all"	|
-"forall"	|
-"for all"	{ yylval = 0; return SSET; }
+(for[ ]?)?all	{ yylval = 0; return SSET; }
 "exists"	{ yylval = 1; return SSET; }
 
-"in"	{ yylval = 2; return SSET; }
-"notin"	|
-"not in"	{ yylval = 3; return SSET; }
-"subset"	{ yylval = 4; return SSET; }
-"supset"	|
-"superset" { yylval = 5; return SSET; }
+in	{ yylval = 2; return SSET; }
+not[ ]?in	{ yylval = 3; return SSET; }
+subset	{ yylval = 4; return SSET; }
+sup(er)?set	{ yylval = 5; return SSET; }
 
 "union"	|
 "cup"	{ yylval = 6; return SSET; }
-"intersect"	|
-"intersection" |
+intersect(ion)?	|
 "cap"	{ yylval = 7; return SSET; }
 "\\"	{ yylval = 8; return SSET; }
 
@@ -102,8 +92,7 @@
 "Rset"	{ yylval = 6; return NSET; }
 "Cset"	{ yylval = 7; return NSET; }
 "Hset"	{ yylval = 8; return NSET; }
-"aleph"	|
-"Aleph"	{ yylval = 9; return NSET; }
+(A|a)leph	{ yylval = 9; return NSET; }
 "Re"	{ yylval = 10; return NSET; }
 "Im"	{ yylval = 11; return NSET; }
 
@@ -115,6 +104,7 @@ max	|
 min	|
 gcd	|
 det	|
+mod	|
 
 sinh?	|
 cosh?	|
@@ -177,7 +167,7 @@ cases?	{ yylval = (int)yytext; return NAME; }
 "}"	{ return CS; }
 
 ^"["	|
-("bmatrix "|[ \t])"["	{ return OB_M; }
+(bmatrix[ ]|[ \t])"["	{ return OB_M; }
 (vmatrix|det)" ["	{ return OB_D; }
 (Vmatrix)" ["	{ return OB_V; }
 (pmatrix|parentheses)" ["	{ return OB_P; }
@@ -193,11 +183,10 @@ cases?" ["	{ return OB_C; }
 "root"	{ return NRT; }
 "sqrt"	{ return SRT; }
 
-"mod"	{ return MOD; }
-"floor"	{ return FLR; }
-"ceil"	|
-"ceiling"	{ return CIL; }
-"round"	{ return RND; }
+"("[ ]?mod	{ return OP_M; }
+floor	{ return FLR; }
+ceil(ing)?	{ return CIL; }
+round	{ return RND; }
 
 
 "hati"	|
@@ -233,41 +222,21 @@ cases?" ["	{ return OB_C; }
 "bar"	{ yylval = 4; return OOVR; }
 
 
-"sum"	|
-"Sum"	|
-"sumation" |
-"Sumation" { yylval = 0; return OSUM; }
-
-"prod"	|
-"Prod"	|
-"product"	|
-"Product"	{ yylval = 1; return OSUM; }
-
-"coprod"	|
-"Coprod"	|
-"coproduct"	|
-"Coproduct"	{ yylval = 2; return OSUM; }
+(S|s)um(ation)?	{ yylval = 0; return OSUM; }
+(P|p)rod(uct)?	{ yylval = 1; return OSUM; }
+(C|c)oprod(uct)?	{ yylval = 2; return OSUM; }
 
 "Union"	|
 "Cup"	{ yylval = 3; return OSUM; }
-"Intersect"	|
-"Intersection"	|
+Intersect(ion)?	|
 "Cap"	{ yylval = 4; return OSUM; }
 
 "lim"	{ yylval = 5; return OSUM; }
 
-"int"	|
-"Int"	|
-"integral" |
-"Integral" { yylval = 6; return OSUM; }
-
-"oint"	|
-"Oint"	|
-"ointegral"	|
-"Ointegral"	{ yylval = 7; return OSUM; }
-
-"iint"	{ yylval = 8; return OSUM; }
-"iiint"	{ yylval = 9; return OSUM; }
+(I|i)nt(egral)?	{ yylval = 6; return OSUM; }
+(O|o)(I|i)nt(egral)?	{ yylval = 7; return OSUM; }
+(I|i){2}nt(egral)?	{ yylval = 8; return OSUM; }
+(I|i){3}nt(egral)?	{ yylval = 9; return OSUM; }
 
 
 "from"	{ return FR; }

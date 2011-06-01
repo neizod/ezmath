@@ -59,12 +59,13 @@ void join(int n, char* strs, ...) {
  char* dOsum[10] = {"\\sum", "\\prod", "\\coprod", "\\bigcup", "\\bigcap", "\\lim", "\\int", "\\oint", "\\iint", "\\iiint"};
 %}
 
-%token NUMBER ENGL GREEK TEXT PUNCT ESCCH
+%token NUMBER REPEAT ENGL GREEK LATEX TEXT PUNCT
 %token SOPT SEQV SLGC SOTH SSET
 %token NSET NAME FUNC INVFUNC
 
 %token DIV POW CHS NRT
-%token SRT MOD FLR CIL RND
+%token SRT MOD
+%token ABS FLR CIL RND
 
 %token OSUM FR TO WH
 %token NOVR OOVR
@@ -165,18 +166,20 @@ frac: reduce DIV reduce { popi(2); join(5, "\\frac{", ts[2], "}{", ts[1], "}"); 
 root: SRT reduce { popi(1); join(3, "\\sqrt{", ts[1], "}"); push(ts[0]); dbs(); }
 | reduce NRT reduce { popi(2); join(5, "\\sqrt[", ts[2], "]{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
-round: FLR reduce { popi(1); join(3, "\\lfloor", ts[1], "\\rfloor"); push(ts[0]); dbs(); }
-| CIL reduce { popi(1); join(3, "\\lceil", ts[1], "\\rceil"); push(ts[0]); dbs(); }
-| RND reduce { popi(1); join(3, "\\lfloor", ts[1], "\\rceil"); push(ts[0]); dbs(); }
-;
-over: OOVR reduce { popi(1); join(4, dOovr[$1], "{", ts[1], "}"); push(ts[0]); dbs(); }
-;
 
 bracket: OP sentence CP { popi(1); join(3, "\\left(", ts[1], "\\right)"); push(ts[0]); dbs(); }
 ;
 subbracket: OP sentence CHS sentence CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); }
 | OP_M sentence CP { popi(1); join(3, "\\pmod{", ts[1], "}"); push(ts[0]); dbs(); }
 | OS sentence CS { popi(1); join(3, "\\left\\{", ts[1], "\\right\\}"); push(ts[0]); dbs(); }
+;
+func_bracket: ABS reduce { popi(1); join(3, "\\left|", ts[1], "\\right|"); push(ts[0]); dbs(); }
+| FLR reduce { popi(1); join(3, "\\left\\lfloor", ts[1], "\\right\\rfloor"); push(ts[0]); dbs(); }
+| CIL reduce { popi(1); join(3, "\\left\\lceil", ts[1], "\\right\\rceil"); push(ts[0]); dbs(); }
+| RND reduce { popi(1); join(3, "\\left\\lfloor", ts[1], "\\right\\rceil"); push(ts[0]); dbs(); }
+;
+
+over: OOVR reduce { popi(1); join(4, dOovr[$1], "{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 
 piece: subpiece
@@ -191,37 +194,36 @@ subsingle: single OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); pu
 
 single: number
 | variable
-| name
 | symbol
 | text
 | alignment
 
 | matrix
-| round
 | subbracket
+| func_bracket
 | root
 | over
 ;
 number: NUMBER { push((char*)$1); }
+| REPEAT { strcpy(ts[1], (char*)$1); ts[1][strlen(ts[1])-3] = '\0'; register int i = strrchr(ts[1], '.') - ts[1] + 1; strcpy(ts[2], (char*)ts[1]+i); ts[1][i-3] = '\0'; join(4, ts[1], "\\overline{", ts[2], "}"); push(ts[0]); }
 ;
 variable: ENGL { join(2, " ", (char*)$1); push(ts[0]); }
 | GREEK { join(2, "\\", (char*)$1); push(ts[0]); }
 | NSET { push(dNset[$1]); }
 | NOVR { push(dNovr[$1]); }
 ;
-name: NAME { strcpy(ts[1], (char*)$1); join(3, "\\operatorname{", ts[1], "}"); push(ts[0]); }
-| FUNC { strcpy(ts[1], (char*)$1); join(2, "\\", ts[1]); push(ts[0]); }
-| INVFUNC { if(strlen((char*)$1)<6) strcpy(ts[1], (char*)$1+1); else strcpy(ts[1], (char*)$1+3); join(3, "\\", ts[1], "^{-1}"); push(ts[0]); }
+text: TEXT { strcpy(ts[1], (char*)$1+1); ts[1][strlen(ts[1])-1] = '\0'; join(3, "\\text{", ts[1], "}"); push(ts[0]); }
+| PUNCT { push((char*)$1); }
+| NAME { join(3, "\\operatorname{", (char*)$1, "}"); push(ts[0]); }
+| FUNC { join(2, "\\", (char*)$1); push(ts[0]); }
+| INVFUNC { if(strlen((char*)$1)<6) join(3, "\\", (char*)$1+1, "^{-1}"); else join(3, "\\", (char*)$1+3, "^{-1}"); push(ts[0]); }
+| LATEX { strcpy(ts[1], (char*)$1+2); ts[1][strlen(ts[1])-1] = '\0'; push(ts[1]); }
 ;
 symbol: SOPT { push(dSopt[$1]); }
 | SOTH { push(dSoth[$1]); }
 | SLGC { push(dSlgc[$1]); }
 | SSET { push(dSset[$1]); }
 | SEQV { push(dSeqv[$1]); }
-;
-text: TEXT { strcpy(ts[1], (char*)$1+1); ts[1][strlen(ts[1])-1] = '\0'; join(3, "\\text{", ts[1], "}"); push(ts[0]); }
-| PUNCT { push((char*)$1); }
-| ESCCH { join(2, "\\", (char*)$1); push(ts[0]); }
 ;
 alignment: SPC { push("\\;"); }
 | ALG { push("&"); }

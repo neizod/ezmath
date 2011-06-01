@@ -152,14 +152,16 @@ cases?	{ yylval = (int)yytext; return NAME; }
 
 [a-zA-Z]	{ yylval = (int)yytext; return ENGL; }
 [':!@\?\$]	{ yylval = (int)yytext; return PUNCT; }
-[%&]	{ yylval = (int)yytext; return ESCCH; }
+[%&]	{ yylval = (int)yytext; return FUNC; }
 
+[0-9]+\.[0-9]*"..."[0-9]+"..."	{ yylval = (int)yytext; return REPEAT; }
 [0-9]+(\.[0-9]+"..."?)?	{ yylval = (int)yytext; return NUMBER; }
 
-\"[^\"]*\" { yylval = (int)yytext; return TEXT; }
+\"[^\"]*\"	{ yylval = (int)yytext; return TEXT; }
+@\"[^\"]*\"	{ yylval = (int)yytext; return LATEX; }
 
 
-
+"("[ ]?mod	{ return OP_M; }
 "("	{ return OP; }
 ")"	{ return CP; }
 
@@ -183,7 +185,7 @@ cases?" ["	{ return OB_C; }
 "root"	{ return NRT; }
 "sqrt"	{ return SRT; }
 
-"("[ ]?mod	{ return OP_M; }
+abs	{ return ABS; }
 floor	{ return FLR; }
 ceil(ing)?	{ return CIL; }
 round	{ return RND; }

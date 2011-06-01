@@ -47,7 +47,7 @@ function ezmath_filter_tips($delta = 0, $format = -1, $long) {
       </ul>For complete details on the Ezmath syntax, see the <a href="@ezmath_docs">Ezmath document</a>', array('@ezmath_docs' => 'http://code.google.com/p/ezmath/wiki/Document'));
   }
   else {
-    return t('Allow <a href="@filter_tips">Ezmath syntax</a> to be written between <code>$$...$$</code> and tern it into mathematical notation, for more see <a href="@ezmath_docs">Ezmath document</a>', array('@filter_tips' => url('filter/tips'), '@ezmath_docs' => 'http://code.google.com/p/ezmath/wiki/Document'));
+    return t('Allow <a href="@filter_tips">Ezmath syntax</a> to be written between <code>$$...$$</code> and tern it into mathematical notation, for more see <a href="@ezmath_docs">Ezmath document</a>.', array('@filter_tips' => url('filter/tips'), '@ezmath_docs' => 'http://code.google.com/p/ezmath/wiki/Document'));
   }
 }
 
@@ -74,12 +74,11 @@ function ezmath_block($op = 'list', $delta = 0, $edit = array()) {
  */
 function _ezmath_help_block() {
   return '<pre>'. t('
-Mix <code>$$...$$</code> for in-line math,
-Or feed line before & after
-<center><code>$$...$$</code></center>to seperate them from text.
+Use <code>$$ ... $$</code> for in-line math
+Or feed line like this <code>$$<center>...</center>$$</code> to seperate math from text.
 
 Use <code>_</code> to insert whitespace
-<code>#</code> May help aligning paragraph
+and <code>#</code> for aligning paragraph
 
 Text under <code>"..."</code> still be text
 
@@ -103,8 +102,8 @@ Choose: <code>(n choose r)</code>
 Floor: <code>floor(number)</code>
 
 Matrix: <code>[a,b,c;d,e,f]</code>
-Cases: <code>cases(x,1;-x,2)</code> 
-Limit: <code>lim a^x when(a->0)</code>
+Cases: <code>cases [x,1;-x,2]</code>
+Limit: <code>lim a^x where(a->0)</code>
 Integral: <code>int x_dx from b to c</code>
 *<code>from...to...</code> can be omitted.
 

@@ -70,7 +70,7 @@ void join(int n, char* strs, ...) {
 %token NOVR OOVR
 
 %token OP CP OS CS OB CB
-%token OB_M OB_D OB_P OB_C
+%token OB_M OB_D OB_V OB_P OB_C
 %token SPC SEP SNL ALG EOL
 
 %%
@@ -130,10 +130,13 @@ subreduce: OP sentence CP OB sentence CB { popi(2); join(5, "\\left(", ts[2], "\
 | subreduce OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); dbs(); }
 ;
 
-matrix: OB_M mtx_sentence CB { popi(1); join(3, "\\begin{bmatrix}\n", ts[1], "\n\\end{bmatrix}"), push(ts[0]); dbs(); }
-| OB_D mtx_sentence CB { popi(1); join(3, "\\begin{vmatrix}\n", ts[1], "\n\\end{vmatrix}"), push(ts[0]); dbs(); }
-| OB_P mtx_sentence CB { popi(1); join(3, "\\begin{pmatrix}\n", ts[1], "\n\\end{pmatrix}"), push(ts[0]); dbs(); }
-| OB_C mtx_sentence CB { popi(1); join(3, "\\begin{cases}\n", ts[1], "\n\\end{cases}"), push(ts[0]); dbs(); }
+matrix: mtx_wrap mtx_sentence CB { popi(2); join(7, "\\begin{", ts[2], "}\n", ts[1], "\n\\end{", ts[2], "}"), push(ts[0]); dbs(); }
+;
+mtx_wrap: OB_M { push("bmatrix"); }
+| OB_D { push("vmatrix"); }
+| OB_V { push("Vmatrix"); }
+| OB_P { push("pmatrix"); }
+| OB_C { push("cases"); }
 ;
 mtx_sentence: { push("\\text{}"); /* nothing */ }
 | mtx_subsentence

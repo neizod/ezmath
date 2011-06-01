@@ -177,11 +177,11 @@ cases?	{ yylval = (int)yytext; return NAME; }
 "}"	{ return CS; }
 
 ^"["	|
-[ \t]"["	{ return OB_M; }
-"det ["	{ return OB_D; }
-"parentheses ["	{ return OB_P; }
-"case ["	|
-"cases ["	{ return OB_C; }
+("bmatrix "|[ \t])"["	{ return OB_M; }
+(vmatrix|det)" ["	{ return OB_D; }
+(Vmatrix)" ["	{ return OB_V; }
+(pmatrix|parentheses)" ["	{ return OB_P; }
+cases?" ["	{ return OB_C; }
 "["	{ return OB; }
 "]"	{ return CB; }
 

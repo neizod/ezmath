@@ -108,6 +108,14 @@
 "Im"	{ yylval = 11; return NSET; }
 
 
+exp	|
+log	|
+ln	|
+max	|
+min	|
+gcd	|
+det	|
+
 sinh?	|
 cosh?	|
 tanh?	|
@@ -122,79 +130,35 @@ a(rc)?coth?	|
 a(rc)?sech?	|
 a(rc)?csch?	{ yylval = (int)yytext; return INVFUNC; }
 
-
-"exp"	{ yylval = 0; return NEXP; }
-"log"	{ yylval = 1; return NEXP; }
-"ln"	{ yylval = 2; return NEXP; }
-
-
-"max"	{ yylval = 0; return NMIC; }
-"min"	{ yylval = 1; return NMIC; }
-"gcd"	{ yylval = 2; return NMIC; }
-"lcm"	{ yylval = 3; return NMIC; }
-"det"	{ yylval = 4; return NMIC; }
-
-
-"sgn"	|
-"case"	|
-"cases"	{ yylval = (int)yytext; return NOTH; }
+lcm	|
+sgn	|
+cases?	{ yylval = (int)yytext; return NAME; }
 
 
 
-"alpha"	|
-"beta"	|
-"gamma"	|
-"delta"	|
-"epsilon"	|
-"zeta"	|
-"eta"	|
-"theta"	|
-"iota"	|
-"kappa"	|
-"lambda"	|
-"mu"	|
-"nu"	|
-"xi"	|
-"pi"	|
-"rho"	|
-"sigma"	|
-"tau"	|
-"upsilon"	|
-"phi"	|
-"chi"	|
-"psi"	|
-"omega"	{ yylval = (int)yytext; return GREEK; }
-
-"varepsilon"	|
-"vartheta"	|
-"varpi"	|
-"varrho"	|
-"varsigma"	|
-"varphi"	{ yylval = (int)yytext; return GREEK; }
-
-"Alpha"	|
-"Beta"	|
-"Gamma"	|
-"Delta"	|
-"Epsilon"	|
-"Zeta"	|
-"Eta"	|
-"Theta"	|
-"Iota"	|
-"Kappa"	|
-"Lambda"	|
-"Mu"	|
-"Nu"	|
-"Xi"	|
-"Pi"	|
-"Rho"	|
-"Sigma"	|
-"Tau"	|
-"Upsilon"	|
-"Phi"	|
-"Chi"	|
-"Psi"	|
-"Omega"	{ yylval = (int)yytext; return GREEK; }
+(A|a)lpha	|
+(B|b)eta	|
+(G|g)amma	|
+(D|d)elta	|
+(E|(var)?e)psilon	|
+(Z|z)eta	|
+(E|e)ta	|
+(T|(var)?t)heta	|
+(I|i)ota	|
+(K|k)appa	|
+(L|l)ambda	|
+(M|m)u	|
+(N|n)u	|
+(X|x)i	|
+(P|(var)?p)i	|
+(R|(var)?r)ho	|
+(S|(var)?s)igma	|
+(T|t)au	|
+(U|u)psilon	|
+(P|(var)?p)hi	|
+(C|c)hi	|
+(P|p)si	|
+(O|o)mega	{ yylval = (int)yytext; return GREEK; }
 
 [a-zA-Z]	{ yylval = (int)yytext; return ENGL; }
 [':!@\?\$]	{ yylval = (int)yytext; return PUNCT; }

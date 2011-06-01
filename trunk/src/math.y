@@ -135,7 +135,7 @@ matrix: OB_M mtx_sentence CB { popi(1); join(3, "\\begin{bmatrix}\n", ts[1], "\n
 | OB_P mtx_sentence CB { popi(1); join(3, "\\begin{pmatrix}\n", ts[1], "\n\\end{pmatrix}"), push(ts[0]); dbs(); }
 | OB_C mtx_sentence CB { popi(1); join(3, "\\begin{cases}\n", ts[1], "\n\\end{cases}"), push(ts[0]); dbs(); }
 ;
-mtx_sentence: { push(""); /* nothing */ }
+mtx_sentence: { push("\\text{}"); /* nothing */ }
 | mtx_subsentence
 ;
 mtx_subsentence: mtx_element

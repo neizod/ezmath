@@ -70,7 +70,7 @@ void join(int n, char* strs, ...) {
 %token NOVR OOVR
 
 %token OP CP OS CS OB CB
-%token OB_M OB_D OB_V OB_P OB_C
+%token OP_M OB_M OB_D OB_V OB_P OB_C
 %token SPC SEP SNL ALG EOL
 
 %%
@@ -105,7 +105,6 @@ contsingle: SEP { push(","); }
 element: piece
 | superpiece
 | frac
-| modular
 ;
 superpiece: subsuperpiece
 | subsuperpiece POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
@@ -166,8 +165,6 @@ frac: reduce DIV reduce { popi(2); join(5, "\\frac{", ts[2], "}{", ts[1], "}"); 
 root: SRT reduce { popi(1); join(3, "\\sqrt{", ts[1], "}"); push(ts[0]); dbs(); }
 | reduce NRT reduce { popi(2); join(5, "\\sqrt[", ts[2], "]{", ts[1], "}"); push(ts[0]); dbs(); }
 ;
-modular: MOD reduce { popi(1); join(3, "\\pmod{", ts[1], "}"); push(ts[0]); dbs(); }
-;
 round: FLR reduce { popi(1); join(3, "\\lfloor", ts[1], "\\rfloor"); push(ts[0]); dbs(); }
 | CIL reduce { popi(1); join(3, "\\lceil", ts[1], "\\rceil"); push(ts[0]); dbs(); }
 | RND reduce { popi(1); join(3, "\\lfloor", ts[1], "\\rceil"); push(ts[0]); dbs(); }
@@ -178,7 +175,7 @@ over: OOVR reduce { popi(1); join(4, dOovr[$1], "{", ts[1], "}"); push(ts[0]); d
 bracket: OP sentence CP { popi(1); join(3, "\\left(", ts[1], "\\right)"); push(ts[0]); dbs(); }
 ;
 subbracket: OP sentence CHS sentence CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); }
-/* | OP MOD CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); } */
+| OP_M sentence CP { popi(1); join(3, "\\pmod{", ts[1], "}"); push(ts[0]); dbs(); }
 | OS sentence CS { popi(1); join(3, "\\left\\{", ts[1], "\\right\\}"); push(ts[0]); dbs(); }
 ;
 

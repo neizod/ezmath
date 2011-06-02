@@ -120,10 +120,42 @@ a(rc)?coth?	|
 a(rc)?sech?	|
 a(rc)?csch?	{ yylval = (int)yytext; return INVFUNC; }
 
+
 lcm	|
 sgn	|
 rad	|
 cases?	{ yylval = (int)yytext; return NAME; }
+
+
+
+begin	|
+end	|
+
+if	|
+do	|
+od	|
+then	|
+else	|
+el(se[ ])?if	|
+end[ ]if	|
+fi	|
+
+for	|
+upto	|
+downto	|
+step	|
+end[ ]for	|
+while	|
+end[ ]while	|
+loop	|
+end[ ]loop	|
+repeat	|
+until	|
+
+var	|
+comment	|
+print	|
+return	{ yylval = (int)yytext; return PSEUDO; }
 
 
 
@@ -237,6 +269,7 @@ Intersect(ion)?	|
 
 
 "_"	{ return SPC; }
+"__"	{ return TAB; }
 ","	{ return SEP; }
 ";"	{ return SNL; }
 "#"	{ return ALG; }

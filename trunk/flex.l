@@ -1,5 +1,5 @@
 %{
-#include "math.tab.h"
+#include "bison.tab.h"
 %}
 
 %%

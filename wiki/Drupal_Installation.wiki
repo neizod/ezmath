@@ -40,4 +40,7 @@ After finished this 3 installation, enable `Libraries` and `Mathjax` modules. En
  # Enable `Ezmath filter` module at `Administer >> Site building >> Modules`. (also check MathJax module to be enable!)
  # Add `Ezmath` input at `Administer >> Site configuration >> Input formats`.
  # Go to `Rearrange` tab and weight Ezmath to 0, or first execute filter.
- # Test by post new content by place Ezmath syntax between $$ ... $$, e.g. `$$ a[i][j] * Xi^"T" = [i,j;4,2;x,0] $$`.
+ # Test by post new content by place Ezmath syntax between $$ ... $$, e.g.
+{{{
+$$ a[i][j] * Xi^"T" = [i,j;4,2;x,0] $$
+}}}

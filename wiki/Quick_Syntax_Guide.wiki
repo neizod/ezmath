@@ -1,3 +1,4 @@
+#labels Featured,Phase-Design,Phase-Support
 =Quick Ezmath Syntax Guide=
 
 This guide shows you how to use Ezmath instead of LaTeX when writting posts or comments.

@@ -127,6 +127,8 @@ cases?	{ yylval = (int)yytext; return NAME; }
 
 
 
+(i|j)math	|
+
 (A|a)lpha	|
 (B|b)eta	|
 (G|g)amma	|
@@ -193,31 +195,16 @@ ceil(ing)?	{ return CIL; }
 round	{ return RND; }
 
 
-"hati"	|
-"hat i"	|
-"hat(i)"	{ yylval = 0; return NOVR; }
-"hatiota"	|
-"hat iota"	{ yylval = 1; return NOVR; }
-"hatj"	|
-"hat j"	|
-"hat(j)"	{ yylval = 2; return NOVR; }
-"veci"	|
-"vec i"	|
-"vec(i)"	{ yylval = 3; return NOVR; }
-"veciota"	|
-"vec iota"	{ yylval = 4; return NOVR; }
-"vecj"	|
-"vec j"	|
-"vec(j)"	{ yylval = 5; return NOVR; }
-"bari"	|
-"bar i"	|
-"bar(i)"	{ yylval = 6; return NOVR; }
-"bariota"	|
-"bar iota"	{ yylval = 7; return NOVR; }
-"barj"	|
-"bar j"	|
-"bar(j)"	{ yylval = 8; return NOVR; }
 
+hat[ ]?(i(math)?|"(i)")	{ yylval = 0; return NOVR; }
+hat[ ]?iota	{ yylval = 1; return NOVR; }
+hat[ ]?(j(math)?|"(j)")	{ yylval = 2; return NOVR; }
+vec[ ]?(i(math)?|"(i)")	{ yylval = 3; return NOVR; }
+vec[ ]?iota	{ yylval = 4; return NOVR; }
+vec[ ]?(j(math)?|"(j)")	{ yylval = 5; return NOVR; }
+bar[ ]?(i(math)?|"(i)")	{ yylval = 6; return NOVR; }
+bar[ ]?iota	{ yylval = 7; return NOVR; }
+bar[ ]?(j(math)?|"(j)")	{ yylval = 8; return NOVR; }
 
 "dot"	{ yylval = 0; return OOVR; }
 "ddot"	{ yylval = 1; return OOVR; }

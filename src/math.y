@@ -58,9 +58,10 @@ void join(int n, char* strs, ...) {
  char* dOsum[10] = {"\\sum", "\\prod", "\\coprod", "\\bigcup", "\\bigcap", "\\lim", "\\int", "\\oint", "\\iint", "\\iiint"};
 %}
 
-%token NUMBER REPEAT ENGL GREEK LATEX TEXT PUNCT
+%token NUMBER REPEAT
+%token ENGL GREEK LATEX TEXT PUNCT
+%token NSET NAME PSEUDO FUNC INVFUNC
 %token SOPT SEQV SLGC SOTH SSET
-%token NSET NAME FUNC INVFUNC
 
 %token DIV POW CHS NRT
 %token SRT MOD
@@ -71,7 +72,7 @@ void join(int n, char* strs, ...) {
 
 %token OP CP OS CS OB CB
 %token OP_M OB_M OB_D OB_V OB_P OB_C
-%token SPC SEP SNL ALG EOL
+%token SPC TAB SEP SNL ALG EOL
 
 %%
 
@@ -217,6 +218,7 @@ variable: ENGL { join(2, " ", (char*)$1); push(ts[0]); }
 ;
 text: TEXT { strcpy(ts[1], (char*)$1+1); ts[1][strlen(ts[1])-1] = '\0'; join(3, "\\text{", ts[1], "}"); push(ts[0]); }
 | PUNCT { push((char*)$1); }
+| PSEUDO { join(3, "\\mathbf{\\text{", (char*)$1, "}}"); push(ts[0]); }
 | NAME { join(3, "\\operatorname{", (char*)$1, "}"); push(ts[0]); }
 | FUNC { join(2, "\\", (char*)$1); push(ts[0]); }
 | INVFUNC { if(strlen((char*)$1)<6) join(3, "\\", (char*)$1+1, "^{-1}"); else join(3, "\\", (char*)$1+3, "^{-1}"); push(ts[0]); }
@@ -228,7 +230,8 @@ symbol: SOPT { push(dSopt[$1]); }
 | SSET { push(dSset[$1]); }
 | SEQV { push(dSeqv[$1]); }
 ;
-alignment: SPC { push("\\;"); }
+alignment: SPC { push("\\;\\;"); }
+| TAB { push("\\quad\\quad"); }
 | ALG { push("&"); }
 ;
 %%

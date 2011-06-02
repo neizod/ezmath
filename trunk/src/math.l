@@ -127,7 +127,6 @@ rad	|
 cases?	{ yylval = (int)yytext; return NAME; }
 
 
-
 begin	|
 end	|
 
@@ -141,10 +140,10 @@ end[ ]if	|
 fi	|
 
 for	|
+end[ ]for	|
 upto	|
 downto	|
 step	|
-end[ ]for	|
 while	|
 end[ ]while	|
 loop	|
@@ -153,6 +152,8 @@ repeat	|
 until	|
 
 var	|
+function	|
+procedure	|
 comment	|
 print	|
 return	{ yylval = (int)yytext; return PSEUDO; }
@@ -245,7 +246,7 @@ bar[ ]?(j(math)?|"(j)")	{ yylval = 8; return NOVR; }
 "bar"	{ yylval = 4; return OOVR; }
 
 
-(S|s)um(ation)?	{ yylval = 0; return OSUM; }
+(S|s)um(mation)?	{ yylval = 0; return OSUM; }
 (P|p)rod(uct)?	{ yylval = 1; return OSUM; }
 (C|c)oprod(uct)?	{ yylval = 2; return OSUM; }
 

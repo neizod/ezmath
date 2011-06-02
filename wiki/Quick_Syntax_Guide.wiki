@@ -46,8 +46,9 @@ a/b # ~~ pi
 
 Note that `#` can not be place inside any parentheses.
 
+==Atom==
 
-==Numbers==
+===Numbers===
 
 There are 4 type of numbers: integer, decimal, transcendental, and repeating decimal.
 
@@ -66,7 +67,7 @@ The last one, repeating decimal, is written in this from.
 Note that the numbers can contain only digits and periods.
 
 
-==Symbols==
+===Symbols===
 
 Treat the most of frequently use symbol as the way you done with most computer program.
 
@@ -101,7 +102,7 @@ and or not infty propto empty partial nabla
 all exists in notin subset supset union intersect
 }}}
 
-==Alphabets and Words==
+===Alphabets and Words===
 
 Each English alphabet will be seen as mathematical variable.
 If you want dotless i or j, add `math` after it.
@@ -139,7 +140,7 @@ if, then, else
 Note that inverse trigonometric functions will be display as `function_name^-1`
 
 
-==Escape Text and LaTeX==
+===Escape Text and LaTeX===
 
 Put text inside `" ... "` to display them as text.
 There is no escape character for `"` (quotation mark) yet.
@@ -153,7 +154,7 @@ To escape LaTeX, just add `@` (at sign) in front of the text mode.
 Use this carefully!
 
 
-==Parentheses==
+===Parentheses===
 
 All left parentheses need right parentheses of the same type, and the right can not be appear before the left.
 
@@ -170,13 +171,15 @@ abs(ad-bc), norm(z), round(ln x), floor(n/2)
 In case you want to use the right before the left, or only the left (e.g. `(−1, 7]`, `]-infty, 0]`), just passing them under `" ... "`.
 
 
-==Reduce Parentheses==
+====Reduce Parentheses====
 
 There are situation that you might want to wrap many atoms into one, use `( ... )` to wrap them.
-This method called Reduce Parentheses. If you place them in the right position, the parentheses will be hide autometically.
+This method called Reduce Parentheses. If you place them in the right position, the parentheses will be hide automatically.
 
 
-==Indexing==
+==Word==
+
+===Indexing===
 
 To index the atom, treat them the way you done with computer's array.
 
@@ -185,7 +188,7 @@ a[n], m[i][j]
 }}}
 
 
-==Exponention==
+===Exponention===
 
 Use `^` (caret) between base and exponent part.
 
@@ -196,7 +199,7 @@ c^2, a[n]^i, e^(pi i)
 This must be done after indexed, otherwise the indexed will goes to the exponent.
 
 
-==Accents==
+===Accents===
 
 To add accents to word, put this keywords ahade.
 
@@ -222,7 +225,10 @@ If there are only i or j after `vec`, `bar`, and `hat`; its dot will be removed 
 vec i, hat(j)
 }}}
 
-==Roots==
+
+==Sentence==
+
+===Roots===
 
 The most frequently root, square root, can be call by favorite keyword `sqrt`.
 
@@ -237,7 +243,7 @@ For the nth root, place keyword "root" between the degree and the root.
 }}}
 
 
-==Fraction==
+===Fraction===
 
 To express the fraction, use `/` (slash) to separate a numerator and a denominator.
 
@@ -245,7 +251,7 @@ To express the fraction, use `/` (slash) to separate a numerator and a denominat
 a/b
 }}}
 
-==Combination==
+===Combination===
 
 For combination, place keyword `choose` inside parenteses, with upper on the left side and lower on the right side.
 
@@ -253,7 +259,7 @@ For combination, place keyword `choose` inside parenteses, with upper on the lef
 (n choose r)
 }}}
 
-==Matrix==
+===Matrix===
 
 Matrix is call by `[ ... ]`, when it is not hinge to any atoms (need at least one whitespace before it - otherwise, its goes to indexed).
 
@@ -276,7 +282,7 @@ Also, LaTeX matrix keyword style are allowed.
 pmatrix, bmatrix, vmatrix, Vmatrix
 }}}
 
-==Cases==
+====Cases====
 
 Cases can be seen as a matrix, which left parentheses is "{" and right parentheses is omitted. So we can use this.
 
@@ -284,7 +290,7 @@ Cases can be seen as a matrix, which left parentheses is "{" and right parenthes
 cases [x, if x >= 0; -x, if x < 0]
 }}}
 
-==Limits==
+===Limits===
 
 Use keyword `lim` for limits notation, and keyword `where` follow by condition.
 
@@ -299,7 +305,7 @@ lim x^x where(x -> 0)
 }}}
 
 
-==Integral==
+===Integral===
 
 Summation-integral symbol keywords are list bellow.
 
@@ -324,7 +330,9 @@ sum f(x) from () to (Rset)
 Note that you can not use this and the limits as exponent part without wrap it inside `( ... )`.
 
 
-==Pseudocode==
+==Technique==
+
+===Pseudocode===
 
 Use `#` at the start of each line to mark start point of paragraph.
 Use `_` to instead of spacebar to add whitespace between words.
@@ -347,8 +355,7 @@ $$
 }}}
 
 
-==Fin==
 
-This document is part of Ezmath program under Apache License 2.0.
-by neizod
+*Fin*
+
 Adapted from Quick Markdown Syntax Guide by Greg Schueler.

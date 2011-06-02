@@ -1,0 +1,362 @@
+=Quick Ezmath Syntax Guide=
+
+This guide shows you how to use Ezmath instead of LaTeX when writting posts or comments.
+
+Ezmath is way easier to use than LaTeX.
+However, you can mix LaTeX with Ezmath if you really want to and you know how.
+
+Just write text in the comment box as usual, write Ezmath syntax inside `$$ ... $$` for in-line math, or feed before and after Ezmath syntax like this:
+
+{{{
+$$
+...
+$$
+}}}
+
+for a displaystyle math (separate line from text, align at the center of page).
+
+
+==General Rules==
+
+Ezmath syntax is case sensitive.
+
+Whitespace and tab is not consider as page alignment, use `_` (underscore) and `__` (double underscore) instead.
+It is frequently unnecessary, so you may write
+
+{{{
+a+b=c^2
+}}}
+
+But, to prevent ambiguity, you should always use whitespace to separate every single word.
+
+{{{
+z = x i + y
+}}}
+
+Newline character generally produce a line feed, use this carefuly since it can conflict with LaTeX syntax (like a/<newline>b).
+Use # (hash) to align following sentence in the same vertical position as others line.
+
+{{{
+  a # = 22
+  b # = 7
+a/b # ~~ pi
+}}}
+
+Note that # can not be place inside any parentheses.
+
+
+Numbers
+-----
+
+There are 4 type of numbers: integer, decimal, transcendental, and repeating decimal.
+The first 3, Ezmath will recognize them as numbers in the way of WYSIWYG.
+
+{{{
+42, 0.25, 3.1416...
+}}}
+
+The last one, repeating decimal, is written in this from.
+
+{{{
+0.0...238095... ,or 0....9...
+}}}
+
+Note that the numbers can contain only digits and periods.
+
+
+Symbols
+-----
+
+Treat the most of frequently use symbol as the way you done with most computer program.
+
+Elementary symbol:
+
+{{{
++ - * // = !=
+}}}
+
+Basic symbol:
+
+{{{
+. ! | +- -+ ~ < > <= >= -> <-> ...
+}}}
+
+Additional symbol:
+
+{{{
+\ ' : ? $ % & , ;
+}}}
+
+Complex symbol:
+
+{{{
+(+) (-) (*) (/) (.) || << >> ~~ ~= == 
+}}}
+
+Text symbol:
+
+{{{
+and or not infty propto empty partial nabla
+all exists in notin subset supset union intersect
+}}}
+
+Alphabets and Words
+---------------
+
+Each English alphabet will be seen as mathematical variable.
+If you want dotless i or j, add "math" after it.
+
+{{{
+imath, jmath
+}}}
+
+For Greek alphabet, just write them in English.
+Use uppercase for first character if you want uppercase Greek alphabet.
+Alphabet that has variation can be call by putting var before its name.
+
+{{{
+alpha, Delta, varphi
+}}}
+
+Set notations are begin with set name, and follow by word 'set'.
+
+{{{
+Eset, Nset, Zset, Qset, Rset, Cset
+}}}
+
+Functions are written as its name.
+
+{{{
+sin, arccos, tanh, max, log, gcd, Re, Im
+}}}
+
+And there also some frequently used logic word.
+
+{{{
+if, then, else
+}}}
+
+Note that inverse trigonometric functions will be display as `function_name^-1`
+
+
+Escape Text and LaTeX
+----
+
+Put text inside `" ... "` to display them as text.
+There is no escape character for `"` (quotation mark) yet.
+
+To escape LaTeX, just add `@` (at sign) infront of the text mode.
+
+{{{
+@" ... "
+}}}
+
+Use this carefully!
+
+
+Parentheses
+----------
+
+All left parentheses need right parentheses of the same type, and the right can not be appear before the left.
+
+{{{
+() [] {}
+}}}
+
+The extra parentheses need its type then follow by `( ... )`.
+
+{{{
+abs(ad-bc), norm(z), round(ln x), floor(n/2)
+}}}
+
+In case you want to use the right before the left, or only the left (e.g. `(−1, 7]`, `]-infty, 0]`), just passing them under `" ... "`.
+
+
+Reduce Parentheses
+--------------
+
+There are situation that you might want to wrap many atoms into one, use `( ... )` to wrap them.
+This method called Reduce Parentheses. If you place them in the right position, the parentheses will be hide autometically.
+
+
+Indexing
+--------
+
+To index the atom, treat them the way you done with computer's array.
+
+{{{
+a[n], m[i][j]
+}}}
+
+Exponention
+-----------
+
+Use ^ (caret) between base and exponent part.
+
+{{{
+c^2, a[n]^i, e^(pi i)
+}}}
+
+This must be done after indexed, otherwise the indexed will goes to the exponent.
+
+
+Accents
+------
+
+To add accents to word, put this keywords ahade.
+
+{{{
+vec, bar, hat, dot, ddot
+}}}
+
+The accents can be stack.
+
+{{{
+vec ddot a
+}}}
+
+Only "vec", "bar", and "hat" can be extended for long word.
+
+{{{
+bar(x + y)
+}}}
+
+If there are only i or j after "vec", "bar", and "hat"; its dot will be remove autometicaly.
+
+{{{
+vec i, hat(j)
+}}}
+
+Roots
+----
+
+The most frequently root, square root, can be call by favorite keyword `sqrt`.
+
+{{{
+sqrt(r)
+}}}
+
+For the nth root, place keyword "root" between the degree and the root.
+
+{{{
+(n)root(r)
+}}}
+
+Fraction
+-------
+
+To express the fraction, use / (slash) to separate a numerator and a denominator.
+
+{{{
+a/b
+}}}
+
+Combination
+------
+
+For combination, place keyword "choose" inside parenteses, with upper on the left side and lower on the right side.
+
+{{{
+(n choose r)
+}}}
+
+Matrix
+------
+
+Matrix is call by [ ... ], when it is not hinge to any atoms (need whitspace before it - otherwise, its goes to indexed).
+Each of element inside matrix is separate by , (comma) and ; (semicolon). Comma is use to separate each element into columns, and semicolon separate there rows (newline character doesn't do any action inside matrix).
+
+{{{
+[a, b, c; d, e, f]
+}}}
+
+There are keywords to adjust matrix parentheses, which must be place before [ ... ] with exactly one whitespace.
+
+{{{
+det [a, b; c, d]
+parentheses [1, 2, 3; 4, 5, 6]
+}}}
+
+Also, LaTeX matrix keyword style are allowed.
+
+{{{
+pmatrix, bmatrix, vmatrix, Vmatrix
+}}}
+
+Cases
+-----
+
+Cases can be seen as a matrix, which left parentheses is "{" and right parentheses is omitted. So we can use this.
+
+{{{
+cases [x, if x >= 0; -x, if x < 0]
+}}}
+
+Limits
+-----
+
+Use keyword "lim" for limits notation, and keyword "where" follow by condition.
+
+{{{
+lim where(n -> infty)
+}}}
+
+Keyword "lim" and "where" doesn't require to be place next to each other. So you may write like this to improve readability.
+
+{{{
+lim x^x where(x -> 0)
+}}}
+
+Integral
+--------
+
+Summation-integral symbol keywords are list bellow.
+
+{{{
+int, oint, iint, iiint, sum, prod, coprod, Union, Intersect
+}}}
+
+To hinge boundary, use keyword "from ... to ... " or "where ... " like the limits.
+
+{{{
+int from a to b x_dx
+coprod (4.n^2)/(4.n^2-1) from (n=1) to infty
+Union A where (A in M)
+}}}
+
+There is no keyword to put only top boundary, but you may adapt this.
+
+{{{
+sum f(x) from () to (Rset)
+}}}
+
+Pseudocode
+----------
+
+Use # at the start of each line to mark start point of paragraph.
+Use _ to instead of spacebar to add whitespace between words.
+For each depth inside the code, use __ after # to add tab character.
+Function name should be wrap between " ... " to prevent keyword conflict.
+Since we kept keyword "to" for integral notation; use "upto", or "downto" instead.
+To provide more readability, add line number manually before #.
+example:
+
+{{{
+$$
+   # procedure_"factorial"("int"_n)
+   # begin
+   # __ var_"int"_r = 1
+   # __ for_ i := n _downto_ 2 _step_ 1 _do
+5: # ____ r <- r * i _od
+   # __ return_ r
+   # end
+$$
+}}}
+
+
+Fin
+---
+
+This document is part of Ezmath program under Apache License 2.0.
+by neizod
+Adapted from Quick Markdown Syntax Guide by Greg Schueler.

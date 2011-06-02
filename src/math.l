@@ -22,8 +22,8 @@
 "-+"	{ yylval = 13; return SOPT; }
 
 "~"	{ yylval = 14; return SOPT; }
-"degree"	{ yylval = 15; return SOPT; }
-"star"	{ yylval = 16; return SOPT; }
+deg(ree)?	{ yylval = 15; return SOPT; }
+star	{ yylval = 16; return SOPT; }
 
 "||"	{ yylval = 17; return SOPT; }
 "|"	{ yylval = 18; return SOPT; }
@@ -122,6 +122,7 @@ a(rc)?csch?	{ yylval = (int)yytext; return INVFUNC; }
 
 lcm	|
 sgn	|
+rad	|
 cases?	{ yylval = (int)yytext; return NAME; }
 
 
@@ -186,6 +187,7 @@ cases?" ["	{ return OB_C; }
 "sqrt"	{ return SRT; }
 
 abs	{ return ABS; }
+norm	{ return NRM; }
 floor	{ return FLR; }
 ceil(ing)?	{ return CIL; }
 round	{ return RND; }

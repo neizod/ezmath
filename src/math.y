@@ -15,18 +15,17 @@ char ts[8][2048];
 
 void dbs(void) {
   /*
-  if(stack_i > 0)
+  if(stack_i > 0) {
     printf("(%3d)>>> %s\n", stack_i, ts[0]);
-  else
+  } else {
     printf("(fin)::: %s\n", ts[0]);
-  */
-}
-void dbf(void) {
-  if(argc == 0)
-    printf("%s\n", ts[0]);
+    exit(0);
+  }
+  /* uncomment above to enable step-debug mode */
 }
 void push(char* str) {
   strcpy(stack_str[stack_i++], str);
+  dbs();
 }
 void pop(char* str) {
   strcpy(str, stack_str[--stack_i]);
@@ -54,8 +53,8 @@ void join(int n, char* strs, ...) {
  char* dSoth[4] = {"\\ldots", "\\infty", "\\partial", "\\nabla"};
  char* dSset[9] = {"\\forall", "\\exists", "\\in", "\\notin", "\\subseteq", "\\supseteq", "\\cup", "\\cap", "\\setminus"};
  char* dNset[12] = {"\\emptyset", "\\varnothing", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{P}", "\\mathbb{Q}", "\\mathbb{R}", "\\mathbb{C}", "\\mathbb{H}", "\\aleph", "\\Re", "\\Im"};
- char* dNovr[9] = {"\\hat{\\imath}","\\hat{\\iota}", "\\hat{\\jmath}", "\\vec{\\imath}", "\\vec{\\iota}", "\\vec{\\jmath}", "\\overline{\\imath}", "\\overline{\\iota}", "\\overline{\\jmath}"};
- char* dOovr[5] = {"\\dot", "\\ddot", "\\hat", "\\vec", "\\overline"};
+ char* dNovr[9] = {"\\hat{\\imath}","\\hat{\\iota}", "\\hat{\\jmath}", "\\overrightarrow{\\imath}", "\\overrightarrow{\\iota}", "\\overrightarrow{\\jmath}", "\\overline{\\imath}", "\\overline{\\iota}", "\\overline{\\jmath}"};
+ char* dOovr[5] = {"\\dot", "\\ddot", "\\hat", "\\overrightarrow", "\\overline"};
  char* dOsum[10] = {"\\sum", "\\prod", "\\coprod", "\\bigcup", "\\bigcap", "\\lim", "\\int", "\\oint", "\\iint", "\\iiint"};
 %}
 
@@ -65,7 +64,7 @@ void join(int n, char* strs, ...) {
 
 %token DIV POW CHS NRT
 %token SRT MOD
-%token ABS FLR CIL RND
+%token ABS NRM FLR CIL RND
 
 %token OSUM FR TO WH
 %token NOVR OOVR
@@ -83,20 +82,20 @@ sentence: /* nothing */ { push(""); }
 | subsentence
 ;
 subsentence: superelement
-| subsentence superelement { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+| subsentence superelement { popi(2); join(2, ts[2], ts[1]); push(ts[0]); }
 ;
 
 superelement: element
 | control
 ;
 control: subcontrol
-| subcontrol POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
+| subcontrol POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); }
 ;
 subcontrol: contsingle
 | subcontsingle
 ;
-subcontsingle: contsingle OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); push(ts[0]); dbs(); }
-| subcontsingle OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); dbs(); }
+subcontsingle: contsingle OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); push(ts[0]); }
+| subcontsingle OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); }
 ;
 contsingle: SEP { push(","); }
 | SNL { push(";"); }
@@ -109,13 +108,13 @@ element: piece
 | frac
 ;
 superpiece: subsuperpiece
-| subsuperpiece POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
+| subsuperpiece POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); }
 ;
 subsuperpiece: supersingle
 | subsupersingle
 ;
-subsupersingle: supersingle OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); push(ts[0]); dbs(); }
-| subsupersingle OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); dbs(); }
+subsupersingle: supersingle OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); push(ts[0]); }
+| subsupersingle OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); }
 ;
 supersingle: sumational
 | bracket
@@ -126,14 +125,14 @@ reduce: piece
 | superreduce
 ;
 superreduce: subreduce
-| subreduce POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
-| OP sentence CP POW reduce { popi(2); join(5, "\\left(", ts[2], "\\right)^{", ts[1], "}"); push(ts[0]); dbs(); }
+| subreduce POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); }
+| OP sentence CP POW reduce { popi(2); join(5, "\\left(", ts[2], "\\right)^{", ts[1], "}"); push(ts[0]); }
 ;
-subreduce: OP sentence CP OB sentence CB { popi(2); join(5, "\\left(", ts[2], "\\right)_{", ts[1], "}"); push(ts[0]); dbs(); }
-| subreduce OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); dbs(); }
+subreduce: OP sentence CP OB sentence CB { popi(2); join(5, "\\left(", ts[2], "\\right)_{", ts[1], "}"); push(ts[0]); }
+| subreduce OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); }
 ;
 
-matrix: mtx_wrap mtx_sentence CB { popi(2); join(7, "\\begin{", ts[2], "}\n", ts[1], "\n\\end{", ts[2], "}"), push(ts[0]); dbs(); }
+matrix: mtx_wrap mtx_sentence CB { popi(2); join(7, "\\begin{", ts[2], "}\n", ts[1], "\n\\end{", ts[2], "}"), push(ts[0]); }
 ;
 mtx_wrap: OB_M { push("bmatrix"); }
 | OB_D { push("vmatrix"); }
@@ -141,11 +140,11 @@ mtx_wrap: OB_M { push("bmatrix"); }
 | OB_P { push("pmatrix"); }
 | OB_C { push("cases"); }
 ;
-mtx_sentence: { push("\\text{}"); /* nothing */ }
+mtx_sentence: { push("{}"); /* nothing */ }
 | mtx_subsentence
 ;
 mtx_subsentence: mtx_element
-| mtx_subsentence mtx_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+| mtx_subsentence mtx_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); }
 ;
 mtx_element: element
 | SEP { push("&"); }
@@ -153,46 +152,47 @@ mtx_element: element
 | EOL { push(""); /* do nothing -- but require to push empty string since it is a token too */ }
 ;
 
-sumational: sum_symbol sum_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]); dbs(); }
+sumational: sum_symbol sum_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]);}
 ;
 sum_symbol: OSUM { push(dOsum[$1]); }
 ;
 sum_element: sentence
-| sentence boundary { popi(2); join(3, "\\limits", ts[1], ts[2]); push(ts[0]), dbs(); }
+| sentence boundary { popi(2); join(3, "\\limits", ts[1], ts[2]); push(ts[0]); }
 ;
-boundary: FR reduce TO reduce { popi(2), join(5, "_{", ts[2], "}^{", ts[1], "}"); push(ts[0]); dbs(); }
-| WH reduce { popi(1), join(3, "_{", ts[1], "}"); push(ts[0]); dbs(); }
-;
-
-frac: reduce DIV reduce { popi(2); join(5, "\\frac{", ts[2], "}{", ts[1], "}"); push(ts[0]); dbs(); }
-;
-root: SRT reduce { popi(1); join(3, "\\sqrt{", ts[1], "}"); push(ts[0]); dbs(); }
-| reduce NRT reduce { popi(2); join(5, "\\sqrt[", ts[2], "]{", ts[1], "}"); push(ts[0]); dbs(); }
+boundary: FR reduce TO reduce { popi(2), join(5, "_{", ts[2], "}^{", ts[1], "}"); push(ts[0]); }
+| WH reduce { popi(1), join(3, "_{", ts[1], "}"); push(ts[0]); }
 ;
 
-bracket: OP sentence CP { popi(1); join(3, "\\left(", ts[1], "\\right)"); push(ts[0]); dbs(); }
+frac: reduce DIV reduce { popi(2); join(5, "\\frac{", ts[2], "}{", ts[1], "}"); push(ts[0]); }
 ;
-subbracket: OP sentence CHS sentence CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); dbs(); }
-| OP_M sentence CP { popi(1); join(3, "\\pmod{", ts[1], "}"); push(ts[0]); dbs(); }
-| OS sentence CS { popi(1); join(3, "\\left\\{", ts[1], "\\right\\}"); push(ts[0]); dbs(); }
-;
-func_bracket: ABS reduce { popi(1); join(3, "\\left|", ts[1], "\\right|"); push(ts[0]); dbs(); }
-| FLR reduce { popi(1); join(3, "\\left\\lfloor", ts[1], "\\right\\rfloor"); push(ts[0]); dbs(); }
-| CIL reduce { popi(1); join(3, "\\left\\lceil", ts[1], "\\right\\rceil"); push(ts[0]); dbs(); }
-| RND reduce { popi(1); join(3, "\\left\\lfloor", ts[1], "\\right\\rceil"); push(ts[0]); dbs(); }
+root: SRT reduce { popi(1); join(3, "\\sqrt{", ts[1], "}"); push(ts[0]); }
+| reduce NRT reduce { popi(2); join(5, "\\sqrt[", ts[2], "]{", ts[1], "}"); push(ts[0]); }
 ;
 
-over: OOVR reduce { popi(1); join(4, dOovr[$1], "{", ts[1], "}"); push(ts[0]); dbs(); }
+bracket: OP sentence CP { popi(1); join(3, "\\left(", ts[1], "\\right)"); push(ts[0]); }
+;
+subbracket: OP sentence CHS sentence CP { popi(2); join(5, "{", ts[2], "\\choose", ts[1], "}"); push(ts[0]); }
+| OP_M sentence CP { popi(1); join(3, "\\pmod{", ts[1], "}"); push(ts[0]); }
+| OS sentence CS { popi(1); join(3, "\\left\\{", ts[1], "\\right\\}"); push(ts[0]); }
+;
+func_bracket: ABS reduce { popi(1); join(3, "\\left|", ts[1], "\\right|"); push(ts[0]); }
+| NRM reduce { popi(1); join(3, "\\left\\|", ts[1], "\\right\\|"); push(ts[0]); }
+| FLR reduce { popi(1); join(3, "\\left\\lfloor", ts[1], "\\right\\rfloor"); push(ts[0]); }
+| CIL reduce { popi(1); join(3, "\\left\\lceil", ts[1], "\\right\\rceil"); push(ts[0]); }
+| RND reduce { popi(1); join(3, "\\left\\lfloor", ts[1], "\\right\\rceil"); push(ts[0]); }
+;
+
+over: OOVR reduce { popi(1); join(4, dOovr[$1], "{", ts[1], "}"); push(ts[0]); }
 ;
 
 piece: subpiece
-| subpiece POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); dbs(); }
+| subpiece POW reduce { popi(2); join(4, ts[2], "^{", ts[1], "}"); push(ts[0]); }
 ;
 subpiece: single
 | subsingle
 ;
-subsingle: single OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); push(ts[0]); dbs(); }
-| subsingle OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); dbs(); }
+subsingle: single OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); push(ts[0]); }
+| subsingle OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); }
 ;
 
 single: number

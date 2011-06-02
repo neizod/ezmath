@@ -1,0 +1,124 @@
+<?php
+// $Id: customsite.module
+
+function ezmath_help($path = 'admin/help#ezmath', $arg) {
+  switch ($path) {
+    case 'admin/help#ezmath':
+      return t('<p>The Ezmath filter allows you to enter content using <a href="http://code.google.com/p/ezmath/">Ezmath</a>, a simple plain-math syntax that is transformed into valid LaTeX.</p>');
+      break;
+  }
+}
+
+/**
+ * Implementation of hook_filter().
+ * display name and short description on Input format page
+ */
+function ezmath_filter($op, $delta = 0, $format = -1, $text = '') {
+  switch ($op) {
+    case 'list':
+      return array(t('Ezmath'));
+    case 'description':
+      return t('Allows content to be submitted using Ezmath, a simple math-plain-text syntax that will turn into mathematical notation.');
+    case 'process':
+      return _ezmath_process($text, $format);
+    default:
+      return $text;
+  }
+}
+
+/**
+ * Implementation of hook_filter_tips().
+ * $long appear on Tips page, else appear as quick help under Post Box.
+ */
+function ezmath_filter_tips($delta = 0, $format = -1, $long) {
+  if ($long) {
+    return t('Ezmath Quick Start Guide:<ul>
+      <li>Always ensure that Ezmath syntax are wrap between double Dollar sign (<code>$$...$$</code>).</li>
+      <li>Space have noting to do with paragraph alignment.</li>
+      <li>Text under Double Quote (<code>"..."</code>) will be treated as plain-text.</li>
+      <li>Numbers are in form of: <code>42</code>, <code>0.125</code>, or <code>3.14159...</code></li>
+      <li>Greek alphabet are treat as case sensitive.</li>
+      <li>Some useful Sets: <code>Eset</code>, <code>Nset</code>, <code>Zset</code>, <code>Rset</code>, and <code>Cset</code>.</li>
+      <li>Indexed: <code>S[i][j]</code>, just like array indexed in computer.</li>
+      <li>Exponent: <code>B^E</code>, note that Caret sign (<code>^</code>) can not be appear before Indexed.</li>
+      <li>Fraction: <code>N/D</code>, when either numerator or denominator are complex surround it by parentheses.</li>
+      <li>Matrix: <code>[a,b,c;d,e,f]</code>, make sure that "<code>[</code>" have space before it.</li>
+      <li>Integral: <code>int a dx from b to c</code>, note that "<code>from b to c</code>" can be omitted.</li>
+      </ul>For complete details on the Ezmath syntax, see the <a href="@ezmath_docs">Ezmath document</a>', array('@ezmath_docs' => 'http://code.google.com/p/ezmath/wiki/Document'));
+  }
+  else {
+    return t('Allow <a href="@filter_tips">Ezmath syntax</a> to be written between <code>$$...$$</code> and tern it into mathematical notation, for more see <a href="@ezmath_docs">Ezmath document</a>.', array('@filter_tips' => url('filter/tips'), '@ezmath_docs' => 'http://code.google.com/p/ezmath/wiki/Document'));
+  }
+}
+
+/**
+ * Implementation of hook_block().
+ */
+function ezmath_block($op = 'list', $delta = 0, $edit = array()) {
+  switch($op) {
+    case 'list':
+      return array('help' => array('info' => t('Ezmath filter tips')));
+    case 'view':
+      switch($delta) {
+        case 'help':
+          return array(
+            'subject' => t('Ezmath Quick Tips'),
+            'content' => _ezmath_help_block()
+          );
+      }
+  }
+}
+
+/**
+ * Provides content for hook_block().
+ */
+function _ezmath_help_block() {
+  return '<pre>'. t('
+Use <code>$$ ... $$</code> for in-line math
+Or feed line like this <code>$$<center>...</center>$$</code> to seperate math from text.
+
+Use <code>_</code> to insert whitespace
+and <code>#</code> for aligning paragraph
+
+Text under <code>"..."</code> still be text
+
+Math atom:
+- Numbers: 42, 0.25, 3.1415...
+- Greek: alpha, Delta, varphi
+- Set: Nset, Zset, Re, Im
+- Function: sin, gcd, log
+- Operator: +, -, *, //, +-
+- Relation: =, !=, ~~, <=, >-
+- Logic: ->, <->, and, or, not
+- Symbol: infinity, empty
+- Others: degree, ...
+
+Indexing: <code>Atom[i][j]</code>
+Exponent: <code>Base^Expnt</code>
+Fraction: <code>Numrt/Denomt</code>
+
+Root: <code>sqrt(r)</code>, <code>(n)root(r)</code>
+Choose: <code>(n choose r)</code>
+Floor: <code>floor(number)</code>
+
+Matrix: <code>[a,b,c;d,e,f]</code>
+Cases: <code>cases [x,1;-x,2]</code>
+Limit: <code>lim a^x where(a->0)</code>
+Integral: <code>int x_dx from b to c</code>
+*<code>from...to...</code> can be omitted.
+
+<hr />
+<center><a href="@ezmath_docs">Complete Ezmath Document</a></center>',
+array('@ezmath_docs' => 'http://code.google.com/p/ezmath/wiki/Document')) .'</pre>';
+}
+
+/**
+ * Filter process callback.
+ */
+function _ezmath_process($text, $format) {
+  if (!empty($text)) {
+    include_once drupal_get_path('module', 'ezmath') . '/ezmath.php';
+    $text = Ezmath($text);
+  }
+  return $text;
+}

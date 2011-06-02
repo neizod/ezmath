@@ -1,31 +1,33 @@
 #labels Featured,Phase-Implementation,Phase-Deploy
 = Installation Guide for Drupal Module =
 
+This page will show you how to install and enable Ezmath on Drupal 6.
+
 ==System Requirement==
-# Unix/Linux base sever
-# Web server with PHP 5 or above
-# Drupal 6
+ # Unix/Linux base sever
+ # Web server with PHP 5 or above
+ # Drupal 6
 
 ==Prerequisite Drupal Modules==
-# Filter (core)
-# Libraries API
-# MathJax
+ # Filter (core)
+ # Libraries API
+ # MathJax
 
 
 ==Prerequisite Modules Installation==
 
 ===Libraries API===
-# Download "Libraries API" from http://drupal.org/project/libraries
-# Uncompress archive and rename it to "libraries" under "modules" directory.
+ # Download "Libraries API" from http://drupal.org/project/libraries
+ # Uncompress archive and rename it to "libraries" under "modules" directory.
 
 ===MathJax Module===
-# Download "MathJax Module" from http://drupal.org/project/mathjax
-# Uncompress archive and rename it to "mathjax" under "modules" directory.
+ # Download "MathJax Module" from http://drupal.org/project/mathjax
+ # Uncompress archive and rename it to "mathjax" under "modules" directory.
 
 ===MathJax Software===
-# Download "MathJax Software" from http://www.mathjax.org/download/
-# Create your "libraries" directory (e.g. /sites/all/libraries)
-# Uncompress archive and rename it to "mathjax" under "libraries" directory.
+ # Download "MathJax Software" from http://www.mathjax.org/download/
+ # Create your "libraries" directory (e.g. /sites/all/libraries)
+ # Uncompress archive and rename it to "mathjax" under "libraries" directory.
 
 After finished this 3 installation, enable "Libraries" and "Mathjax" modules.
    Enable modules at Administer >> Site building >> Modules.
@@ -33,16 +35,16 @@ After finished this 3 installation, enable "Libraries" and "Mathjax" modules.
 
 ==Ezmath Installation==
 
-# Go to your MathJax module folder. Open "mathjax.js" with text editor.
-# Search for line that contain "inlineMath" (line 18), replace all line with:
+ # Go to your MathJax module folder. Open "mathjax.js" with text editor.
+ # Search for line that contain "inlineMath" (line 18), replace all line with:
                    'inlineMath: ["\\\\(","\\\\)"]],' +
    This will allow your members write Dollar sign $ without turn it into math.
 
-# Download and uncompress "ezmath1.x.tar.gz" in side your modules folder,
+ # Download and uncompress "ezmath1.x.tar.gz" in side your modules folder,
    which default place is "/sites/all/modules".
-# Enable "Ezmath filter" module at "Administer >> Site building >> Modules".
+ # Enable "Ezmath filter" module at "Administer >> Site building >> Modules".
    (also check MathJax module to be enable!)
-# Add "Ezmath" input at "Administer >> Site configuration >> Input formats".
-# Go to "Rearrange" tab and weight Ezmath to 0, or first execute filter.
-# Test by post new content by place Ezmath syntax between $$ ... $$,
+ # Add "Ezmath" input at "Administer >> Site configuration >> Input formats".
+ # Go to "Rearrange" tab and weight Ezmath to 0, or first execute filter.
+ # Test by post new content by place Ezmath syntax between $$ ... $$,
    e.g. $$ a[i][j] * Xi^"T" = [i,j;4,2;x,0] $$.

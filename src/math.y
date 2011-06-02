@@ -117,7 +117,7 @@ subsuperpiece: supersingle
 subsupersingle: supersingle OB sentence CB { popi(2); join(4, ts[2], "_{", ts[1], "}"); push(ts[0]); }
 | subsupersingle OB sentence CB { popi(2); ts[2][strlen(ts[2])-1] = '\0'; join(4, ts[2], ",", ts[1], "}"); push(ts[0]); }
 ;
-supersingle: sumational
+supersingle: summation
 | bracket
 ;
 
@@ -153,7 +153,7 @@ mtx_element: element
 | EOL { push(""); /* do nothing -- but require to push empty string since it is a token too */ }
 ;
 
-sumational: sum_symbol sum_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]);}
+summation: sum_symbol sum_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]);}
 ;
 sum_symbol: OSUM { push(dOsum[$1]); }
 ;

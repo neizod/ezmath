@@ -35,6 +35,7 @@ z = x i + y
 }}}
 
 Newline character generally produce a line feed, use this carefuly since it can conflict with LaTeX syntax (like `a/<newline>b`).
+
 Use `#` (hash) to align following sentence in the same vertical position as others line.
 
 {{{
@@ -49,6 +50,7 @@ Note that `#` can not be place inside any parentheses.
 ==Numbers==
 
 There are 4 type of numbers: integer, decimal, transcendental, and repeating decimal.
+
 The first 3, Ezmath will recognize them as numbers in the way of WYSIWYG.
 
 {{{
@@ -116,7 +118,7 @@ Alphabet that has variation can be call by putting var before its name.
 alpha, Delta, varphi
 }}}
 
-Set notations are begin with set name, and follow by word `set`.
+Set notations are begin with set name, and follow by keyword `set`.
 
 {{{
 Eset, Nset, Zset, Qset, Rset, Cset
@@ -142,7 +144,7 @@ Note that inverse trigonometric functions will be display as `function_name^-1`
 Put text inside `" ... "` to display them as text.
 There is no escape character for `"` (quotation mark) yet.
 
-To escape LaTeX, just add `@` (at sign) infront of the text mode.
+To escape LaTeX, just add `@` (at sign) in front of the text mode.
 
 {{{
 @" ... "
@@ -208,13 +210,13 @@ The accents can be stack.
 vec ddot a
 }}}
 
-Only ``vec`, `bar`, and `hat` can be extended for long word.
+Only `vec`, `bar`, and `hat` can be extended for long word.
 
 {{{
 bar(x + y)
 }}}
 
-If there are only i or j after `vec`, `bar`, and `hat`; its dot will be remove automatically.
+If there are only i or j after `vec`, `bar`, and `hat`; its dot will be removed automatically.
 
 {{{
 vec i, hat(j)
@@ -253,7 +255,8 @@ For combination, place keyword `choose` inside parenteses, with upper on the lef
 
 ==Matrix==
 
-Matrix is call by `[ ... ]`, when it is not hinge to any atoms (need whitspace before it - otherwise, its goes to indexed).
+Matrix is call by `[ ... ]`, when it is not hinge to any atoms (need at least one whitespace before it - otherwise, its goes to indexed).
+
 Each of element inside matrix is separate by `,` (comma) and `;` (semicolon). Comma is use to separate each element into columns, and semicolon separate there rows (newline character doesn't do any action inside matrix).
 
 {{{
@@ -289,7 +292,7 @@ Use keyword `lim` for limits notation, and keyword `where` follow by condition.
 lim where(n -> infty)
 }}}
 
-Keyword `lim` and `where` doesn't require to be place next to each other. So you may write like this to improve readability.
+Keyword `lim` and `where` doesn't require to be place next to each other. So you may write them in sandwich style to improve readability.
 
 {{{
 lim x^x where(x -> 0)
@@ -317,6 +320,8 @@ There is no keyword to put only top boundary, but you may adapt this.
 {{{
 sum f(x) from () to (Rset)
 }}}
+
+Note that you can not use this and the limits as exponent part without wrap it inside `( ... )`.
 
 
 ==Pseudocode==

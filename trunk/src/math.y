@@ -54,7 +54,7 @@ void join(int n, char* strs, ...) {
  char* dSset[9] = {"\\forall", "\\exists", "\\in", "\\notin", "\\subseteq", "\\supseteq", "\\cup", "\\cap", "\\setminus"};
  char* dNset[12] = {"\\emptyset", "\\varnothing", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{P}", "\\mathbb{Q}", "\\mathbb{R}", "\\mathbb{C}", "\\mathbb{H}", "\\aleph", "\\Re", "\\Im"};
  char* dNovr[9] = {"\\hat{\\imath}","\\hat{\\iota}", "\\hat{\\jmath}", "\\overrightarrow{\\imath}", "\\overrightarrow{\\iota}", "\\overrightarrow{\\jmath}", "\\overline{\\imath}", "\\overline{\\iota}", "\\overline{\\jmath}"};
- char* dOovr[5] = {"\\dot", "\\ddot", "\\hat", "\\overrightarrow", "\\overline"};
+ char* dOovr[5] = {"\\dot", "\\ddot", "\\widehat", "\\overrightarrow", "\\overline"};
  char* dOsum[10] = {"\\sum", "\\prod", "\\coprod", "\\bigcup", "\\bigcap", "\\lim", "\\int", "\\oint", "\\iint", "\\iiint"};
 %}
 

@@ -335,10 +335,15 @@ Note that you can not use this and the limits as exponent part without wrap it i
 ===Pseudocode===
 
 Use `#` at the start of each line to mark start point of paragraph.
+
 Use `_` to instead of spacebar to add whitespace between words.
+
 For each depth inside the code, use `__` after `#` to add tab character.
+
 Function name should be wrap between `" ... "` to prevent keyword conflict.
+
 Since we kept keyword `to` for integral notation; use `upto`, or `downto` instead.
+
 To provide more readability, add line number manually before `#`.
 example:
 

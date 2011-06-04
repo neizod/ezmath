@@ -1,0 +1,93 @@
+#summary EzMath's BNF.
+#labels Phase-Design,Phase-Implementation
+
+=Introduction=
+
+EzMath syntax's context-free grammar in Backus–Naur form.
+
+
+=The Input=
+
+{{{
+       <list> ::= <sentence>
+   <sentence> ::= /* nothing */ | <subsentence>
+<subsentence> ::= <superelement> | <subsentence> <superelement>
+
+ <superelement> ::= <element> | <control>
+      <control> ::= <subcontrol> | <subcontrol> ‘^’ <reduce>
+   <subcontrol> ::= <contsingle> | <subcontsingle>
+<subcontsingle> ::= <contsingle> ‘[’ <sentence> ‘]’ |
+                    <subcontsingle> ‘[’ <sentence> ‘]’
+    <contsigle> ::= ‘,’ | ‘;’ | ‘EOL’
+
+       <element> ::= <piece> | <superpiece> | <superresuce> | <frac>
+    <superpiece> ::= <subsuperpiece> | <subsuperpiece> ‘^’ <reduce>
+ <subsuperpiece> ::= <supersingle> | <subsupersingle>
+<subsupersingle> ::= <supersingle> ‘[’ <sentence> ‘]’ |
+                     <subsupersingle> ‘[’ <sentence> ‘]’
+     <contsigle> ::= <summation> | ‘(’ <sentence> ‘)’
+
+     <reduce> ::= <piece> | ‘(’ sentence ‘)’ | <superreduce> 
+<superreduce> ::= <subreduce> | <subreduce> ‘^’ <reduce> |
+                  ‘(’ sentence ‘)’ ‘^’ <reduce>
+  <subreduce> ::= ‘(’ sentence ‘)’ ‘[’ <sentence> ‘]’ |
+                  <subreduce> ‘[’ <sentence> ‘]’
+
+         <matrix> ::= <mtx_wrap> <mtx_sentence> ‘]’
+       <mtx_wrap> ::= ‘ [’ | ‘det [’ | ‘Vmatrix [’ | ‘pmatrix’ | ‘cases [’
+   <mtx_sentence> ::= /* nothing */ | <mtx_subsentence>
+<mtx_subsentence> ::= <mtx_element> | <mtx_subsentence> <mtx_element>
+    <mtx_element> ::= <element> | ‘,’ | ‘;’ | ‘EOL’
+
+ <sumational> ::= <sum_symbol> <sum_element>
+ <sum_symbol> ::= ‘Union’ | ‘Intersect’ | ‘sum’ | ‘prod’ | ‘coprod’ |
+                  ‘int’ | ‘oint’ | ‘iint’ | ‘iiint’
+<sum_element> ::= <sentence> | <sentence> <boundary>
+   <boundary> ::= ‘from’ <reduce> ‘to’ <reduce> | ‘where’ <reduce>
+
+   <frac> ::= <reduce> ‘/’ <reduce>
+   <root> ::= ‘sqrt’ <reduce> | <reduce> ‘root’ <reduce>
+
+  <subbracket> ::= ‘(’ <sentence> ‘choose’ <sentence> ‘)’ |
+                   ‘(mod ’ <sentence> ‘)’ |
+                   ‘{’ <sentence> ‘}’
+<func_bracket> ::= ‘abs’ <reduce> | ‘norm’ <reduce> |
+                   ‘floor’ <reduce> | ‘ceiling’ <reduce> | ‘round’ <reduce>
+        <over> ::= ‘dot’ <reduce> | ‘ddot’ <reduce> |
+                   ‘vec’ <reduce> | ‘bar’ <reduce> | ‘hat’ <reduce>
+
+    <piece> ::= <subpiece> | <subpiece> ‘^’ <reduce>
+ <subpiece> ::= <single> | <subsingle>
+<subsingle> ::= <single> ‘[’ <sentence> ‘]’ | <subsingle> ‘[’ <sentence> ‘]’
+   <single> ::= <number> | <variable> | <operator> | <equivalence> | <name>
+
+   <number> ::= <integer> | <float> | <repeat> | <transcend>
+   <repeat> ::= <integer> ‘.’ ‘...’ <integer> ‘...’ |
+                <float> ‘...’ <integer> ‘...’
+<transcend> ::= <float> ‘...’
+    <float> ::= <integer> ‘.’ <integer>
+  <integer> ::= <digit> | <integer> <digit>
+    <digit> ::= ‘0’ | ‘1’ | ... | ‘9’
+
+<variable> ::= <english> | <greek> | <set> | ‘_’
+ <english> ::= ‘a' | ‘b’ | ... | ‘z’ | ‘A’ | ‘B’ | ... | ‘Z’
+   <greek> ::= ‘alpha’ | ‘beta’ | ... | ‘omega’ |
+   ‘Alpha’ | ‘Beta’ | ... | ‘Omega’
+     <set> ::= ‘Eset’ | ‘Nset’ | ‘Zset’ | ‘Qset’ | ‘Rset’ | ‘Cset’ | ‘Aleph’ |
+		   ‘infinity’ | ‘...’ | ‘all’ | ‘exists’ | ‘in’ | ‘notin’ |
+   ‘subset’ | ‘supset’ | ‘union’ | ‘intersect’
+
+<text> ::= ‘“user text between double quote”’ |
+           ‘@“user LaTeX between double quote that lead with at sign”’
+
+<operator> ::= ‘+’ | ‘-’ | ‘*’ | ‘.’ | ‘~’ | ‘!’ | ‘+-’ | ‘-+’ | 
+               ‘(+)’ | ‘(-)’ | ‘(*)’ | ‘(.)’ | ‘(/)’
+
+<equivalence> ::= ‘=’ | ‘!=’ | ‘<’ | ‘>’ | ‘<<’ | ‘>>’ | ‘<=’ | ‘>=’ |
+                  ‘~~’ | ‘~=’ | ‘==’ | ‘->’ | ‘<->’ | ‘and’ | ‘or’ | ‘not’
+
+<name> ::= ‘sin’ | ‘cos’ | ‘tan’ | ‘cot’ | ‘sec’ | ‘csc’ |
+           ‘asin’ | ‘acos’ | ‘atan’ | ‘acot’ | ‘asec’ | ‘acsc’
+
+<alignment> ::= ‘SPC’ | ‘TAB’ | ‘#’
+}}}

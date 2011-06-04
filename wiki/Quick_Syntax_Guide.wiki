@@ -356,7 +356,7 @@ Note that you can not use this and the limits as exponent part without wrap it i
 
 =Technique=
 
-==Chemical==
+==Chemical Equation==
 
  # Wrap chemical element inside `" ... "`.
  # Since we didn't have command to add attribute on left side of atom, 

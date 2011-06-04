@@ -359,9 +359,9 @@ Note that you can not use this and the limits as exponent part without wrap it i
 ==Chemical Equation==
 
  # Wrap chemical element inside `" ... "`.
- # Since we didn't have command to add attribute on left side of atom, 
-use invisible atom (`""`) to add attribute before the main atom.
+ # Since we didn't have command to add attribute on left side of atom, use invisible atom (`""`) to add attribute before the main atom.
  # Use `-->` to provide a long arrow.
+Example:
 
 {{{
 $$

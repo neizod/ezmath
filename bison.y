@@ -49,7 +49,7 @@ void join(int n, char* strs, ...) {
 
  char* dSopt[19] = {"+", "-", "\\times", "\\cdot", "*", "\\div", "\\oplus", "\\ominus", "\\otimes", "\\odot", "\\circleast", "\\oslash", "\\pm", "\\mp", "\\sim", "{^\\circ}", "\\star", "\\|", "|"};
  char* dSeqv[14] = {"=", "\\equiv", "\\cong", "\\approx", "\\propto", "\\neq", "\\lt", "\\gt", "\\ll", "\\gg", "\\leq", "\\geq", "\\prec", "\\succ"};
- char* dSlgc[14] = {"\\land", "\\lor", "\\neg", "\\leftrightarrow", "\\longleftrightarrow", "\\rightarrow", "\\longrightarrow", "\\leftarrow", "\\longleftarrow", "\\Leftrightarrow", "\\Longleftrightarrow", "\\Rightarrow", "\\Longrightarrow", "\\Longleftarrow",};
+ char* dSlgc[15] = {"\\land", "\\lor", "\\neg", "\\leftrightarrow", "\\longleftrightarrow", "\\rightarrow", "\\longrightarrow", "\\leftarrow", "\\longleftarrow", "\\Leftrightarrow", "\\Longleftrightarrow", "\\Rightarrow", "\\Longrightarrow", "\\Longleftarrow", "\\mapsto"};
  char* dSoth[4] = {"\\ldots", "\\infty", "\\partial", "\\nabla"};
  char* dSset[9] = {"\\forall", "\\exists", "\\in", "\\notin", "\\subseteq", "\\supseteq", "\\cup", "\\cap", "\\setminus"};
  char* dNset[12] = {"\\emptyset", "\\varnothing", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{P}", "\\mathbb{Q}", "\\mathbb{R}", "\\mathbb{C}", "\\mathbb{H}", "\\aleph", "\\Re", "\\Im"};
@@ -65,7 +65,7 @@ void join(int n, char* strs, ...) {
 
 %token DIV POW CHS NRT
 %token SRT MOD
-%token ABS NRM FLR CIL RND
+%token ABS NRM BRA KET INN FLR CIL RND
 
 %token OSUM FR TO WH
 %token NOVR OOVR
@@ -178,6 +178,9 @@ subbracket: OP sentence CHS sentence CP { popi(2); join(5, "{", ts[2], "\\choose
 ;
 func_bracket: ABS reduce { popi(1); join(3, "\\left|", ts[1], "\\right|"); push(ts[0]); }
 | NRM reduce { popi(1); join(3, "\\left\\|", ts[1], "\\right\\|"); push(ts[0]); }
+| BRA reduce { popi(1); join(3, "\\left\\langle", ts[1], "\\right|"); push(ts[0]); }
+| KET reduce { popi(1); join(3, "\\left|", ts[1], "\\right\\rangle"); push(ts[0]); }
+| INN reduce { popi(1); join(3, "\\left\\langle", ts[1], "\\right\\rangle"); push(ts[0]); }
 | FLR reduce { popi(1); join(3, "\\left\\lfloor", ts[1], "\\right\\rfloor"); push(ts[0]); }
 | CIL reduce { popi(1); join(3, "\\left\\lceil", ts[1], "\\right\\rceil"); push(ts[0]); }
 | RND reduce { popi(1); join(3, "\\left\\lfloor", ts[1], "\\right\\rceil"); push(ts[0]); }

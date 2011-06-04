@@ -1,7 +1,7 @@
 #labels Featured,Phase-Implementation,Phase-Deploy
 = Installation Guide for Drupal Module =
 
-This page will show you how to install and enable Ezmath on Drupal 6.
+This page will show you how to install and enable EzMath on Drupal 6.
 
 ===System Requirement===
  # Unix/Linux base sever
@@ -44,13 +44,13 @@ This will allow your site's members write single Dollar sign ($) without turn it
 }}}
 
 
-=Ezmath Installation=
+=EzMath Installation=
 
- # Download and uncompress `ezmath1.x.tar.gz` in side your modules folder, which default place is `/sites/all/modules`.
- # Enable `Ezmath filter` module at `Administer >> Site building >> Modules`. (also check MathJax module to be enable!)
- # Add `Ezmath` input at `Administer >> Site configuration >> Input formats`.
- # Go to `Rearrange` tab and weight Ezmath to 0, or first execute filter.
- # Test by post new content by place Ezmath syntax between $$ ... $$, e.g.
+ # Download and uncompress `EzMath1.x.tar.gz` in side your modules folder, which default place is `/sites/all/modules`.
+ # Enable `EzMath filter` module at `Administer >> Site building >> Modules`. (also check MathJax module to be enable!)
+ # Add `EzMath` input at `Administer >> Site configuration >> Input formats`.
+ # Go to `Rearrange` tab and weight EzMath to 0, or first execute filter.
+ # Test by post new content by place EzMath syntax between $$ ... $$, e.g.
 {{{
 $$ a[i][j] * Xi^"T" = [i,j;4,2;x,0] $$
 }}}

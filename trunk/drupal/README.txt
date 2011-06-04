@@ -27,7 +27,7 @@ MathJax Module
 2. Uncompress archive and rename it to "mathjax" under "modules" directory.
 
 MathJax Software
-1. Download "MathJax Software" from http://www.mathjax.org/download/
+1. Download "MathJax Software" from http://www.mathjax.org/download
 2. Create your "libraries" directory (e.g. /sites/all/libraries)
 3. Uncompress archive and rename it to "mathjax" under "libraries" directory.
 
@@ -41,7 +41,7 @@ Ezmath Installation:
 1. Go to your MathJax module folder. Open "mathjax.js" with text editor.
 2. Search for line that contain "inlineMath" (line 18), replace all line with:
                    'inlineMath: ["\\\\(","\\\\)"]],' +
-   This will allow your members write Dollar sign $ without turn it into math.
+   This will allow your members write Dollar sign ($) without turn it into math.
 
 3. Download and uncompress "ezmath1.x.tar.gz" in side your modules folder,
    which default place is "/sites/all/modules".

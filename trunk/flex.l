@@ -58,6 +58,7 @@ star	{ yylval = 16; return SOPT; }
 "=>"	{ yylval = 11; return SLGC; }
 "==>"	{ yylval = 12; return SLGC; }
 "<=="	{ yylval = 13; return SLGC; }
+"|->"	{ yylval = 14; return SLGC; }
 
 
 "..."	{ yylval = 0; return SOTH; }
@@ -217,12 +218,19 @@ cases?" ["	{ return OB_C; }
 
 "/"	{ return DIV; }
 "^"	{ return POW; }
-"choose"	{ return CHS; }
-"root"	{ return NRT; }
-"sqrt"	{ return SRT; }
+choose	{ return CHS; }
+root	{ return NRT; }
+sqrt	{ return SRT; }
+
 
 abs	{ return ABS; }
 norm	{ return NRM; }
+
+bra	{ return BRA; }
+ket	{ return KET; }
+braket	|
+inner	{ return INN; }
+
 floor	{ return FLR; }
 ceil(ing)?	{ return CIL; }
 round	{ return RND; }

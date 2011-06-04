@@ -1,12 +1,20 @@
 #labels Featured,Phase-Design,Phase-Support
-=Quick Ezmath Syntax Guide=
+=Quick EzMath Syntax Guide=
 
-This guide shows you how to use Ezmath instead of LaTeX when writting posts or comments.
+This guide shows you how to use EzMath instead of LaTeX when writting posts or comments.
 
-Ezmath is way easier to use than LaTeX.
-However, you can mix LaTeX with Ezmath if you really want to and you know how.
+EzMath is way easier to use than LaTeX.
+However, you can mix LaTeX with EzMath if you really want to and you know how.
 
-Just write text in the comment box as usual, write Ezmath syntax inside `$$ ... $$` for in-line math, or feed before and after Ezmath syntax like this:
+==Start==
+
+For an in-line math, write EzMath syntax inside 
+
+{{{
+$$ ... $$
+}}}
+
+Or feed before and after EzMath syntax like this:
 
 {{{
 $$
@@ -19,10 +27,20 @@ for a displaystyle math (separate line from text, align at the center of page).
 
 ==General Rules==
 
-Ezmath syntax is case sensitive.
+EzMath syntax is case sensitive.
+
+Although you can type-in any language if you wish. We recommend only English alphabets, modern numeric digits, and standard symbols.
+
+{{{
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+0 1 2 3 4 5 6 7 8 9 ? + - * / ^ = ( ) [ ] { } < >
+~ ! @ $ % & , . " ' : ; _ #
+}}}
 
 Whitespace and tab is not consider as page alignment, use `_` (underscore) and `__` (double underscore) instead.
-It is frequently unnecessary, so you may write
+
+Whitespace is frequently unnecessary, so you may write
 
 {{{
 a+b=c^2
@@ -52,7 +70,7 @@ Note that `#` can not be place inside any parentheses.
 
 There are 4 type of numbers: integer, decimal, transcendental, and repeating decimal.
 
-The first 3, Ezmath will recognize them as numbers in the way of WYSIWYG.
+The first 3, EzMath will recognize them as numbers in the way of WYSIWYG.
 
 {{{
 42, 0.25, 3.1416...
@@ -168,7 +186,7 @@ The extra parentheses need its type then follow by `( ... )`.
 abs(ad-bc), norm(z), round(ln x), floor(n/2)
 }}}
 
-In case you want to use the right before the left, or only the left (e.g. `(−1, 7]`, `]-infty, 0]`), just passing them under `" ... "`.
+In case you want to use the right before the left, or only the left (e.g. `(?1, 7]`, `]-infty, 0]`), just passing them under `" ... "`.
 
 
 ====Reduce Parentheses====
@@ -358,9 +376,3 @@ $$
    # end
 $$
 }}}
-
-
-
-*Fin*
-
-Adapted from Quick Markdown Syntax Guide by Greg Schueler.

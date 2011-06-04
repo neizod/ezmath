@@ -379,6 +379,5 @@ $$
    # __ for_ i := n _downto_ 2 _step_ 1 _do
 5: # ____ r <- r * i _od
    # __ return_ r
-   # end
-$$
+   # end $$
 }}}

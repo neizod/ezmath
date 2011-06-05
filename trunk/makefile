@@ -1,25 +1,32 @@
-req =	flex.l bison.y
+CC =	cc
 
-bison =	bison -d bison.y
-flex =	flex flex.l
+REQ =	$(LEX).l $(PARSE).y
+LEX =	lexical
+PARSE =	parser
 
-define mksrc
-	$(bison)
-	$(flex)
+BISON =	bison -d $(PARSE).y
+FLEX =	flex $(LEX).l
+
+define MKSRC
+	$(BISON)
+	$(FLEX)
 endef
-rmsrc =	rm -rf bison.tab.c bison.tab.h lex.yy.c
+CCRAW =	$(PARSE).tab.c lex.yy.c
+ALRAW =	$(PARSE).tab.h $(CCRAW)
+RMSRC =	rm -rf $(ALRAW)
 
-
-ezmath:	$(req)
-	$(mksrc)
-	cc -o $@ bison.tab.c lex.yy.c -lfl
-	$(rmsrc)
+ezmath:	$(REQ)
+	$(MKSRC)
+	$(CC) -o $@ $(CCRAW) -lfl
+	$(RMSRC)
 	cp ezmath drupal/
 
-src:	$(req)
-	$(mksrc)
+src:	$(REQ)
+	$(MKSRC)
 	mkdir src
-	mv bison.tab.c bison.tab.h lex.yy.c src/
+	mv $(ALRAW) src/
 
+.PHONY:	clean
 clean:
-	$(rmsrc)
+	$(RMSRC)
+	rm -rf src

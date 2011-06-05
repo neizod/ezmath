@@ -85,15 +85,13 @@ class Ezmath_Parser {
   }
   // parsing error handler, return original text hilight in darkred.
   function error_parse($text, $type = 'w') {
-    // manualy manage newline here since it will be conflict with markdown.
-    $text = preg_replace("/\n/", '<br />', $text);
     if($type == 'w') {
       $text = '$$' . $text . '$$';
     } else {
       $text = '$$' . $text;
     }
     // it's ok to use $ directly while its being wrap inside <code>...</code>.
-    $text = '<code>' . $text . '</code>';
+    $text = '<pre>' . $text . '</pre>';
     $text = '<span style="color:darkred">' . $text . '</span>';
     return $text;
   }

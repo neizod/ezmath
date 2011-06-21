@@ -15,16 +15,17 @@ CCRAW =	$(PARSE).tab.c lex.yy.c
 ALRAW =	$(PARSE).tab.h $(CCRAW)
 RMSRC =	rm -rf $(ALRAW)
 
-ezmath:	$(REQ)
-	$(MKSRC)
-	$(CC) -o $@ $(CCRAW) -lfl
+main:	ezmath
 	$(RMSRC)
 	cp ezmath drupal/
 
-src:	$(REQ)
-	$(MKSRC)
+src:	ezmath
 	mkdir src
 	mv $(ALRAW) src/
+
+ezmath:	$(REQ)
+	$(MKSRC)
+	$(CC) -o $@ $(CCRAW) -lfl
 
 .PHONY:	clean
 clean:

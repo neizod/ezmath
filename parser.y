@@ -46,16 +46,6 @@ void join(int n, char* strs, ...) {
     strcat(ts[0], va_arg(ap, char*));
   va_end(ap);
 }
-
- char* dSopt[19] = {"+", "-", "\\times", "\\cdot", "*", "\\div", "\\oplus", "\\ominus", "\\otimes", "\\odot", "\\circleast", "\\oslash", "\\pm", "\\mp", "\\sim", "{^\\circ}", "\\star", "\\|", "|"};
- char* dSeqv[14] = {"=", "\\equiv", "\\cong", "\\approx", "\\propto", "\\neq", "\\lt", "\\gt", "\\ll", "\\gg", "\\leq", "\\geq", "\\prec", "\\succ"};
- char* dSlgc[15] = {"\\land", "\\lor", "\\neg", "\\leftrightarrow", "\\longleftrightarrow", "\\rightarrow", "\\longrightarrow", "\\leftarrow", "\\longleftarrow", "\\Leftrightarrow", "\\Longleftrightarrow", "\\Rightarrow", "\\Longrightarrow", "\\Longleftarrow", "\\mapsto"};
- char* dSoth[4] = {"\\ldots", "\\infty", "\\partial", "\\nabla"};
- char* dSset[9] = {"\\forall", "\\exists", "\\in", "\\notin", "\\subseteq", "\\supseteq", "\\cup", "\\cap", "\\setminus"};
- char* dNset[12] = {"\\emptyset", "\\varnothing", "\\mathbb{N}", "\\mathbb{Z}", "\\mathbb{P}", "\\mathbb{Q}", "\\mathbb{R}", "\\mathbb{C}", "\\mathbb{H}", "\\aleph", "\\Re", "\\Im"};
- char* dNovr[9] = {"\\hat{\\imath}","\\hat{\\iota}", "\\hat{\\jmath}", "\\overrightarrow{\\imath}", "\\overrightarrow{\\iota}", "\\overrightarrow{\\jmath}", "\\overline{\\imath}", "\\overline{\\iota}", "\\overline{\\jmath}"};
- char* dOovr[5] = {"\\dot", "\\ddot", "\\widehat", "\\overrightarrow", "\\overline"};
- char* dOsum[10] = {"\\sum", "\\prod", "\\coprod", "\\bigcup", "\\bigcap", "\\lim", "\\int", "\\oint", "\\iint", "\\iiint"};
 %}
 
 %token NUMBER REPEAT
@@ -141,7 +131,7 @@ mtx_wrap: OB_M { push("bmatrix"); }
 | OB_P { push("pmatrix"); }
 | OB_C { push("cases"); }
 ;
-mtx_sentence: { push("{}"); /* nothing */ }
+mtx_sentence: /* nothing */ { push("{}"); }
 | mtx_subsentence
 ;
 mtx_subsentence: mtx_element
@@ -155,7 +145,7 @@ mtx_element: element
 
 summation: sum_symbol sum_element { popi(2); join(2, ts[2], ts[1]); push(ts[0]);}
 ;
-sum_symbol: OSUM { push(dOsum[$1]); }
+sum_symbol: OSUM { push((char*)$1); }
 ;
 sum_element: sentence
 | sentence boundary { popi(2); join(3, "\\limits", ts[1], ts[2]); push(ts[0]); }
@@ -186,7 +176,7 @@ func_bracket: ABS reduce { popi(1); join(3, "\\left|", ts[1], "\\right|"); push(
 | RND reduce { popi(1); join(3, "\\left\\lfloor", ts[1], "\\right\\rceil"); push(ts[0]); }
 ;
 
-over: OOVR reduce { popi(1); join(4, dOovr[$1], "{", ts[1], "}"); push(ts[0]); }
+over: OOVR reduce { popi(1); join(4, (char*)$1, "{", ts[1], "}"); push(ts[0]); }
 ;
 
 piece: subpiece
@@ -216,8 +206,8 @@ number: NUMBER { push((char*)$1); }
 ;
 variable: ENGL { join(2, " ", (char*)$1); push(ts[0]); }
 | GREEK { join(2, "\\", (char*)$1); push(ts[0]); }
-| NSET { push(dNset[$1]); }
-| NOVR { push(dNovr[$1]); }
+| NSET { push((char*)$1); }
+| NOVR { push((char*)$1); }
 ;
 text: TEXT { strcpy(ts[1], (char*)$1+1); ts[1][strlen(ts[1])-1] = '\0'; join(3, "\\text{", ts[1], "}"); push(ts[0]); }
 | PUNCT { push((char*)$1); }
@@ -227,11 +217,11 @@ text: TEXT { strcpy(ts[1], (char*)$1+1); ts[1][strlen(ts[1])-1] = '\0'; join(3, 
 | INVFUNC { if(strlen((char*)$1)<6) join(3, "\\", (char*)$1+1, "^{-1}"); else join(3, "\\", (char*)$1+3, "^{-1}"); push(ts[0]); }
 | LATEX { strcpy(ts[1], (char*)$1+2); ts[1][strlen(ts[1])-1] = '\0'; push(ts[1]); }
 ;
-symbol: SOPT { push(dSopt[$1]); }
-| SOTH { push(dSoth[$1]); }
-| SLGC { push(dSlgc[$1]); }
-| SSET { push(dSset[$1]); }
-| SEQV { push(dSeqv[$1]); }
+symbol: SOPT { push((char*)$1); }
+| SOTH { push((char*)$1); }
+| SLGC { push((char*)$1); }
+| SSET { push((char*)$1); }
+| SEQV { push((char*)$1); }
 ;
 alignment: SPC { push("\\;\\;"); }
 | TAB { push("\\quad\\quad"); }

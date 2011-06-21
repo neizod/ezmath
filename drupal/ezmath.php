@@ -90,7 +90,7 @@ class Ezmath_Parser {
     } else {
       $text = '$$' . $text;
     }
-    // it's ok to use $ directly while its being wrap inside <code>...</code>.
+    // it's ok to use $ directly while its being wrap inside <pre>...</pre>.
     $text = '<pre>' . $text . '</pre>';
     $text = '<span style="color:darkred">' . $text . '</span>';
     return $text;

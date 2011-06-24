@@ -101,11 +101,16 @@ intersect(ion)?	|
 exp	|
 log	|
 ln	|
+
 max	|
 min	|
 gcd	|
+
 det	|
 mod	|
+
+inf	|
+sup	|
 
 sinh?	|
 cosh?	|
@@ -162,6 +167,7 @@ return	{ yylval = (int)yytext; return PSEUDO; }
 
 
 (i|j)math	|
+hbar	|
 
 (A|a)lpha	|
 (B|b)eta	|

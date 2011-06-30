@@ -72,6 +72,7 @@ Note that `#` can not be place inside any parentheses.
 
 Atom is the smallest part in EzMath syntax. You can use them to form mathematical sentence.
 
+
 ==Numbers==
 
 There are 4 types of numbers: integer, decimal, transcendental, and repeating decimal.
@@ -95,7 +96,7 @@ Note that the numbers can contain only digits and periods.
 
 Treat the most of frequently use symbol as the way you done with most computer program.
 
-Elementary symbol:
+*Elementary symbol:*
 
 Addition, subtraction, multiplication, division.
 
@@ -103,7 +104,7 @@ Addition, subtraction, multiplication, division.
 + - * //
 }}}
 
-Addition elementary:
+*Addition elementary:*
 
 Dot product, factorial, divides, plus-minus, minus-plus, equivalence relation, more.
 
@@ -111,13 +112,13 @@ Dot product, factorial, divides, plus-minus, minus-plus, equivalence relation, m
 . ! | +- -+ ~ ...
 }}}
 
-Complex elementary:
+*Complex elementary:*
 
 {{{
 (+) (-) (*) (/) (.) 
 }}}
 
-Equality:
+*Equality:*
 
 Equality, inequality, approximately, congruent, congruent (modulo), proportionality.
 
@@ -125,7 +126,7 @@ Equality, inequality, approximately, congruent, congruent (modulo), proportional
 = != ~~ ~= == propto
 }}}
 
-Strict inequality:
+*Strict inequality:*
 
 Less than, greater than, much less than, much greater than, less or equal, greater or equal, 
 
@@ -133,19 +134,19 @@ Less than, greater than, much less than, much greater than, less or equal, great
 < > << >> <= >=
 }}}
 
-Logic:
+*Logic:*
 
 {{{
 and or not union intersect
 }}}
 
-Set:
+*Set:*
 
 {{{
 all exists in notin subset supset
 }}}
 
-Arrow:
+*Arrow:*
 
 Maps to, left arrow, left-right arrow.
 
@@ -153,13 +154,7 @@ Maps to, left arrow, left-right arrow.
 |-> -> <->
 }}}
 
-Alphabetic symbol:
-
-{{{
-infty empty partial nabla
-}}}
-
-Other symbol:
+*Other symbol:*
 
 {{{
 \ ' : ? $ % & , ;
@@ -170,7 +165,7 @@ Other symbol:
 
 Each English alphabet will be seen as mathematical variable.
 If you want dotless i or j, add `math` after it.
-If you want a little bar over h head, add `bar` after h.
+This also work on the `hbar`.
 
 {{{
 imath, jmath, hbar
@@ -188,6 +183,12 @@ Set notations are begin with set name, and follow by keyword `set`.
 
 {{{
 Eset, Nset, Zset, Qset, Rset, Cset
+}}}
+
+And some more symbols.
+
+{{{
+infty empty partial nabla
 }}}
 
 Functions are written as its name.
@@ -244,6 +245,9 @@ This method called Reduce Parentheses. If you place them in the right position, 
 
 =Word=
 
+Word are the combination of atoms.
+
+
 ==Indexing==
 
 To index the atom, treat them the way you done with computer's array.
@@ -266,16 +270,16 @@ This must be done after indexed, otherwise the indexed will goes to the exponent
 
 ==Accents==
 
-To add accents to word, put this keywords ahade.
+To add accents to word, put this keywords ahead.
 
 {{{
-vec, bar, hat, dot, ddot
+vec(a), bar(z), hat(c), dot(m), ddot(n)
 }}}
 
 The accents can be stack.
 
 {{{
-vec ddot a
+vec(ddot(a))
 }}}
 
 Only `vec`, `bar`, and `hat` can be extended for long word.
@@ -287,11 +291,14 @@ bar(x + y)
 If there are only i or j after `vec`, `bar`, and `hat`; its dot will be removed automatically.
 
 {{{
-vec i, hat(j)
+vec(i), hat(j)
 }}}
 
 
 =Sentence=
+
+Sentence is a group of words and atoms. It can be from in freestyle, but there are also some rule for special form.
+
 
 ==Roots==
 
@@ -301,7 +308,7 @@ The most frequently root, square root, can be call by favorite keyword `sqrt`.
 sqrt(r)
 }}}
 
-For the nth root, place keyword "root" between the degree and the root.
+For the _n_th root, place keyword "root" between the degree and the root.
 
 {{{
 (n)root(r)
@@ -316,20 +323,23 @@ To express the fraction, use `/` (slash) to separate a numerator and a denominat
 a/b
 }}}
 
+Note that the fraction can not be stack, so you can not write `1/2/3`. If you really want to, use parentheses to group them.
+
 
 ==Combination==
 
-For combination, place keyword `choose` inside parenteses, with upper on the left side and lower on the right side.
+For combination, place keyword `choose` inside the parentheses, with upper part on the left side and lower part on the right side.
 
 {{{
 (n choose r)
 }}}
 
+
 ==Matrix==
 
-Matrix is call by `[ ... ]`, when it is not hinge to any atoms (need at least one whitespace before it - otherwise, its goes to indexed).
+Matrix can be call by `[ ... ]`, when it is not hinge to any atoms (need at least one whitespace before it - otherwise, its goes to indexed).
 
-Each of element inside matrix is separate by `,` (comma) and `;` (semicolon). Comma is use to separate each element into columns, and semicolon separate there rows (newline character doesn't do any action inside matrix).
+Each of element inside matrix is separate by `,` (comma) and `;` (semicolon). Comma is use to separate each element into columns, and semicolon separate there rows (newline character will not act as linefeed inside matrix).
 
 {{{
 [a, b, c; d, e, f]
@@ -351,11 +361,12 @@ pmatrix, bmatrix, vmatrix, Vmatrix
 
 ===Cases===
 
-Cases can be seen as a matrix, which left parentheses is "{" and right parentheses is omitted. So we can use this.
+Cases can be count as a type of matrix, which left parentheses is "{" and right parentheses is omitted. So we can write cases in this form.
 
 {{{
 cases [x, if x >= 0; -x, if x < 0]
 }}}
+
 
 ==Limits==
 
@@ -395,6 +406,10 @@ sum f(x) from () to (Rset)
 }}}
 
 Note that you can not use this and the limits as exponent part without wrap it inside `( ... )`.
+
+{{{
+e^(int x_dx)
+}}}
 
 
 =Technique=

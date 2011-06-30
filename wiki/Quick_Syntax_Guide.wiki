@@ -39,18 +39,18 @@ Although you can type-in any language if you wish. We recommend only English alp
 a b c d e f g h i j k l m n o p q r s t u v w x y z
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 0 1 2 3 4 5 6 7 8 9 + - * / | \ ^ = ( ) [ ] { } < >
-~ ? ! @ $ % & , . " ' : ; _ # whitespace newline
+~ ? ! @ $ % & , . " ' : ; _ # space newline
 }}}
 
-Whitespace and tab is not consider as page alignment, use `_` (underscore) and `__` (double underscore) instead.
+Space and tab is not consider as page alignment, use `_` (underscore) and `__` (double underscore) instead.
 
-Whitespace is frequently unnecessary, so you may write
+Space is frequently unnecessary, so you may write:
 
 {{{
 a+b=c^2
 }}}
 
-But, to prevent ambiguity, you should always use whitespace to separate every single word.
+But, to prevent ambiguity, you should always use space to separate every single word, like this:
 
 {{{
 z = x i + y
@@ -70,17 +70,19 @@ Note that `#` can not be place inside any parentheses.
 
 =Atom=
 
+Atom is the smallest part in EzMath syntax. You can use them to form mathematical sentence.
+
 ==Numbers==
 
-There are 4 type of numbers: integer, decimal, transcendental, and repeating decimal.
+There are 4 types of numbers: integer, decimal, transcendental, and repeating decimal.
 
-The first 3, EzMath will recognize them as numbers in the way of WYSIWYG.
+For the first 3 types, EzMath will recognize them as numbers in the way of WYSIWYG.
 
 {{{
 42, 0.25, 3.1416...
 }}}
 
-The last one, repeating decimal, is written in this from.
+The last one, repeating decimal, must be written in this from.
 
 {{{
 0.0...238095... ,or 0....9...
@@ -95,42 +97,83 @@ Treat the most of frequently use symbol as the way you done with most computer p
 
 Elementary symbol:
 
-{{{
-+ - * // = !=
-}}}
-
-Basic symbol:
+Addition, subtraction, multiplication, division.
 
 {{{
-. ! | +- -+ ~ < > <= >= -> <-> ...
++ - * //
 }}}
 
-Additional symbol:
+Addition elementary:
+
+Dot product, factorial, divides, plus-minus, minus-plus, equivalence relation, more.
+
+{{{
+. ! | +- -+ ~ ...
+}}}
+
+Complex elementary:
+
+{{{
+(+) (-) (*) (/) (.) 
+}}}
+
+Equality:
+
+Equality, inequality, approximately, congruent, congruent (modulo), proportionality.
+
+{{{
+= != ~~ ~= == propto
+}}}
+
+Strict inequality:
+
+Less than, greater than, much less than, much greater than, less or equal, greater or equal, 
+
+{{{
+< > << >> <= >=
+}}}
+
+Logic:
+
+{{{
+and or not union intersect
+}}}
+
+Set:
+
+{{{
+all exists in notin subset supset
+}}}
+
+Arrow:
+
+Maps to, left arrow, left-right arrow.
+
+{{{
+|-> -> <->
+}}}
+
+Alphabetic symbol:
+
+{{{
+infty empty partial nabla
+}}}
+
+Other symbol:
 
 {{{
 \ ' : ? $ % & , ;
 }}}
 
-Complex symbol:
-
-{{{
-(+) (-) (*) (/) (.) || << >> ~~ ~= == 
-}}}
-
-Text symbol:
-
-{{{
-and or not infty propto empty partial nabla
-all exists in notin subset supset union intersect
-}}}
 
 ==Alphabets and Words==
 
 Each English alphabet will be seen as mathematical variable.
 If you want dotless i or j, add `math` after it.
+If you want a little bar over h head, add `bar` after h.
 
 {{{
-imath, jmath
+imath, jmath, hbar
 }}}
 
 For Greek alphabet, just write them in English.

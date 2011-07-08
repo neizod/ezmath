@@ -220,7 +220,7 @@ symbol: SOPT { push((char*)$1); }
 | SOTH { push((char*)$1); }
 | SLGC { push((char*)$1); }
 | SSET { push((char*)$1); }
-| SEQV { push((char*)$1); }
+| SEQV { push((char*)$1); } /* wait to be clean up here! */
 ;
 alignment: SPC { push("\\;\\;"); }
 | TAB { push("\\quad\\quad"); }

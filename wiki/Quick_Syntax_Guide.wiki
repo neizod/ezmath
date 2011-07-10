@@ -165,10 +165,10 @@ Maps to, left arrow, left-right arrow.
 
 Each English alphabet will be seen as mathematical variable.
 If you want dotless i or j, add `math` after it.
-This also work on the `hbar`.
+This also work on the `hbar` and `ell`.
 
 {{{
-imath, jmath, hbar
+imath, jmath, hbar, ell
 }}}
 
 For Greek alphabet, just write them in English.

@@ -279,7 +279,7 @@ vec(a), bar(z), hat(c), dot(m), ddot(n)
 The accents can be stack.
 
 {{{
-vec(ddot(a))
+vec(dot(a))
 }}}
 
 Only `vec`, `bar`, and `hat` can be extended for long word.
@@ -308,7 +308,7 @@ The most frequently root, square root, can be call by favorite keyword `sqrt`.
 sqrt(r)
 }}}
 
-For the _n_th root, place keyword "root" between the degree and the root.
+For the _n_ th root, place keyword `root` between the degree and the root.
 
 {{{
 (n)root(r)
@@ -337,7 +337,7 @@ For combination, place keyword `choose` inside the parentheses, with upper part 
 
 ==Matrix==
 
-Matrix can be call by `[ ... ]`, when it is not hinge to any atoms (need at least one whitespace before it - otherwise, its goes to indexed).
+Matrix can be call by `[ ... ]`, when it is not hinge to any atoms (need at least one space before it - otherwise, its goes to indexed).
 
 Each of element inside matrix is separate by `,` (comma) and `;` (semicolon). Comma is use to separate each element into columns, and semicolon separate there rows (newline character will not act as linefeed inside matrix).
 
@@ -345,7 +345,7 @@ Each of element inside matrix is separate by `,` (comma) and `;` (semicolon). Co
 [a, b, c; d, e, f]
 }}}
 
-There are keywords to adjust matrix parentheses, which must be place before `[ ... ]` with exactly one whitespace.
+There are keywords to adjust matrix parentheses, which must be place before `[ ... ]` with exactly one space.
 
 {{{
 det [a, b; c, d]
@@ -364,7 +364,7 @@ pmatrix, bmatrix, vmatrix, Vmatrix
 Cases can be count as a type of matrix, which left parentheses is "{" and right parentheses is omitted. So we can write cases in this form.
 
 {{{
-cases [x, if x >= 0; -x, if x < 0]
+cases [x, if_ x >= 0; -x, if_ x < 0]
 }}}
 
 
@@ -431,7 +431,7 @@ $$
 ==Pseudocode==
 
  # Use `#` at the start of each line to mark start point of paragraph.
- # Use `_` to instead of spacebar to add whitespace between words.
+ # Use `_` instead of spacebar to add whitespace between words.
  # For each depth inside the code, use `__` after `#` to add tab character.
  # Function name should be wrap between `" ... "` to prevent keyword conflict.
  # Since we kept keyword `to` for integral notation; use `upto`, or `downto` instead.

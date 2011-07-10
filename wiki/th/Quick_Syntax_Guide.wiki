@@ -1,24 +1,24 @@
 #summary This guide shows you how to use EzMath instead of LaTeX when writting posts or comments.
 #labels Featured,Phase-Design,Phase-Support
 
-=Quick EzMath Syntax Guide=
+=คู่มือไวยกรณ์ EzMath แบบติดจรวด=
 
-This guide shows you how to use EzMath instead of LaTeX when writting posts or comments.
+คู่มือนี้ จะแสดงถึงวิธีการใช้ EzMath แทนที่ LaTeX เมื่อคุณต้องการเผยแพร่บทความหรือแสดงความความคิดเห็นบนเว็บบอร์ด
 
-EzMath is way easier to use than LaTeX.
-However, you can mix LaTeX with EzMath if you really want to and you know how.
+การใช้ EzMath นั้นง่ายกว่าการใช้ LaTeX มาก
+แต่คุณก็ยังสามารถใช้ LaTeX ควบคู่ไปกับ EzMath ได้ถ้าคุณต้องการและรู้วิธีใช้
 
 <wiki:toc max_depth="3" />
 
-=Start=
+=เริ่มต้น=
 
-For an in-line math, write EzMath syntax inside 
+เมื่อต้องการแทรกสมการคณิตศาสตร์ในบรรทัดเดียวกับข้อความ เขียนไวยกรณ์ EzMath ภายในนี้
 
 {{{
 $$ ... $$
 }}}
 
-Or feed before and after EzMath syntax like this:
+หรือเว้นบรรทัดก่อนและหลังไวยกรณ์ EzMath เช่นนี้
 
 {{{
 $$
@@ -26,39 +26,39 @@ $$
 $$
 }}}
 
-for a displaystyle math (separate line from text, align at the center of page).
+เพื่อแยกส่วนของสมการคณิตศาสตร์ออกจากข้อความทั่วไป
 
 
-==General Rules==
+==กฎทั่วไป==
 
-EzMath syntax is case sensitive.
+ไวยกรณ์ EzMath เป็น case sensitive (ตัวอักษรพิมพ์เล็ก-ใหญ่จะส่งผลต่างกัน)
 
-Although you can type-in any language if you wish. We recommend only English alphabets, modern numeric digits, and standard symbols.
+แม้ว่าคุณจะสามารถพิมพ์ภาษาใดๆ เข้าไปในไวยกรณ์ EzMath ก็ได้ แต่เราแนะนำเฉพาะตัวอักษรภาษาอังกฤษ, ตัวเลขอาราบิก, และอักขระพิเศษแบบมาตรฐานเท่านั้น
 
 {{{
 a b c d e f g h i j k l m n o p q r s t u v w x y z
 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 0 1 2 3 4 5 6 7 8 9 + - * / | \ ^ = ( ) [ ] { } < >
-~ ? ! @ $ % & , . " ' : ; _ # whitespace newline
+~ ? ! @ $ % & , . " ' : ; _ # space newline
 }}}
 
-Whitespace and tab is not consider as page alignment, use `_` (underscore) and `__` (double underscore) instead.
+SPACE และ TAB ไม่ถือว่าเป็นการจัดย่อหน้า ให้ใช้ `_` (underscore) และ `__` (double underscore) แทนตามลำดับ
 
-Whitespace is frequently unnecessary, so you may write
+แม้ว่าหลายครั้งนั้น SPACE จะถูกมองว่าไม่จำเป็น คุณอาจเขียนสมการเช่นนี้ได้
 
 {{{
 a+b=c^2
 }}}
 
-But, to prevent ambiguity, you should always use whitespace to separate every single word.
+แต่เพื่อหลีกเลี่ยง AMBIGUITY คุณควรจะใช้ SPACE เว้นคำต่างๆ แยกจากกันทุกครั้ง
 
 {{{
 z = x i + y
 }}}
 
-Newline character generally produce a line feed, use this carefuly since it can conflict with LaTeX syntax (like `a/<newline>b`).
+NEWLINE จะถูกใช้งานเพื่อขึ้นบรรทัดใหม่แทบทั้งหมด โปรดระมัดระวังเมื่อใช้ NEWLINE เนื่องจากบางกรณีมันอาจทำให้ LaTeX เกิดข้อขัดแย้ง (เช่น `a/<newline>b`).
 
-Use `#` (hash) to align following sentence in the same vertical position as others line.
+ใช้ `#` (hash) เพื่อจัดย่อหน้าสำหรับประโยคที่ตามมาในตำแหน่งเดียวกันกับบรรดทัดอื่นๆ
 
 {{{
   a # = 22
@@ -66,30 +66,34 @@ Use `#` (hash) to align following sentence in the same vertical position as othe
 a/b # ~~ pi
 }}}
 
-Note that `#` can not be place inside any parentheses.
+ข้อควรระวังคือ ห้ามใช้ `#` ภายใต้วงเล็บใดๆ ทั้งสิ้น
 
-=Atom=
 
-==Numbers==
+=อะตอม=
 
-There are 4 type of numbers: integer, decimal, transcendental, and repeating decimal.
+อะตอมคือส่วนที่เล็กที่สุดของไวยกรณ์ EzMath คุณสามารถใช้มันเพื่อสร้างประโยคทางคณิตศาสตร์ได้
 
-The first 3, EzMath will recognize them as numbers in the way of WYSIWYG.
+
+==จำนวน==
+
+วิธีเขียนจำนวนมีอยู่ด้วยกัน 4 แบบ: จำนวนเต็ม, ทศนิยม, ทศนิยมไม่รู้จบ, และทศนิยมซ้ำ
+
+สำหรับ 3 แบบแรกนั้น EzMath จะมองมันในรูปแบบของ WYSIWYG (เห็นอย่างไรได้อย่างนั้น)
 
 {{{
 42, 0.25, 3.1416...
 }}}
 
-The last one, repeating decimal, is written in this from.
+ส่วนทศนิยมซ้ำต้องเขียนอยู่ในรูปของ
 
 {{{
 0.0...238095... ,or 0....9...
 }}}
 
-Note that the numbers can contain only digits and periods.
+ข้อควรระวังคือ จำนวนสามารถประกอบไปด้วยตัวเลขและจุดเท่านั้น
 
 
-==Symbols==
+==สัญลักษณ์==
 
 Treat the most of frequently use symbol as the way you done with most computer program.
 
@@ -124,30 +128,31 @@ and or not infty propto empty partial nabla
 all exists in notin subset supset union intersect
 }}}
 
-==Alphabets and Words==
+==อักขระและคำ==
 
-Each English alphabet will be seen as mathematical variable.
-If you want dotless i or j, add `math` after it.
+อักขระภาษาอังกฤษจะถูกมองว่าเป็นตัวแปรโดยอัตโนมัติ
+ถ้าคุณต้องการ i หรือ j ไม่มีหัว ให้เพิ่มคำว่า `math` ต่อท้ายคำนั้น
+กฎนี้ยังถูกใช้กับ h มีขีดอีกด้วย
 
 {{{
-imath, jmath
+imath, jmath, hbar
 }}}
 
-For Greek alphabet, just write them in English.
-Use uppercase for first character if you want uppercase Greek alphabet.
-Alphabet that has variation can be call by putting var before its name.
+สำหรับอักขระภาษากรีก ให้เขียนมันด้วยชื่อในภาษาอังกฤษ
+โดยให้ตัวอักษรตัวแรกเป็นตัวพิมพ์ใหญ่ ถ้าคุณต้องการให้ตัวอักษรกรีกตัวนั้นเป็นตัวพิมพ์ใหญ่
+สำหรับตัวอักษรที่มีวิธีเขียนมากกว่า 1 วิธี สามารถเรียกการเขียนอีกแบบได้โดยเติม `var` ไปที่ด้านหน้าของคำ
 
 {{{
 alpha, Delta, varphi
 }}}
 
-Set notations are begin with set name, and follow by keyword `set`.
+การเขียนชื่อเซตนั้นทำได้โดยเขียนตัวอักษรแสดงชื่อเซต แล้วนำคำว่า `set` มาต่อท้าย
 
 {{{
 Eset, Nset, Zset, Qset, Rset, Cset
 }}}
 
-Functions are written as its name.
+ชื่อฟังก์ชันสามารถเรียกได้ทันทีโดยชื่อของมัน
 
 {{{
 sin, arccos, tanh, max, log, gcd, Re, Im
@@ -159,12 +164,12 @@ And there also some frequently used logic word.
 if, then, else
 }}}
 
-Note that inverse trigonometric functions will be display as `function_name^-1`
+หมายเหตุ ฟังก์ชันตรีโกณมิติผกผันจะแสดงในรูปของ `function_name^-1`
 
 
 ==Escape Text and LaTeX==
 
-Put text inside `" ... "` to display them as text.
+ใส่ข้อความภายใต้ `" ... "` เพื่อให้มันแสดงเป็นข้อความตามปรกติ
 There is no escape character for `"` (quotation mark) yet.
 
 To escape LaTeX, just add `@` (at sign) in front of the text mode.
@@ -173,27 +178,27 @@ To escape LaTeX, just add `@` (at sign) in front of the text mode.
 @" ... "
 }}}
 
-Use this carefully!
+โปรดใช้ด้วยความระมัดระวัง!
 
 
-==Parentheses==
+==วงเล็บ==
 
-All left parentheses need right parentheses of the same type, and the right can not be appear before the left.
+วงเล็บเปิดนั้น ต้องการวงเล็บปิดแบบเดียวกับตัวมันเองเสมอ และวงเล็บปิดก็ไม่สามารถปรากฎก่อนวงเล็บเปิดได้
 
 {{{
 () [] {}
 }}}
 
-The extra parentheses need its type then follow by `( ... )`.
+สำหรับวงเล็บพิเศษแบบอื่นๆ สามารถเรียกใช้ได้โดยประกาศชื่อวงเล็บนำหน้า `( ... )`
 
 {{{
 abs(ad-bc), norm(z), round(ln x), floor(n/2)
 }}}
 
-In case you want to use the right before the left, or only the left (e.g. `(?1, 7]`, `]-infty, 0]`), just passing them under `" ... "`.
+ในกรณีที่คุณต้องการแสดงวงเล็บปิดก่อนเปิด หรือต้องการแค่วงเล็บเปิด (เช่น `(-1, 7], ]-infty, 0]`) ให้ใช้ `" ... "` ครอบมันไว้
 
 
-===Reduce Parentheses===
+===วงเล็บอันตรธาน===
 
 There are situation that you might want to wrap many atoms into one, use `( ... )` to wrap them.
 This method called Reduce Parentheses. If you place them in the right position, the parentheses will be hide automatically.

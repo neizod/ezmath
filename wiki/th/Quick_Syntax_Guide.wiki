@@ -6,7 +6,7 @@
 คู่มือนี้ จะแสดงถึงวิธีการใช้ EzMath แทนที่ LaTeX เมื่อคุณต้องการเผยแพร่บทความหรือแสดงความความคิดเห็นบนเว็บบอร์ด
 
 การใช้ EzMath นั้นง่ายกว่าการใช้ LaTeX มาก
-แต่คุณก็ยังสามารถใช้ LaTeX ควบคู่ไปกับ EzMath ได้ถ้าคุณต้องการและรู้วิธีใช้
+แต่คุณก็ยังสามารถใช้ LaTeX ควบคู่ไปกับ EzMath ได้ถ้าคุณต้องการและรู้วิธีใช้มัน
 
 <wiki:toc max_depth="3" />
 
@@ -42,21 +42,21 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 ~ ? ! @ $ % & , . " ' : ; _ # space newline
 }}}
 
-SPACE และ TAB ไม่ถือว่าเป็นการจัดย่อหน้า ให้ใช้ `_` (underscore) และ `__` (double underscore) แทนตามลำดับ
+space และ tab ไม่ถือว่าเป็นการจัดย่อหน้า ให้ใช้ `_` (underscore) และ `__` (double underscore) แทนตามลำดับ
 
-แม้ว่าหลายครั้งนั้น SPACE จะถูกมองว่าไม่จำเป็น คุณอาจเขียนสมการเช่นนี้ได้
+แม้ว่าหลายครั้งนั้น space จะถูกมองว่าไม่จำเป็น คุณอาจเขียนสมการเช่นนี้ได้
 
 {{{
 a+b=c^2
 }}}
 
-แต่เพื่อหลีกเลี่ยง AMBIGUITY คุณควรจะใช้ SPACE เว้นคำต่างๆ แยกจากกันทุกครั้ง
+แต่เพื่อหลีกเลี่ยงความกำกวม คุณควรจะใช้ space เว้นคำต่างๆ แยกจากกันทุกครั้ง
 
 {{{
 z = x i + y
 }}}
 
-NEWLINE จะถูกใช้งานเพื่อขึ้นบรรทัดใหม่แทบทั้งหมด โปรดระมัดระวังเมื่อใช้ NEWLINE เนื่องจากบางกรณีมันอาจทำให้ LaTeX เกิดข้อขัดแย้ง (เช่น `a/<newline>b`).
+newline จะถูกใช้งานเพื่อขึ้นบรรทัดใหม่แทบทั้งหมด โปรดระมัดระวังเมื่อใช้ newline เนื่องจากบางกรณีมันอาจทำให้ LaTeX เกิดข้อผิดพลาดได้ (เช่น `a/<newline>b`).
 
 ใช้ `#` (hash) เพื่อจัดย่อหน้าสำหรับประโยคที่ตามมาในตำแหน่งเดียวกันกับบรรดทัดอื่นๆ
 
@@ -76,7 +76,7 @@ a/b # ~~ pi
 
 ==จำนวน==
 
-วิธีเขียนจำนวนมีอยู่ด้วยกัน 4 แบบ: จำนวนเต็ม, ทศนิยม, ทศนิยมไม่รู้จบ, และทศนิยมซ้ำ
+วิธีเขียนจำนวนมีอยู่ด้วยกัน 4 แบบ คือจำนวนเต็ม, ทศนิยม, ทศนิยมไม่รู้จบ, และทศนิยมซ้ำ
 
 สำหรับ 3 แบบแรกนั้น EzMath จะมองมันในรูปแบบของ WYSIWYG (เห็นอย่างไรได้อย่างนั้น)
 
@@ -95,12 +95,28 @@ a/b # ~~ pi
 
 ==สัญลักษณ์==
 
-Treat the most of frequently use symbol as the way you done with most computer program.
+จัดการกับเครื่องหมายที่ใช้บ่อยๆ เช่นเดียวกับที่คุณทำในโปรแกรมคอมพิวเตอร์ทั่วไป
 
-Elementary symbol:
+เครื่องหมายดำเนินการพื้นฐาน:
+
+บวก, ลบ, คูณ, หาร
 
 {{{
 + - * // = !=
+}}}
+
+เครื่องหมายดำเนินการเพิ่มเติม:
+
+ผลคูณจุด, แฟคทอเรียล, หารลงตัว, บวกหรือลบ, ลบหรือบวก, สมมูล, ไข่ปลา
+
+{{{
+. ! | +- -+ ~ ...
+}}}
+
+เครื่องหมายดำเนินการแบบซับซ้อน:
+
+{{{
+(+) (-) (*) (/) (.) 
 }}}
 
 Basic symbol:
@@ -109,33 +125,53 @@ Basic symbol:
 . ! | +- -+ ~ < > <= >= -> <-> ...
 }}}
 
-Additional symbol:
+เท่ากัน:
+
+เท่ากับ, ไม่เท่ากับ, ประมาณ, เท่ากันทุกประการ, คอนกรูเอ็นซ์ (มอดูโล), แปรผัน
+
+{{{
+= != ~~ ~= == propto
+}}}
+
+ไม่เท่ากัน:
+
+น้อยกว่า, มากกว่า, น้อยกว่ามาก, มากกว่ามาก, น้อยกว่าหรือเท่ากับ, มากกว่าหรือเท่ากับ
+
+{{{
+< > << >> <= >=
+}}}
+
+ตรรกะ:
+
+ทุกๆ, มี, เป็นสมาชิก, ไม่เป็นสมาชิก, เป็นซับเซต, เป็นซูเปอร์เซต
+
+{{{
+all exists in notin subset supset
+}}}
+
+ลูกศร:
+
+จับคู่กับ, ลูกศรขวา (ถ้า ... แล้ว), ลูกศรซ้ายขวา (ก็ต่อเมื่อ)
+
+{{{
+|-> -> <->
+}}}
+
+สัญลักษณ์อื่นๆ:
 
 {{{
 \ ' : ? $ % & , ;
 }}}
 
-Complex symbol:
-
-{{{
-(+) (-) (*) (/) (.) || << >> ~~ ~= == 
-}}}
-
-Text symbol:
-
-{{{
-and or not infty propto empty partial nabla
-all exists in notin subset supset union intersect
-}}}
 
 ==อักขระและคำ==
 
 อักขระภาษาอังกฤษจะถูกมองว่าเป็นตัวแปรโดยอัตโนมัติ
-ถ้าคุณต้องการ i หรือ j ไม่มีหัว ให้เพิ่มคำว่า `math` ต่อท้ายคำนั้น
-กฎนี้ยังถูกใช้กับ h มีขีดอีกด้วย
+ถ้าคุณต้องการ `i` หรือ `j` ไม่มีหัว ให้เพิ่มคำว่า `math` ต่อท้ายคำนั้น
+กฎพิเศษนี้ยังรวมไปถึง `hbar` และ `ell` อีกด้วย
 
 {{{
-imath, jmath, hbar
+imath, jmath, hbar, ell
 }}}
 
 สำหรับอักขระภาษากรีก ให้เขียนมันด้วยชื่อในภาษาอังกฤษ
@@ -152,13 +188,19 @@ alpha, Delta, varphi
 Eset, Nset, Zset, Qset, Rset, Cset
 }}}
 
+นอกจากนี้ยังมีสัญลักษณ์พิเศษอีกบางตัว
+
+{{{
+infty empty partial nabla
+}}}
+
 ชื่อฟังก์ชันสามารถเรียกได้ทันทีโดยชื่อของมัน
 
 {{{
 sin, arccos, tanh, max, log, gcd, Re, Im
 }}}
 
-And there also some frequently used logic word.
+เช่นเดียวกันกับคำสงวนด้านตรรกะ-รหัสเทียม
 
 {{{
 if, then, else
@@ -167,12 +209,12 @@ if, then, else
 หมายเหตุ ฟังก์ชันตรีโกณมิติผกผันจะแสดงในรูปของ `function_name^-1`
 
 
-==Escape Text and LaTeX==
+==การใส่ข้อความหรือ LaTeX เข้าไปตรงๆ==
 
 ใส่ข้อความภายใต้ `" ... "` เพื่อให้มันแสดงเป็นข้อความตามปรกติ
-There is no escape character for `"` (quotation mark) yet.
+คุณไม่สามารถใช้เครื่องหมาย `"` (quotation mark) ในการใส่ข้อความตรงๆ ได้
 
-To escape LaTeX, just add `@` (at sign) in front of the text mode.
+การใส่ข้อความแบบ LaTeX ทำได้ง่ายๆ เพียงแค่เพิ่ม `@` (at sign) ไว้ด้านหน้าการใส่ข้อความแบบธรรมดาตรงๆ
 
 {{{
 @" ... "
@@ -195,154 +237,163 @@ To escape LaTeX, just add `@` (at sign) in front of the text mode.
 abs(ad-bc), norm(z), round(ln x), floor(n/2)
 }}}
 
-ในกรณีที่คุณต้องการแสดงวงเล็บปิดก่อนเปิด หรือต้องการแค่วงเล็บเปิด (เช่น `(-1, 7], ]-infty, 0]`) ให้ใช้ `" ... "` ครอบมันไว้
+ในกรณีที่คุณต้องการแสดงวงเล็บปิดก่อนเปิด หรือต้องการแค่วงเล็บเปิด (เช่น `(-1, 7] หรือ ]-infty, 0]`) ให้ใช้ `" ... "` ครอบมันไว้
 
 
 ===วงเล็บอันตรธาน===
 
-There are situation that you might want to wrap many atoms into one, use `( ... )` to wrap them.
-This method called Reduce Parentheses. If you place them in the right position, the parentheses will be hide automatically.
+ในสถานการณ์ที่คุณต้องการรวมอะตอมหลายๆ อะตอมเป็นอะตอมเดียว ใช้ `( ... )` ครอบอะตอมเหล่านั้นเข้าไว้
+วิธีการนี้เรียกว่า วงเล็บอันตรธาน ถ้าคุณนำไปใช้อย่างถูกที่ เครื่องหมายวงเล็บจะหายไปโดยอัตโนมัติ
 
 
-=Word=
+=คำ=
 
-==Indexing==
+คำคืออะตอมที่ถูกตกแต่งแล้ว
 
-To index the atom, treat them the way you done with computer's array.
+
+==การระบุตำแหน่ง==
+
+เมื่อต้องการระบุตำแหน่งให้อะตอม ทำเหมือนกับที่คุณทำกับ array ในภาษาคอมพิวเตอร์ส่วนใหญ่
 
 {{{
 a[n], m[i][j]
 }}}
 
 
-==Exponention==
+==ยกกำลัง==
 
-Use `^` (caret) between base and exponent part.
+ใช้เครื่องหมาย `^` (caret) คั่นระหว่างส่วนฐานและส่วนกำลัง
 
 {{{
 c^2, a[n]^i, e^(pi i)
 }}}
 
-This must be done after indexed, otherwise the indexed will goes to the exponent.
+การยกกำลังต้องทำหลังจากการระบุตำแหน่งของฐานเรียบร้อยแล้วเท่านั้น มิฉะนั้นส่วนของตำแหน่งจะขึ้นไปเป็นสมบัติของส่วนกำลังแทน
 
 
-==Accents==
+==การเน้น==
 
-To add accents to word, put this keywords ahade.
-
-{{{
-vec, bar, hat, dot, ddot
-}}}
-
-The accents can be stack.
+เมื่อต้องการเน้นคำ ใส่คำสำคัญเล่านี้ไว้ข้างหน้ามันดังนี้
 
 {{{
-vec ddot a
+vec(a), bar(z), hat(c), dot(m), ddot(n)
 }}}
 
-Only `vec`, `bar`, and `hat` can be extended for long word.
+การเน้นคำสามารถวางซ้อนกันได้
+
+{{{
+vec(dot(a))
+}}}
+
+มีเพียง `vec`, `bar`, และ `hat` เท่านั้น ที่สามารถลากไปครอบคำยาวๆ ได้
 
 {{{
 bar(x + y)
 }}}
 
-If there are only i or j after `vec`, `bar`, and `hat`; its dot will be removed automatically.
+ถ้าในวงเล็บมีเพียงแค่ i หรือ j ตามหลัง `vec`, `bar`, และ `hat` จุดบนหัวของ i และ j จะหายไปโดยอัตโนมัติ
 
 {{{
-vec i, hat(j)
+vec(i), hat(j)
 }}}
 
 
-=Sentence=
+=ประโยค=
 
-==Roots==
+ประโยคคือกลุ่มของอะตอมและคำที่วางต่อๆ กันอย่างไรก็ได้ ถึงกระนั้นก็ตาม มันก็มีกฎบางอย่างเพื่อสร้างประโยคแบบพิเศษขึ้นมา
 
-The most frequently root, square root, can be call by favorite keyword `sqrt`.
+
+==ราก==
+
+สำหรับรากที่สอง ใช้คำสำคัญ `sqrt` นำหน้าส่วนที่ต้องการให้ติดราก
 
 {{{
 sqrt(r)
 }}}
 
-For the nth root, place keyword "root" between the degree and the root.
+สำหรับรากที่ n ใช้คำว่า `root` คั่นระหว่างส่วนดีกรีและราก
 
 {{{
 (n)root(r)
 }}}
 
 
-==Fraction==
+==เศษส่วน==
 
-To express the fraction, use `/` (slash) to separate a numerator and a denominator.
+เมื่อต้องการแสดงเศษส่วน ให้เครื่องหมาย `/` (slash) แยกระหว่างตัวเศษและตัวส่วน
 
 {{{
 a/b
 }}}
 
+ข้อควรระวังคือเศษส่วนไม่สามารถวางต่อกันเช่น 1/2/3 ได้ คุณต้องใช้วงเล็บอันตรธานเพื่อจัดกลุ่มให้มันเอง
 
-==Combination==
 
-For combination, place keyword `choose` inside parenteses, with upper on the left side and lower on the right side.
+==การเลือก==
+
+ใช้คำสำคัญ `choose` แบ่งส่วนด้านบนและด้านล่างของการเลือก โดยครอบทั้งประโยคไว้ภายใต้วงเล็บ
 
 {{{
 (n choose r)
 }}}
 
-==Matrix==
 
-Matrix is call by `[ ... ]`, when it is not hinge to any atoms (need at least one whitespace before it - otherwise, its goes to indexed).
+==เมตริกซ์==
 
-Each of element inside matrix is separate by `,` (comma) and `;` (semicolon). Comma is use to separate each element into columns, and semicolon separate there rows (newline character doesn't do any action inside matrix).
+เมตริกซ์สามารถเรียกใช้ได้โดย `[ ... ]` เมื่อมันไม่ได้ห้อยติดกับอะตอมใดๆ (ต้องการ space อย่างน้อย 1 ตัว มิฉะนั้นแล้ว มันจะกลายเป็นการระบุตำแหน่งแทน)
+
+สมาชิกของเมตริกซ์แต่ละตัวจะถูกคั่นโดย `,` (comma) และ `;` (semicolon) ซึ่ง comma จะทำการแยกสมาชิกออกเป็นสดมภ์ ส่วน semicolon จะทำการแยกแถว (newline ไม่ส่งผลต่อการขึ้นบรรทักใหม่)
 
 {{{
 [a, b, c; d, e, f]
 }}}
 
-There are keywords to adjust matrix parentheses, which must be place before `[ ... ]` with exactly one whitespace.
+คุณสามารถเติมคำสำคัญสำหรับเปลี่ยนรูปร่างวงเล็บที่ครอบเมตริกซ์ได้ โดยการวางมันไว้ก่อนหน้า `[ ... ]` ที่มี space คั่น 1 ครั้ง
 
 {{{
 det [a, b; c, d]
 parentheses [1, 2, 3; 4, 5, 6]
 }}}
 
-Also, LaTeX matrix keyword style are allowed.
+และคุณยังสามารถใช้คำสำคัญแบบ LaTeX ได้อีกด้วย
 
 {{{
 pmatrix, bmatrix, vmatrix, Vmatrix
 }}}
 
 
-===Cases===
+===การแยกกรณี===
 
-Cases can be seen as a matrix, which left parentheses is "{" and right parentheses is omitted. So we can use this.
+การแยกกรณีนั้น สามารถมองได้ว่าเป็นเมตริกซ์แบบหนึ่ง ซึ่งวงเล็บด้านซ้ายใช้เครื่องหมาย "{" ส่วนวงเล็บด้านขวานั้นไม่มี คุณสามารถเรียกใช้ได้ดังนี้
 
 {{{
-cases [x, if x >= 0; -x, if x < 0]
+cases [x, if_ x >= 0; -x, if_ x < 0]
 }}}
 
-==Limits==
+==ลิมิต==
 
-Use keyword `lim` for limits notation, and keyword `where` follow by condition.
+ใช้คำสำคัญ `lim` สำหรับการแสดงลิมิต และคำสำคัญ `where` ตามด้วยขอบเขต
 
 {{{
 lim where(n -> infty)
 }}}
 
-Keyword `lim` and `where` doesn't require to be place next to each other. So you may write them in sandwich style to improve readability.
+คำสำคัญ `lim` กับ `where` ไม่จำเป็นต้องวางถัดกันไป ดังนั้นคุณอาจเขียนมันแยกกันเพื่อให้อ่านได้ง่ายขึ้นได้
 
 {{{
 lim x^x where(x -> 0)
 }}}
 
 
-==Integral==
+==อินทริกรัล==
 
-Summation-integral symbol keywords are list bellow.
+คำสำคัญของผลรวม-อินทริกรัลมีดังนี้
 
 {{{
 int, oint, iint, iiint, sum, prod, coprod, Union, Intersect
 }}}
 
-To hinge boundary, use keyword `from ... to ...` or `where ...` like the limits.
+และประกาศขอบเขตของการอินทริกรับโดยใช้คำสำคัญ `from ... to ...` หรือจะใช้ `where ...` เหมือนลิมิตก็ย่อมได้
 
 {{{
 int from a to b x_dx
@@ -350,27 +401,39 @@ coprod (4.n^2)/(4.n^2-1) from (n=1) to infty
 Union A where (A in M)
 }}}
 
-There is no keyword to put only top boundary, but you may adapt this.
+ถึงแม้จะไม่มีคำสำคัญสำหรับการวางเพียงขอบเขตบนอย่างเดียว แต่คุณอาจประยุกต์ใช้นี่ได้
 
 {{{
 sum f(x) from () to (Rset)
 }}}
 
-Note that you can not use this and the limits as exponent part without wrap it inside `( ... )`.
+ข้อควรระวัง คุณไม่สามารใช้ลิมิตและอินทริกรัลเป็นส่วนยกกำลังได้โดยไม่ครอบมันใน `( ... )`.
 
 
-=Technique=
+=เทคนิค=
 
-==Pseudocode==
+==สมการเคมี==
 
- # Use `#` at the start of each line to mark start point of paragraph.
- # Use `_` to instead of spacebar to add whitespace between words.
- # For each depth inside the code, use `__` after `#` to add tab character.
- # Function name should be wrap between `" ... "` to prevent keyword conflict.
- # Since we kept keyword `to` for integral notation; use `upto`, or `downto` instead.
- # To provide more readability, add line number manually before `#`.
- # Put EzMath close tag ($$) at the end of last line to aligning code on left side.
-Example:
+ # ครอบชื่อธาตุไว้ใต้ " ... "
+ # เนื่องจากเราไม่มีคำสั่งสำหรับการใส่สมบัติอย่างการยกกำลังทางด้านซ้ายของอะตอม ให้ใช้อะตอมอันตรธาน ("") เพื่อแสดงสมบัติต่างๆ ก่อนหน้าอะตอมที่เราสนใจ
+ # ใช้ `-->` เมื่อต้องการลูกศรแบบยาว
+ตัวอย่าง:
+
+$$
+""[15]^32 "P" --> ""[16]^32 "S" + beta^- +v
+$$
+
+
+==รหัสเทียม==
+
+ # ใช้ `#` เพื่อกำหนดจุดเริ่มต้นของแต่ละย่อหน้า
+ # อย่าลืมใช้ `_` แทน space เมื่อต้องการเว้นช่องว่างระหว่างคำ
+ # สำหรับแต่ละความลึกในรหัส ใช้ `__` ตามหลัง `#` เพื่อการจัดย่อหน้าแบบลึก
+ # ชื่อฟังก์ชันที่กำหนดเองให้ครอบด้วย `" ... "` เสมอ
+ # เนื่องากคำสำคัญ `to` ถูกเก็บไว้สำหรับการอินทริกรัลแล้ว ให้ใช้คำว่า `upto` หรือ `downto` แทน
+ # ถ้าต้องการเพิ่มความง่ายในการอ่าน ให้ใส่เลขบรรทัดไว้ด้านหน้าเครื่องหมาย `#`
+ # ใส่เครื่องหมายปิด EzMath ($$) ที่บรรทัดสุดท้ายของรหัสเทียม เพื่อให้รหัสเทียมจัดอยู่ทางซ้ายของย่อหน้า
+ตัวอย่าง:
 
 {{{
 $$

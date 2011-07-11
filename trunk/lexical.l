@@ -64,38 +64,39 @@ star	{ yylval = (int)"\\star"; return SOPT; }
 "..."	{ yylval = (int)"\\ldots"; return SOTH; }
 (I|i)nf(ini)?ty	{ yylval = (int)"\\infty"; return SOTH; }
 
+der	|
 part(ial)?	{ yylval = (int)"\\partial"; return SOTH; }
-"grad"	|
-"nabla"	{ yylval = (int)"\\nabla"; return SOTH; }
+grad	|
+nabla	{ yylval = (int)"\\nabla"; return SOTH; }
 
 
 (for[ ]?)?all	{ yylval = (int)"\\forall"; return SSET; }
-"exists"	{ yylval = (int)"\\exists"; return SSET; }
+exists	{ yylval = (int)"\\exists"; return SSET; }
 
 in	{ yylval = (int)"\\in"; return SSET; }
 not[ ]?in	{ yylval = (int)"\\notin"; return SSET; }
 subset	{ yylval = (int)"\\subseteq"; return SSET; }
 sup(er)?set	{ yylval = (int)"\\supseteq"; return SSET; }
 
-"union"	|
-"cup"	{ yylval = (int)"\\cup"; return SSET; }
+union	|
+cup	{ yylval = (int)"\\cup"; return SSET; }
 intersect(ion)?	|
-"cap"	{ yylval = (int)"\\cap"; return SSET; }
+cap	{ yylval = (int)"\\cap"; return SSET; }
 "\\"	{ yylval = (int)"\\setminus"; return SSET; }
 
 
-"empty"	{ yylval = (int)"\\emptyset"; return NSET; }
-"Eset"	{ yylval = (int)"\\varnothing"; return NSET; }
-"Nset"	{ yylval = (int)"\\mathbb{N}"; return NSET; }
-"Zset"	{ yylval = (int)"\\mathbb{Z}"; return NSET; }
-"Pset"	{ yylval = (int)"\\mathbb{P}"; return NSET; }
-"Qset"	{ yylval = (int)"\\mathbb{Q}"; return NSET; }
-"Rset"	{ yylval = (int)"\\mathbb{R}"; return NSET; }
-"Cset"	{ yylval = (int)"\\mathbb{C}"; return NSET; }
-"Hset"	{ yylval = (int)"\\mathbb{H}"; return NSET; }
+empty	{ yylval = (int)"\\emptyset"; return NSET; }
+Eset	{ yylval = (int)"\\varnothing"; return NSET; }
+Nset	{ yylval = (int)"\\mathbb{N}"; return NSET; }
+Zset	{ yylval = (int)"\\mathbb{Z}"; return NSET; }
+Pset	{ yylval = (int)"\\mathbb{P}"; return NSET; }
+Qset	{ yylval = (int)"\\mathbb{Q}"; return NSET; }
+Rset	{ yylval = (int)"\\mathbb{R}"; return NSET; }
+Cset	{ yylval = (int)"\\mathbb{C}"; return NSET; }
+Hset	{ yylval = (int)"\\mathbb{H}"; return NSET; }
 (A|a)leph	{ yylval = (int)"\\aleph"; return NSET; }
-"Re"	{ yylval = (int)"\\Re"; return NSET; }
-"Im"	{ yylval = (int)"\\Im"; return NSET; }
+Re	{ yylval = (int)"\\Re"; return NSET; }
+Im	{ yylval = (int)"\\Im"; return NSET; }
 
 
 exp	|
@@ -250,23 +251,23 @@ round	{ return RND; }
 "bar(i)"	{ yylval = (int)"\\overline{\\imath}"; return NOVR; }
 "bar(j)"	{ yylval = (int)"\\overline{\\jmath}"; return NOVR; }
 
-"dot"	{ yylval = (int)"\\dot"; return OOVR; }
-"ddot"	{ yylval = (int)"\\ddot"; return OOVR; }
-"hat"	{ yylval = (int)"\\widehat"; return OOVR; }
-"vec"	{ yylval = (int)"\\overrightarrow"; return OOVR; }
-"bar"	{ yylval = (int)"\\overline"; return OOVR; }
+dot	{ yylval = (int)"\\dot"; return OOVR; }
+ddot	{ yylval = (int)"\\ddot"; return OOVR; }
+hat	{ yylval = (int)"\\widehat"; return OOVR; }
+vec	{ yylval = (int)"\\overrightarrow"; return OOVR; }
+bar	{ yylval = (int)"\\overline"; return OOVR; }
 
 
 (S|s)um(mation)?	{ yylval = (int)"\\sum"; return OSUM; }
 (P|p)rod(uct)?	{ yylval = (int)"\\prod"; return OSUM; }
 (C|c)oprod(uct)?	{ yylval = (int)"\\coprod"; return OSUM; }
 
-"Union"	|
-"Cup"	{ yylval = (int)"\\bigcup"; return OSUM; }
+Union	|
+Cup	{ yylval = (int)"\\bigcup"; return OSUM; }
 Intersect(ion)?	|
-"Cap"	{ yylval = (int)"\\bigcap"; return OSUM; }
+Cap	{ yylval = (int)"\\bigcap"; return OSUM; }
 
-"lim"	{ yylval = (int)"\\lim"; return OSUM; }
+lim	{ yylval = (int)"\\lim"; return OSUM; }
 
 (I|i)nt(egral)?	{ yylval = (int)"\\int"; return OSUM; }
 (O|o)(I|i)nt(egral)?	{ yylval = (int)"\\oint"; return OSUM; }
@@ -274,10 +275,10 @@ Intersect(ion)?	|
 (I|i){3}nt(egral)?	{ yylval = (int)"\\iiint"; return OSUM; }
 
 
-"from"	{ return FR; }
-"to"	{ return TO; }
-"when"	|
-"where"	{ return WH; }
+from	{ return FR; }
+to	{ return TO; }
+when	|
+where	{ return WH; }
 
 
 "_"	{ return SPC; }

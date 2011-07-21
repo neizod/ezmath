@@ -1,0 +1,5 @@
+#summary convert a readable-math-syntax into mathematics notation on web.
+
+= What is EzMath? =
+
+EzMath is an open-source Flex-Bison-PHP translator engine that translate [Quick_Syntax_Guide EzMath syntax] to LaTeX. And if the translation is successful, [http://www.mathjax.org/ MathJax] will be call to render LaTeX to mathematics display that work on modern web browser.

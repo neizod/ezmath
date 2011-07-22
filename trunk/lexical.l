@@ -169,28 +169,30 @@ return	{ yylval = (int)yytext; return PSEUDO; }
 
 (i|j)math	|
 hbar	|
+ell	|
 
-(A|a)lpha	|
-(B|b)eta	|
+alpha	|
+beta	|
 (G|g)amma	|
 (D|d)elta	|
-(E|(var)?e)psilon	|
-(Z|z)eta	|
-(E|e)ta	|
+(var)?epsilon	|
+zeta	|
+eta	|
 (T|(var)?t)heta	|
-(I|i)ota	|
-(K|k)appa	|
+iota	|
+kappa	|
 (L|l)ambda	|
-(M|m)u	|
-(N|n)u	|
+mu	|
+nu	|
 (X|x)i	|
+omicron	|
 (P|(var)?p)i	|
-(R|(var)?r)ho	|
+(var)?rho	|
 (S|(var)?s)igma	|
-(T|t)au	|
+tau	|
 (U|u)psilon	|
 (P|(var)?p)hi	|
-(C|c)hi	|
+chi	|
 (P|p)si	|
 (O|o)mega	{ yylval = (int)yytext; return GREEK; }
 

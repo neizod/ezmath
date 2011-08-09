@@ -70,11 +70,11 @@ grad	|
 nabla	{ yylval = (int)"\\nabla"; return SOTH; }
 
 
-(for[ ]?)?all	{ yylval = (int)"\\forall"; return SSET; }
+(for" "?)?all	{ yylval = (int)"\\forall"; return SSET; }
 exists	{ yylval = (int)"\\exists"; return SSET; }
 
 in	{ yylval = (int)"\\in"; return SSET; }
-not[ ]?in	{ yylval = (int)"\\notin"; return SSET; }
+not" "?in	{ yylval = (int)"\\notin"; return SSET; }
 subset	{ yylval = (int)"\\subseteq"; return SSET; }
 sup(er)?set	{ yylval = (int)"\\supseteq"; return SSET; }
 
@@ -142,19 +142,19 @@ do	|
 od	|
 then	|
 else	|
-el(se[ ])?if	|
-end[ ]if	|
+el(se" ")?if	|
+end" "if	|
 fi	|
 
 for	|
-end[ ]for	|
+end" "for	|
 upto	|
 downto	|
 step	|
 while	|
-end[ ]while	|
+end" "while	|
 loop	|
-end[ ]loop	|
+end" "loop	|
 repeat	|
 until	|
 
@@ -167,8 +167,9 @@ return	{ yylval = (int)yytext; return PSEUDO; }
 
 
 
-(i|j)math	|
 hbar	|
+(i|j)math	|
+ell	|
 ell	|
 
 alpha	|
@@ -270,6 +271,8 @@ Intersect(ion)?	|
 Cap	{ yylval = (int)"\\bigcap"; return OSUM; }
 
 lim	{ yylval = (int)"\\lim"; return OSUM; }
+lim" "?sup	{ yylval = (int)"\\limsup"; return OSUM; }
+lim" "?inf	{ yylval = (int)"\\liminf"; return OSUM; }
 
 (I|i)nt(egral)?	{ yylval = (int)"\\int"; return OSUM; }
 (O|o)(I|i)nt(egral)?	{ yylval = (int)"\\oint"; return OSUM; }

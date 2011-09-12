@@ -31,56 +31,46 @@ class Ezmath_Parser {
 
   function translate($text) {
     // standardize line endings
-    $text = preg_replace('/\r\n?/', "\n", $text);
+    $text = preg_replace('/\r\n?/', '\n', $text);
+#################### instruction site #################### 
+    function anoy($m) {
 
-    $text_array = explode("\$\$", $text);
-    $all_i = count($text_array);
-    $math_i = ceil($all_i/2)-1;
-
-    // run through all $$...$$ elements
-    for($i = 0; $i < $math_i; $i++) {
-      $j = 2*$i + 1;
-
-      // ignore empty input
-      if(preg_match("/^\s*$/", $text_array[$j])) {
-        continue;
-      }
-
-      // parse and check for error
-      $math = $this->latex($text_array[$j]);
-      if($math != '') {
-        // check if math element is in-line or new-line.
-        if(preg_match("/^\n/", $text_array[$j]) && preg_match("/\n$/", $text_array[$j])) {
-          $text_array[$j] = '\\[' . $math . '\\]';
-        } else {
-          $text_array[$j] = '\\(' . $math . '\\)';
+      if($m[0][0] == '$') {
+        $text = $m[1];
+        // wrap argv before passing it to C parser program
+        $text = preg_replace('#^\s+|\s+$#s', '', $text);
+        $text = '"' . strtr($text, array('"' => '\\"')) . '"';
+        $text = shell_exec(drupal_get_path('module', 'ezmath') . '/ezmath ' . $text);
+        // check if parse success?
+        if($text != '') {
+          if(preg_match('#^\n.*\n$#s', $m[1])) {
+            $text = '$$' . $text . '$$';
+          }
+          else {
+            $text = '$'  . $text .  '$';
+          }
         }
-
-        // eascape special chars to prevent conflict with html, markdown, etc.
-        $text_array[$j] = strtr($text_array[$j], $this->extended_special_chars);
+        else {
+          // on error parse, return original code.
+          $text = '<pre>' . $m[0] . '</pre>';
+        }
       }
       else {
-        $text_array[$j] = $this->error_parse($text_array[$j], 'w');
+        $text = $m[0];
       }
+      return $text;
     }
+    return preg_replace_callback('#\$\$(.*?)\$\$|<pre>.*?</pre>#s', 'anoy', $text);
 
-    // if the last math element dosn't wrap in $$...$$, its will not parse.
-    if($all_i%2 == 0) {
-      $text_array[$all_i-1] = $this->error_parse($text_array[$all_i-1], 'f');
-    }
+##########################################################
 
-    $text = implode($text_array);
-    return $text;
   }
 
-  // wrap argv before passing it to C parser program
-  function wrap_argv($text) {
-    return '"' . strtr($text, array('"' => '\\"')) . '"';
-  }
   function latex($text) {
     // remove first & last empty lines to prevent LaTeX conflict.
+echo $text;
     $text = preg_replace("/^\s+|\s+$/", '', $text);
-
+echo $text;
     return shell_exec(drupal_get_path('module', 'ezmath') . '/ezmath ' . $this->wrap_argv($text));
   }
   // parsing error handler, return original text hilight in darkred.

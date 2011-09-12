@@ -170,7 +170,6 @@ return	{ yylval = (int)yytext; return PSEUDO; }
 hbar	|
 (i|j)math	|
 ell	|
-ell	|
 
 alpha	|
 beta	|

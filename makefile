@@ -1,4 +1,4 @@
-CC =	cc
+CC =	gcc
 
 REQ =	$(LEX).l $(PARSE).y
 LEX =	lexical
